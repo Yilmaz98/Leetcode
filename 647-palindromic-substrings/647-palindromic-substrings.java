@@ -1,11 +1,11 @@
 class Solution {
-    int count = 0;
+    int count = 1;
     public int countSubstrings(String s) {
         for(int i=0;i<s.length()-1;i++) {
             extendPalindrome(s,i,i);
             extendPalindrome(s,i,i+1);
         }
-        return count+1;
+        return count;
     }
     
     public void extendPalindrome(String s, int j, int k) {
