@@ -22,6 +22,6 @@ public class Solution {
             b = b!= null ? b.next : headA;
         }
         
-        return a;
+        return b;
     }
 }
