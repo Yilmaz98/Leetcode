@@ -19,8 +19,6 @@ class Solution {
        result.add(intervals[i]);
         i++;
     }
-        
-        System.out.println(result);
         return result.stream().map(u -> u).toArray(int[][]::new);
     }
 }
