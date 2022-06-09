@@ -10,7 +10,6 @@ class Solution {
         
         if(up) {
             dfs(matrix, i-1, j, visited, m,n, true);
-            dfs(matrix, i, j+1, visited, m,n,false);
         }
         
         dfs(matrix, i, j+1, visited,m,n, false);
