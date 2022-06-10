@@ -12,7 +12,7 @@ class Solution {
     if(ind == word.length()) return true;
     if(i > board.length-1 || i <0 || j<0 || j >board[0].length-1 || board[i][j]!=word.charAt(ind))
         return false;
-    board[i][j]='*';
+    board[i][j]='0';
     boolean result =    exist(board, i-1, j, word, ind+1) ||
                         exist(board, i, j-1, word, ind+1) ||
                         exist(board, i, j+1, word, ind+1) ||
