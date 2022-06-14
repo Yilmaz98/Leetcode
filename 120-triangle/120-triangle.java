@@ -18,9 +18,15 @@ class Solution {
                 k++;
             }
         }
-        
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++) {
+                System.out.print(dp[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
         int ans = Integer.MAX_VALUE;
-            for(int j=0;j<n;j++){
+            for(int j=0;j<n; j++){
                 ans = Math.min(ans, dp[n-1][j]);
         }
         
