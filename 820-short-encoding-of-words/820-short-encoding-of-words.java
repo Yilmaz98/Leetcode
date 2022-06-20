@@ -1,23 +1,30 @@
 class Solution {
     public int minimumLengthEncoding(String[] words) {
-        HashSet<String> set1 = new HashSet<>();
-        HashSet<String> set2 = new HashSet<>();
-		
-        for(String word : words) {
-            set1.add(word);
-            set2.add(word);
+        Set<String> set1 = new HashSet<>();
+        Set<String> set2 = new HashSet<>();
+        
+        for(int i=0;i<words.length;i++) {
+            set1.add(words[i]);
+            set2.add(words[i]);
         }
         
-        for(String word : set1){
-            for(int i = 0; i < word.length(); i++){
-                String subString = word.substring(i + 1);
-                if(set2.contains(subString)) set2.remove(subString);
+        for(String word1: set1) {
+            for(int j=0;j<word1.length();j++) {
+                String curr = word1.substring(j+1);
+                
+                if(set2.contains(curr)) {
+                    set2.remove(curr);
+                }
             }
         }
         
-        int totalCountOfCharacters = 0;
-        for(String word : set2) totalCountOfCharacters += word.length();
+        int ans = 0;
         
-        return totalCountOfCharacters + set2.size();
+        
+        for(String word2: set2) {
+            ans += word2.length();    
+        }
+        
+        return ans + set2.size();
     }
 }
