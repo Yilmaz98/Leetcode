@@ -6,8 +6,7 @@ class Solution {
         for(int i=0;i<nums.length-1;i++) {
             if(i > maxJump)
                 return false;
-            int jump = i + nums[i];
-            maxJump = Math.max(jump, maxJump);
+            maxJump = Math.max(i + nums[i], maxJump);
             if(maxJump >= nums.length-1)
                 return true;
         }
