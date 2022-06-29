@@ -1,35 +1,24 @@
 class Solution {
     public int minDeletions(String s) {
-        Map<Character, Integer> m = new HashMap<>();
-        
-        for(int i=0;i<s.length();i++) {
-            m.put(s.charAt(i), m.getOrDefault(s.charAt(i),0) + 1);
+          // Store the frequency of each character
+        int[] frequency = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            frequency[s.charAt(i) - 'a']++;
         }
-        List<Integer> l = new ArrayList<>();
-        for(Character c: m.keySet()) {
-            l.add(m.get(c));
-        }
-        Collections.sort(l, Collections.reverseOrder());
         
-        int minDecrements = 0;
-        
-        for(int i=1;i<l.size();i++) {
-            Integer a = l.get(i);
-            Integer b = l.get(i-1);
-            if(a.equals(b)){
-                l.set(i,l.get(i) - 1);
-                minDecrements++;
+        int deleteCount = 0;
+        // Use a set to store the frequencies we have already seen
+        HashSet<Integer> seenFrequencies = new HashSet<>();
+        for (int i = 0; i < 26; i++) {
+            // Keep decrementing the frequency until it is unique
+            while (frequency[i] > 0 && seenFrequencies.contains(frequency[i])) {
+                frequency[i]--;
+                deleteCount++;
             }
-            else if(l.get(i-1) < l.get(i)) {
-                if(l.get(i-1) == 0) {
-                   minDecrements += l.get(i);
-                   l.set(i, l.get(i-1));   
-                } else {
-                    minDecrements += l.get(i) - l.get(i-1) + 1;
-                    l.set(i, l.get(i-1) - 1);  
-                }
-            }
+            // Add the newly occupied frequency to the set
+            seenFrequencies.add(frequency[i]);
         }
-        return minDecrements;
+        
+        return deleteCount;
     }
 }
