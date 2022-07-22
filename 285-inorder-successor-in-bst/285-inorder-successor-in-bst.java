@@ -8,24 +8,15 @@
  * }
  */
 class Solution {
-    List<TreeNode> result = new ArrayList<>();
-    
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-        inorder(root);
-        
-        for(TreeNode i: result) {
-            if(i.val>p.val) {
-                return i;
-            }
+          TreeNode res = null;
+    while(root!=null) {
+        if(root.val > p.val) {
+        	res = root;
+        	root = root.left;
         }
-        return null;
+        else root = root.right;
     }
-    
-    public void inorder(TreeNode root) {
-        if(root !=null) {
-            inorder(root.left);
-            result.add(root);
-            inorder(root.right);        
-        }
+    return res;
     }
 }
