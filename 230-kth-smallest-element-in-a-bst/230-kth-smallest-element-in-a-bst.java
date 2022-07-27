@@ -21,7 +21,7 @@ class Solution {
         }
         inorder(root);
         
-        for(int i=1;i<k;i++) {
+        while(k-- >1) {
             pq.poll();
         }
         
