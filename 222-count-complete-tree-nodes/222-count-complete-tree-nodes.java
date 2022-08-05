@@ -38,9 +38,6 @@ class Solution {
         int lt = 1 + dfsl(root.left);
         int rt = 1 + dfsr(root.right);
         
-        System.out.println(lt);
-        System.out.println(rt);
-        
         if(lt == rt)
             return (int)Math.pow(2,lt) -1;
         
