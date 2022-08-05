@@ -14,30 +14,31 @@
  * }
  */
 class Solution {
+    List<Integer> tempList;
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         
         while(root != null) {
-            List<Integer> leaves = new ArrayList<>();
-            root = removeLeaves(root, leaves);
-            result.add(leaves);
+          tempList = new ArrayList<>();
+          root = leafUtil(root);
+          result.add(tempList);
         }
         
         return result;
     }
     
-    
-    public TreeNode removeLeaves(TreeNode root, List<Integer> leaves) {
-        if(root == null)
-            return null;
-        
-        if(root.left == null && root.right == null) {
-            leaves.add(root.val);   
+    public TreeNode leafUtil(TreeNode root) {
+        if(root == null) {
             return null;
         }
         
-        root.left = removeLeaves(root.left, leaves);
-        root.right = removeLeaves(root.right, leaves);
+        if(root.left == null && root.right == null) {
+            tempList.add(root.val);
+            return null;
+        }
+        
+        root.left = leafUtil(root.left);
+        root.right = leafUtil(root.right);
         
         return root;
     }
