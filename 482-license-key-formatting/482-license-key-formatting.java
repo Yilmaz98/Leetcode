@@ -6,15 +6,15 @@ class Solution {
         
         for(int i=curr.length()-1;i>=0;i--) {
             if(result.length() != 0 && (result.length()- dashes) %k == 0) {
-               result+="-"; 
+                result+="-"; 
                 dashes++;
             }
                 
             result += (curr.charAt(i));
         }
-        StringBuilder sb = new StringBuilder(result.toUpperCase());
+        StringBuilder sb = new StringBuilder(result);
         
-        return sb.reverse().toString();
+        return sb.reverse().toString().toUpperCase();
         
      }
 }
