@@ -14,24 +14,32 @@
  * }
  */
 class Solution {
+    
+    public int dfsl(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        
+        return 1 + dfsl(root.left);
+    }
+    
+     public int dfsr(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        
+        return 1 + dfsr(root.right);
+    }
+    
     public int countNodes(TreeNode root) {
         if(root == null)
             return 0;
-        int lt = 1;
-        TreeNode l = root.left;
         
-        while(l!=null) {
-            l = l.left;
-            lt++;
-        }
+        int lt = 1 + dfsl(root.left);
+        int rt = 1 + dfsr(root.right);
         
-         int rt = 1;
-        TreeNode r = root.right;
-        
-        while(r!=null) {
-            r = r.right;
-            rt++;
-        }
+        System.out.println(lt);
+        System.out.println(rt);
         
         if(lt == rt)
             return (int)Math.pow(2,lt) -1;
