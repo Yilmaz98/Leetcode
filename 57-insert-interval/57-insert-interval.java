@@ -16,8 +16,7 @@ class Solution {
          result.add(newInterval);
         
     while(i<intervals.length) {
-       result.add(intervals[i]);
-        i++;
+       result.add(intervals[i++]);
     }
         return result.stream().map(u -> u).toArray(int[][]::new);
     }
