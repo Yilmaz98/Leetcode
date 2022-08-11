@@ -13,6 +13,8 @@ class Solution {
             }
             map.put(A[i], count);
         }
+        System.out.println(map);
+        
         long sum = 0;
         for (Integer n : map.keySet()) {
             sum = (sum + map.get(n)) % ((int) Math.pow(10, 9) + 7) ;
