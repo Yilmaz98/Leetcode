@@ -1,6 +1,6 @@
 class Solution {
     public int uniquePaths(int m, int n) {
-int[][] grid = new int[n][m];    
+    int[][] grid = new int[n][m];    
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < m; j++) {
         if (i == 0) grid[0][j] = 1;
