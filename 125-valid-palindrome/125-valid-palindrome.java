@@ -1,15 +1,29 @@
 class Solution {
+    public boolean isAlphaNumeric(String s, int i) {
+         if((s.charAt(i) >='a' && s.charAt(i) <='z') || (s.charAt(i) >='A'  && s.charAt(i) <='Z') || (s.charAt(i) >='0'  && s.charAt(i) <='9')) {
+             return true;
+         }
+        return false;
+    }
     public boolean isPalindrome(String s) {
-        StringBuilder sb = new StringBuilder();
-        for(int i=0;i<s.length();i++) {
-            if((s.charAt(i) >='a' && s.charAt(i) <='z') || (s.charAt(i) >='A'  && s.charAt(i) <='Z') || (s.charAt(i) >='0'  && s.charAt(i) <='9'))
-            sb.append(s.charAt(i));
+        int i = 0;
+        int j = s.length() - 1;
+        while(i<j) {
+            while(!isAlphaNumeric(s,i) && i<j){
+                i++;
+            } 
+            
+            while(!isAlphaNumeric(s,j) && j>i) {
+                j--;
+            }
+            
+            if(Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j)))
+                return false;
+            
+            i++;
+            j--;
+           
         }
-        
-        String currentString = sb.toString();
-        currentString = currentString.toLowerCase();
-        String reversedString = sb.reverse().toString();
-        reversedString = reversedString.toLowerCase();
-        return currentString.equals(reversedString);
+        return true;
     }
 }
