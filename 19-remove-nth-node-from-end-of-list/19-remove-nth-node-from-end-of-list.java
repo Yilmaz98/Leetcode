@@ -42,9 +42,7 @@ class Solution {
             curr.next = curr.next.next;
         } else if(curr.next!=null) {
             curr.next = null;
-        } else {
-            return null;
-        }
+        } 
         
         return newHead;
         
