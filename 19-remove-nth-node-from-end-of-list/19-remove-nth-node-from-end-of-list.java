@@ -13,35 +13,40 @@ class Solution {
         if(head == null)
             return null;
         
-        ListNode prev = new ListNode(0);
-        prev.next = head;
-        ListNode newHead = prev;
-        ListNode curr = head;
-        ListNode tempCurr = head;
-        
+        ListNode temp = head;
         int count = 0;
         
-        while(tempCurr!=null) {
-            tempCurr = tempCurr.next;
+        while(temp!=null) {
             count++;
+            temp = temp.next;
         }
         
-        System.out.println(count);
+        int newN = count - n;
+                
+        ListNode curr = head;
+        ListNode newHead = curr;
         
-        int pos = 0;
-        while(curr!=null){
-             if(pos == count - n) {
-                 prev.next = curr.next;
-                 break;
-             }
+        if(newN == 0) {
+            if(count == 1)
+                return null;
+            else
+                return curr.next;
+        }
+        
+        while(newN-->1) {
             curr = curr.next;
-           
-            prev = prev.next;
-            pos++;
         }
         
-        System.out.println(pos);
         
-        return newHead.next;
+        if(curr.next!=null && curr.next.next != null) {
+            curr.next = curr.next.next;
+        } else if(curr.next!=null) {
+            curr.next = null;
+        } else {
+            return null;
+        }
+        
+        return newHead;
+        
     }
 }
