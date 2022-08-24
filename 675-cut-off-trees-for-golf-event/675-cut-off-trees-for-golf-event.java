@@ -7,18 +7,18 @@ class Solution {
         for (int r = 0; r < forest.size(); ++r) {
             for (int c = 0; c < forest.get(0).size(); ++c) {
                 int v = forest.get(r).get(c);
-                if (v > 1) trees.add(new int[]{v, r, c});
+                if (v > 1) trees.add(new int[]{r, c, v});
             }
         }
 
-        Collections.sort(trees, (a, b) -> Integer.compare(a[0], b[0]));
+        Collections.sort(trees, (a, b) -> Integer.compare(a[2], b[2]));
 
         int ans = 0, sr = 0, sc = 0;
         for (int[] tree: trees) {
-            int d = bfs(forest, sr, sc, tree[1], tree[2]);
+            int d = bfs(forest, sr, sc, tree[0], tree[1]);
             if (d < 0) return -1;
             ans += d;
-            sr = tree[1]; sc = tree[2];
+            sr = tree[0]; sc = tree[1];
         }
         return ans;
     }
