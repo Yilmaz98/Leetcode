@@ -6,6 +6,7 @@ class Solution {
         int start = 0;
         int end = 0;
         int work = 0;
+        int prev_end = 0;
         
         for(int[] curr: paint) {
             start = curr[0];
@@ -13,7 +14,7 @@ class Solution {
             work = 0;
             while(start < end) {
                 if(m.containsKey(start)) {
-                    int prev_end = m.get(start);
+                    prev_end = m.get(start);
                     m.put(start, Math.max(m.get(start), end));
                     start = prev_end;
                     
