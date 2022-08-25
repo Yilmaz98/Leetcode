@@ -1,13 +1,16 @@
 class Solution {
     public int[] amountPainted(int[][] paint) {
         Map<Integer, Integer> m = new HashMap<>();
-        
         int[] ans = new int[paint.length];
         int index = 0;
+        int start = 0;
+        int end = 0;
+        int work = 0;
+        
         for(int[] curr: paint) {
-            int start = curr[0];
-            int end = curr[1];
-            int work = 0;
+            start = curr[0];
+            end = curr[1];
+            work = 0;
             while(start < end) {
                 if(m.containsKey(start)) {
                     int prev_end = m.get(start);
