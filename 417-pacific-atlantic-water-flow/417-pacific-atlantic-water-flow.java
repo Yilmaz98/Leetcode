@@ -53,11 +53,7 @@ class Solution {
                 int newRow = cell[0] + dir[0];
                 int newCol = cell[1] + dir[1];
                 // Check if new cell is within bounds
-                if (newRow < 0 || newRow >= numRows || newCol < 0 || newCol >= numCols) {
-                    continue;
-                }
-                // Check that the new cell hasn't already been visited
-                if (reachable[newRow][newCol]) {
+                if (newRow < 0 || newRow >= numRows || newCol < 0 || newCol >= numCols || reachable[newRow][newCol]) {
                     continue;
                 }
                 // Check that the new cell has a higher or equal height,
