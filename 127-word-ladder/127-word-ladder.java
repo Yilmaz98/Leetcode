@@ -18,6 +18,8 @@ class Solution {
                 adj.put(pattern, curr);
             }
         }
+        
+        System.out.println(adj);
     
         Set<String> visited = new HashSet<>();
         Queue<String> q = new LinkedList<>();
