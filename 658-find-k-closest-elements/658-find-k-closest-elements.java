@@ -1,16 +1,25 @@
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        List<Integer> lst = new ArrayList<>();
+         // Initialize binary search bounds
+        int left = 0;
+        int right = arr.length - k;
         
-        for(int i=0;i<arr.length;i++) {
-            lst.add(arr[i]);
+        // Binary search against the criteria described
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (x - arr[mid] > arr[mid + k] - x) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
         }
         
-        Collections.sort(lst, (a,b) -> Math.abs(a-x) - Math.abs(b-x));
+        // Create output in correct format
+        List<Integer> result = new ArrayList<Integer>();
+        for (int i = left; i < left + k; i++) {
+            result.add(arr[i]);
+        }
         
-        Collections.sort(lst.subList(0,k));
-        
-        return lst.subList(0,k);
-        
+        return result;
     }
 }
