@@ -27,7 +27,8 @@ private void dfs(Robot robot, int row, int col, int dir, int[][] dirs, Set<Strin
     robot.clean();
     // Only recurse on neighbouring unseen 1's.
     for (int i = 0; i < 4; ++i) {
-        int newDir = (dir + i) % 4;
+        int newDir = (dir + i)%4;
+        System.out.println(newDir);
         int newRow = row + dirs[newDir][0], newCol = col + dirs[newDir][1];
         if (!seen.contains(newRow + "," + newCol) && robot.move()) {
             dfs(robot, newRow, newCol, newDir, dirs, seen);
