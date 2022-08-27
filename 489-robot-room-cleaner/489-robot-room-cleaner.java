@@ -33,8 +33,8 @@ private void dfs(Robot robot, int row, int col, int dir, int[][] dirs, Set<Strin
             dfs(robot, newRow, newCol, newDir, dirs, seen);
             
             // Backtrack. Go back to the initial position (row, col, dir) before the recursive call.
-            robot.turnLeft();
-    			robot.turnLeft();
+            robot.turnRight();
+    			robot.turnRight();
     			robot.move();
     			robot.turnRight();
     			robot.turnRight();
