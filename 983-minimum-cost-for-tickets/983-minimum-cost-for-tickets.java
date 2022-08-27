@@ -52,11 +52,7 @@ class Solution {
                     }
                 }
         }
-        
-        for(int i=0;i<dp.length;i++){
-            System.out.print(dp[i] + " ");
-        }
-        
+               
         return dp[maxDays];
     }
 }
