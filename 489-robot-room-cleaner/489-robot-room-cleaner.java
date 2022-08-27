@@ -28,17 +28,16 @@ private void dfs(Robot robot, int row, int col, int dir, int[][] dirs, Set<Strin
     // Only recurse on neighbouring unseen 1's.
     for (int i = 0; i < 4; ++i) {
         int newDir = (dir + i)%4;
-        System.out.println(newDir);
         int newRow = row + dirs[newDir][0], newCol = col + dirs[newDir][1];
         if (!seen.contains(newRow + "," + newCol) && robot.move()) {
             dfs(robot, newRow, newCol, newDir, dirs, seen);
             
             // Backtrack. Go back to the initial position (row, col, dir) before the recursive call.
-            robot.turnRight();
-            robot.turnRight();
-            robot.move();
-            robot.turnRight();
-            robot.turnRight();
+            robot.turnLeft();
+    			robot.turnLeft();
+    			robot.move();
+    			robot.turnRight();
+    			robot.turnRight();
         }
         robot.turnRight();  
     }
