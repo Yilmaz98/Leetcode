@@ -39,7 +39,7 @@ private void dfs(Robot robot, int row, int col, int dir, int[][] dirs, Set<Strin
     			robot.turnRight();
     			robot.turnRight();
         }
-        robot.turnRight();  
+        robot.turnLeft();  
     }
 }
 }
