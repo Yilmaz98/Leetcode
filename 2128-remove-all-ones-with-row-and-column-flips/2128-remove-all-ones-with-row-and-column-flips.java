@@ -8,10 +8,10 @@ class Solution {
     }
     public boolean removeOnes(int[][] grid) {
         int[] real = grid[0];
-        int[] flipped = new int[grid[0].length];
+        int[] flipped = Arrays.copyOf(real, real.length);
         
-        for(int i=0;i<real.length;i++) {
-            flipped[i] = 1 - real[i];
+        for(int i=0;i<flipped.length;i++) {
+            flipped[i] ^= 1;
         }
         
         for(int i=0;i<grid.length;i++) {
