@@ -8,6 +8,7 @@ class Solution {
         long i = 2;
         
         while(i<= finalSum) {
+            System.out.println(i);
             result.add(i);
             finalSum -=i;
             i+=2;
