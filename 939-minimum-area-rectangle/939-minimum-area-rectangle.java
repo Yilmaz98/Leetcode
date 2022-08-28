@@ -1,23 +1,28 @@
 class Solution {
     public int minAreaRect(int[][] points) {
-        Map<Integer, Set<Integer>> map = new HashMap<>();
-        for (int[] p : points) {
-            if (!map.containsKey(p[0])) {
-                map.put(p[0], new HashSet<>());
+        Map<Integer, Set<Integer>> m = new HashMap<>();
+        
+        for(int[] point: points) {
+            if(!m.containsKey(point[0])) {
+                m.put(point[0], new HashSet<>());
             }
-            map.get(p[0]).add(p[1]);
+            
+            m.get(point[0]).add(point[1]);
         }
-        int min = Integer.MAX_VALUE;
-        for (int[] p1 : points) {
-            for (int[] p2 : points) {
-                if (p1[0] == p2[0] || p1[1] == p2[1]) { // if have the same x or y
+        
+        System.out.println(m);
+        
+        int minArea = Integer.MAX_VALUE;
+        for(int[] p1: points) {
+            for(int[] p2: points) {
+                if(p1[0] == p2[0] || p1[1] == p2[1])
                     continue;
-                }
-                if (map.get(p1[0]).contains(p2[1]) && map.get(p2[0]).contains(p1[1])) { // find other two points
-                    min = Math.min(min, Math.abs(p1[0] - p2[0]) * Math.abs(p1[1] - p2[1]));
-                }
+            if(m.get(p1[0]).contains(p2[1]) && m.get(p2[0]).contains(p1[1])) {
+                minArea = Math.min(minArea, Math.abs(p1[0] -p2[0]) * Math.abs(p1[1]-p2[1]));
             }
+                }
         }
-        return min == Integer.MAX_VALUE ? 0 : min;
+        
+        return minArea == Integer.MAX_VALUE ? 0 : minArea;
     }
 }
