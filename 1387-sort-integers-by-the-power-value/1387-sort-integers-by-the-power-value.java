@@ -21,7 +21,7 @@ class Solution {
         if(map.containsKey(val)) {
             return map.get(val);
         }
-        if((val&1)==0) {
+        if(val%2==0) {
             map.put(val,util(val/2)+1);
         } else {
             map.put(val,util(3*val+1)+1);
