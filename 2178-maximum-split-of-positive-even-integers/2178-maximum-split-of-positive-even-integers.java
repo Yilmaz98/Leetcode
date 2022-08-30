@@ -10,7 +10,7 @@ class Solution {
             i+=2;
         }
         
-        if(finalSum>0 && (finalSum) %2==0){
+        if(finalSum>0){
             res.add(res.pollLast() + finalSum);   
         }
 
