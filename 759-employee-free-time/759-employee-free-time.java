@@ -16,7 +16,6 @@ class Interval {
 class Solution {
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
         List<Interval> result = new ArrayList<>();
-        
         List<Interval> input = new ArrayList<>();
         
         for(List<Interval> each : schedule) {
