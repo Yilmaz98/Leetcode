@@ -31,13 +31,13 @@ class Solution {
         
         int time = 0;
         
-        System.out.println(adj);
+        //System.out.println(adj);
         
         while(!q.isEmpty()) {
             int size = q.size();
             for(int i=0;i<size;i++) {
                 TreeNode curr = q.poll();
-                System.out.println(curr.val + " " + curr.probability + " " + time);
+                //System.out.println(curr.val + " " + curr.probability + " " + time);
 
                 if(curr.val == target) {
                     if(time==t)
