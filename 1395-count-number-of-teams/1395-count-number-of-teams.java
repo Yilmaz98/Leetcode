@@ -7,21 +7,21 @@ class Solution {
             
             for(int j = 0;j<i;j++) {
                 if(rating[j] < rating[i]) {
-                       leftLarger++;
+                        leftSmaller++;
                 }
                 if(rating[j]> rating[i]) {
-                    leftSmaller++;
+                   leftLarger++;
                 }
             }
             
             for(int k = i+1;k<rating.length;k++) {
                 if(rating[k] > rating[i]) {
-                         rightSmaller++;
+                        rightLarger++; 
                  
                 }
                 
                 if(rating[k] < rating[i]) {
-                  rightLarger++;
+                  rightSmaller++;
                 }
             }
             
