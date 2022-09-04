@@ -2,13 +2,13 @@ class Solution {
     public int dfs(Map<Integer,List<Integer>> m, int headID, int[] informTime) {       
         int max = 0;
         if(!m.containsKey(headID)) {
-            return informTime[headID];
+            return max;
         }
         
         for(int i=0;i<m.get(headID).size();i++) {
-            max = Math.max(max, informTime[headID] +  dfs(m,m.get(headID).get(i),informTime));
+            max = Math.max(max,  dfs(m,m.get(headID).get(i),informTime));
         }    
-        return max;  
+        return max + informTime[headID];  
     } 
     
     public int numOfMinutes(int n, int headID, int[] manager, int[] informTime)     {
