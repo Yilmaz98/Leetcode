@@ -22,7 +22,7 @@ class Solution {
         
         int maxLength = 0;
         
-        cache = new int[m][n];;
+        cache = new int[m][n];
         
         for(int i=0;i<m;i++) {
             for(int j=0;j<n;j++) {
