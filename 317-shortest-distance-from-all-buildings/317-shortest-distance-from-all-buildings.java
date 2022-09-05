@@ -1,6 +1,5 @@
 class Solution {
     private int bfs(int[][] grid, int row, int col, int totalHouses) {
-        // Next four directions.
         int dirs[][] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         
         int rows = grid.length;
