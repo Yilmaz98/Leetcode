@@ -17,8 +17,8 @@ class Solution {
 		int tmp = grid[i][j];
 		grid[i][j]=0;
 		
-		int up =  tmp + helper(grid, i+1, j);
-		int down = tmp + helper(grid, i-1, j);
+		int up = tmp + helper(grid, i-1, j);
+        int down =  tmp + helper(grid, i+1, j);
 		int left = tmp + helper(grid, i, j-1);
 		int right = tmp + helper(grid, i, j+1);
 		
