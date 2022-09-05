@@ -1,6 +1,6 @@
 class Solution {
+    int dirs[][] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     private int bfs(int[][] grid, int row, int col, int totalHouses) {
-        int dirs[][] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         
         int rows = grid.length;
         int cols = grid[0].length;
@@ -78,7 +78,6 @@ class Solution {
             }
         }
         
-        // Find the min distance sum for each empty cell.
         for (int row = 0; row < rows; ++row) {
             for (int col = 0; col < cols; ++col) {
                 if (grid[row][col] == 0) {
