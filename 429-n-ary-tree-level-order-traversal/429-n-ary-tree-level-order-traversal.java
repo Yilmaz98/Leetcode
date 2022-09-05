@@ -37,8 +37,9 @@ class Solution {
                 temp.add(curr.val);
                 
                 for(Node n : curr.children) {
-                    if(n!=null)
-                        q.add(n);
+                    if(n==null)
+                        continue;
+                    q.add(n);
                 }
             }
             
