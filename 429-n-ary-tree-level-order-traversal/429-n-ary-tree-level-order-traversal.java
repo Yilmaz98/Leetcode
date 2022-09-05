@@ -27,9 +27,11 @@ class Solution {
         Queue<Node> q  = new LinkedList<>();
         q.add(root);
         
+         List<Integer> temp;
+        
         while(!q.isEmpty()) {
             int size = q.size();
-            List<Integer> temp = new ArrayList<>();
+            temp = new ArrayList<>();
             
             for(int i=0;i<size;i++) {
                 Node curr = q.poll();
