@@ -14,8 +14,6 @@ class Solution {
                 sb2.append(c);
         }
         
- 
-        
         if(!sb.toString().equals(sb2.toString()))
             return false;
         
