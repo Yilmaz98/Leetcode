@@ -13,8 +13,6 @@ class Solution {
             }
         }
         
-        if (horizontal == 0 && vertical == 0) return true;
-        
-        return false;
+        return (horizontal == 0 && vertical == 0); 
     }
 }
