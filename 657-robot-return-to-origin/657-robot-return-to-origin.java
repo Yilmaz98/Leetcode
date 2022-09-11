@@ -3,20 +3,20 @@ class Solution {
         int ud = 0;
         int lr = 0;
         
-        for(int i=0;i<moves.length();i++) {
-            if(moves.charAt(i) == 'L') {
+        for(char c : moves.toCharArray()) {
+            if(c == 'L') {
                lr++;
             }
             
-            if(moves.charAt(i) == 'R') {
+            if(c == 'R') {
                lr--;
             }
                 
-            if(moves.charAt(i) == 'U') {
+            if(c == 'U') {
                ud++;
             }
             
-            if(moves.charAt(i) == 'D') {
+            if(c == 'D') {
                ud--;
             }
         }
