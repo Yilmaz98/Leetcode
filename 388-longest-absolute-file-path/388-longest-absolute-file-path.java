@@ -8,7 +8,7 @@ class Solution {
         
         for (String s : curr) {
             int level = s.lastIndexOf('\t') + 1;
-            System.out.println(s + ":" + level);
+            //System.out.println(s + ":" + level);
             int len = s.length() - level;
             while (stack.size() > level + 1) {
                 stack.pop();
