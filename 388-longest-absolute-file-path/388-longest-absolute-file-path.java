@@ -1,24 +1,24 @@
 class Solution {
     public int lengthLongestPath(String input) {
-        ArrayDeque<Integer> stack = new ArrayDeque<>();
-        stack.push(0);
-        int result = 0;
+        Stack<Integer> st = new Stack<>();
+        st.push(0);
         
         String[] curr = input.split("\n");
+        int result = 0;
         
-        for (String s : curr) {
-            int level = s.lastIndexOf('\t') + 1;
-            //System.out.println(s + ":" + level);
+        for(String s: curr) {
+            int level = s.lastIndexOf("\t") + 1;
             int len = s.length() - level;
-            while (stack.size() > level + 1) {
-                stack.pop();
-            }
-            if (s.contains(".")) {
-                result = Math.max(result, stack.peek() + len);
-            } else {
-                stack.push(stack.peek() + len + 1);
-            }
+            
+            while(st.size() > level + 1) {
+                st.pop();
+            } 
+            if(s.contains(".")) 
+                result = Math.max(result, st.peek() + len);
+             else 
+                st.push(st.peek() + len + 1);
         }
+        
         return result;
     }
 }
