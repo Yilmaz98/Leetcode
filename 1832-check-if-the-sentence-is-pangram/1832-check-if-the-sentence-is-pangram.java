@@ -1,5 +1,8 @@
 class Solution {
     public boolean checkIfPangram(String sentence) {
+        if(sentence.length() < 26)
+            return false;
+            
         int[] count = new int[26];
         
         
