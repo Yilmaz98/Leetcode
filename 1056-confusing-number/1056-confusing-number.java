@@ -6,11 +6,9 @@ class Solution {
         m.put('9','6');
         m.put('8','8');
         m.put('0','0');
-        
-        int count = 0;
-        String curr;
+    
+        String curr = String.valueOf(n);
         StringBuilder reverse = new StringBuilder();
-        curr = String.valueOf(n);
         for(char j : curr.toCharArray()) {
             if(!m.containsKey(j)) {
                 return false;
