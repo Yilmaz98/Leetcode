@@ -8,7 +8,6 @@ class Solution {
         m.put('0','0');
         
         int count = 0;
-        boolean isConfusing = true;
         String curr;
         StringBuilder reverse = new StringBuilder();
         curr = String.valueOf(n);
@@ -18,13 +17,12 @@ class Solution {
             }
             reverse.append(m.get(j));
         }
-            
-            
+             
         reverse.reverse();
-            
         if(!curr.equals(reverse.toString())) {
                 return true;
         }
+        
         return false;
     }
 }
