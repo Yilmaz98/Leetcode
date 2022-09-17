@@ -4,7 +4,7 @@ class Solution {
             return true;
         
         String sum = String.valueOf(n1 + n2);
-        System.out.println(sum);
+        //System.out.println(sum);
         if(s.length() < sum.length()  || !s.substring(0,sum.length()).equals(sum))
             return false;
         else {
