@@ -1,25 +1,54 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> ans = new ArrayList();
-        backtrack(ans, new StringBuilder(), 0, 0, n);
-        return ans;
+        int openN = 0;
+        int closedN = 0;
+        
+        List<String> result = new ArrayList<>();
+        
+        generate(openN,closedN, result,n, "");
+        
+        return result;
     }
-
-    public void backtrack(List<String> ans, StringBuilder cur, int open, int close, int max){
-        if (cur.length() == max * 2) {
-            ans.add(cur.toString());
+    
+    public boolean wellFormed(String s) {
+        Stack<Character> st = new Stack<>();
+        
+        for(int i=0;i<s.length();i++) {
+            if(s.charAt(i)=='(')
+                st.push(s.charAt(i));
+            
+            if(s.charAt(i) == ')') {
+                if(st.isEmpty()) {
+                    return false;
+                }
+                
+                if(st.peek()!='(')
+                    return false;
+                
+                st.pop();
+            }
+        }
+        
+        return true;
+        
+    }
+    
+    public void generate(int o, int c, List<String> result, int n, String curr) {
+        
+        if(o == n && c == n ) {
+            if(wellFormed(curr))
+                result.add(curr);
             return;
         }
-
-        if (open < max) {
-            cur.append("(");
-            backtrack(ans, cur, open+1, close, max);
-            cur.deleteCharAt(cur.length() - 1);
+        
+        if(o < n) {
+            generate(o+1,c,result, n, curr + "(");
         }
-        if (close < open) {
-            cur.append(")");
-            backtrack(ans, cur, open, close+1, max);
-            cur.deleteCharAt(cur.length() - 1);
+        
+         if(c < n) {
+            generate(o,c+1,result, n, curr + ")");
         }
+        
+        return;
     }
 }
