@@ -15,6 +15,8 @@
  */
 class Solution {
     public void inorder(TreeNode root, Set<Integer>s) {
+        if(s.size()>1)
+                return;
         if(root != null) {
             inorder(root.left,s);
             s.add(root.val);
