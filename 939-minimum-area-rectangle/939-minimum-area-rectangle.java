@@ -10,7 +10,7 @@ class Solution {
             m.get(point[0]).add(point[1]);
         }
         
-        System.out.println(m);
+        //System.out.println(m);
         
         int minArea = Integer.MAX_VALUE;
         for(int[] p1: points) {
