@@ -12,11 +12,9 @@ class Solution {
         
         int rank = 1;
         for(Integer i : m.keySet()) {
-            
             for(int j : m.get(i)) {
                 result[j] = rank;
             }
-            
             rank++;
         }
         
