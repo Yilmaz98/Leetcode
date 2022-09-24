@@ -7,11 +7,11 @@ class Solution {
         for(int i=0;i<k;i++) {
             score += cardPoints[i];
             st.push(cardPoints[i]);
-            maxScore = Math.max(maxScore, score);
+           
         }
         
         int n = cardPoints.length -1;
-        
+        maxScore = Math.max(maxScore, score);
         while(!st.isEmpty()) {
             score -= st.pop();
             score += cardPoints[n--];
