@@ -21,7 +21,7 @@ class DetectSquares {
             int x3 = p[0];
             int y3 = p[1];
             
-            if(Math.abs(x1 - x3) == 0 || Math.abs(x1 - x3) != Math.abs(y1-y3))
+            if(Math.abs(x1 - x3) == 0 || Math.abs(y1 - y3) == 0  || Math.abs(x1 - x3) != Math.abs(y1-y3))
                 continue;
             
             ans += count[x1][y3] * count[x3][y1]; 
