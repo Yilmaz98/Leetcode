@@ -7,9 +7,7 @@ class Solution {
         for(int i=0;i<changed.length;i++) {
             m.put(changed[i], m.getOrDefault(changed[i],0) + 1);
         }
-        
-        //System.out.println(m);
-        
+
         Arrays.sort(changed);
         
         int ans[] = new int[changed.length/2];
@@ -22,7 +20,7 @@ class Solution {
                         return new int[0];
                 }
                 
-                m.put(changed[i], m.get(changed[i]) - 1);                                   m.put(changed[i] * 2, m.get(changed[i] * 2) - 1);
+                  m.put(changed[i], m.get(changed[i]) - 1);                                 m.put(changed[i] * 2, m.get(changed[i] * 2) - 1);
                 
                 if(m.get(changed[i]) == 0)
                     m.remove(changed[i]);
@@ -33,11 +31,7 @@ class Solution {
                 ans[idx++] = changed[i];
             }    
         }
-        
-        for(int i=0;i<ans.length;i++) {
-            System.out.println(ans[i] + " ");
-        }
-        
+                
         return idx == changed.length/2 ? ans : new int[0];
     }
 }
