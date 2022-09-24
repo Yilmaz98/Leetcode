@@ -12,7 +12,7 @@ class Solution {
             cur+=2;
         }
         
-        System.out.println(result);
+        //System.out.println(result);
         
         if(finalSum < 0) {
             long last = result.get(result.size()-1);
