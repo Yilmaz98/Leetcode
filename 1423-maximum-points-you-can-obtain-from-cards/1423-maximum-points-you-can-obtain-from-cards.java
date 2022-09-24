@@ -1,23 +1,23 @@
 class Solution {
     public int maxScore(int[] cardPoints, int k) {
-        int n = cardPoints.length, totalSum = 0, minSubarray = Integer.MAX_VALUE;
-        int currSum = 0;
-        int start = 0;
+        int maxScore = 0;
+        int score = 0;
+        Stack<Integer> st = new Stack<>();
         
-	for (int i=0; i<n; i++) {
-		totalSum += cardPoints[i];
-		currSum += cardPoints[i];
-		if (i - start + 1 == (n-k)) 
-            {
-            minSubarray = Math.min(minSubarray, currSum);
-			currSum -= cardPoints[i-(n-k)+1];
-            start++;
-		}
-	}
+        for(int i=0;i<k;i++) {
+            score += cardPoints[i];
+            st.push(cardPoints[i]);
+            maxScore = Math.max(maxScore, score);
+        }
         
-        if(n-k == 0)
-            return totalSum;
-
-	return totalSum - minSubarray;
+        int n = cardPoints.length -1;
+        
+        while(!st.isEmpty()) {
+            score -= st.pop();
+            score += cardPoints[n--];
+            maxScore = Math.max(maxScore, score);
+        }
+        
+        return maxScore;
     }
 }
