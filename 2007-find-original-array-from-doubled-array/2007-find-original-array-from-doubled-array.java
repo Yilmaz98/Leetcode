@@ -8,7 +8,7 @@ class Solution {
             m.put(changed[i], m.getOrDefault(changed[i],0) + 1);
         }
         
-        System.out.println(m);
+        //System.out.println(m);
         
         Arrays.sort(changed);
         
