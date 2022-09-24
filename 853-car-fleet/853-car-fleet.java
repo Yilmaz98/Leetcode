@@ -1,17 +1,20 @@
 class Solution {
-    public int carFleet(int target, int[] pos, int[] speed) {
-          int N = pos.length, res = 0;
-        double[][] cars = new double[N][2];
-        for (int i = 0; i < N; ++i)
-            cars[i] = new double[] {pos[i], (double)(target - pos[i]) / speed[i]};
-        Arrays.sort(cars, (a, b) -> Double.compare(a[0], b[0]));
-        double cur = 0;
-        for (int i = N - 1; i >= 0 ; --i) {
-            if (cars[i][1] > cur) {
-                cur = cars[i][1];
-                res++;
+    public int carFleet(int target, int[] position, int[] speed) {
+         TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        for (int i = 0; i < position.length; i++) {
+            map.put(target - position[i], speed[i]);
+        }
+        
+        //System.out.println(map);
+        double cur = 0.0;
+        int count = 0;
+        for (int item : map.keySet()) {
+            double time = (double) item / map.get(item);
+            if (time > cur) {
+                cur = time;
+                count++;
             }
         }
-        return res;
+        return count;
     }
 }
