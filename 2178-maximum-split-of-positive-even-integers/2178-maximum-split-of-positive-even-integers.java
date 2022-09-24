@@ -1,19 +1,31 @@
 class Solution {
     public List<Long> maximumEvenSplit(long finalSum) {
-        LinkedList<Long> res = new LinkedList<>();
-        if(finalSum % 2!=0)
+        List<Long> result = new ArrayList<>();
+        
+        if(finalSum %2 !=0)
             return new ArrayList<>();
-        long i=2;
-        while(finalSum>=i) {
-            res.add(i);
-            finalSum -=i;
-            i+=2;
+        
+        long cur = 2;
+        while(finalSum > 0) {
+            result.add(cur);
+            finalSum -=cur;
+            cur+=2;
         }
         
-        if(finalSum>0){
-            res.add(res.pollLast() + finalSum);   
+        System.out.println(result);
+        
+        if(finalSum < 0) {
+            long last = result.get(result.size()-1);
+            long prev = result.get(result.size()-2);
+            
+            long fin = prev + last + finalSum;
+            
+            result.remove(result.size()-1);
+            result.remove(result.size()-1);
+            
+            result.add(fin);
         }
-
-        return res;
+        
+        return result;
     }
 }
