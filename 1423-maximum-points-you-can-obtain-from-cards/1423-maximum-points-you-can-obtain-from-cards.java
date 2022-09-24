@@ -6,8 +6,7 @@ class Solution {
         
         for(int i=0;i<k;i++) {
             score += cardPoints[i];
-            st.push(cardPoints[i]);
-           
+            st.push(cardPoints[i]);     
         }
         
         int n = cardPoints.length -1;
