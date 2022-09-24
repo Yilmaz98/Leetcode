@@ -4,6 +4,8 @@ class Solution {
         for (int i = 0; i < position.length; i++) {
             map.put(target - position[i], speed[i]);
         }
+        
+        //System.out.println(map);
         double cur = 0.0;
         int count = 0;
         for (int item : map.keySet()) {
