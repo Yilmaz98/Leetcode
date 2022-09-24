@@ -39,20 +39,14 @@ class Solution {
         }
         
         for(int i=0;i<startL.size();i++) {
-            if(endL.get(i) <= startL.get(i)) {
-                continue;
-            }
-            else{
+            if(endL.get(i)> startL.get(i)) {
                 return false;
             }
         }
         
         for(int i=0;i<startR.size();i++) {
-            if(endR.get(i) >= startR.get(i)) {
-                continue;
-            }
-            else{
-                return false;
+            if(endR.get(i) < startR.get(i)) {
+                 return false;
             }
         }
         
