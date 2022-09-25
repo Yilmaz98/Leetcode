@@ -1,64 +1,37 @@
 class Solution {
-    class UnionFind {
-        private int[] parent;
-        UnionFind(int n) {
-            parent = new int[n];
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
-            }
-        }
-        
-        public void union(int node1, int node2) {
-            node1 = find(node1);
-            node2 = find(node2);
-            if (node1 == node2) return;
-            parent[node1] = node2;
-        }
-        
-        public boolean isConnected(int node1, int node2) {
-            return find(node1) == find(node2);
-        }
-        
-        private int find(int node) {
-            if (parent[node] == node) return node;
-            return parent[node] = find(parent[node]);
-        }
-    }
-    
-	// check from 8 directions
-    private int[] dx = {-1, 1, 0, 0, -1, -1, 1, 1};
-    private int[] dy = {0, 0, -1, 1, -1, 1, -1, 1};
-    
     public int latestDayToCross(int row, int col, int[][] cells) {
-        int n = row * col + 2;
-		// set left and right bound dummy nodes
-        int leftBound = n - 2, rightBound = n - 1;
-        int[][] matrix = new int[row][col];
-        
-        UnionFind uf = new UnionFind(n);
-        
-        for (int day = 0; day < cells.length; day++) {
-            int waterRow = cells[day][0] - 1;
-            int waterCol = cells[day][1] - 1;
-            
-            matrix[waterRow][waterCol] = 1;
-            if (waterCol == 0) uf.union(leftBound, waterRow * col + waterCol);
-            if (waterCol == col - 1) uf.union(rightBound, waterRow * col + waterCol);
-            for (int i = 0; i < dx.length; i++) {
-                int neighborRow = waterRow + dx[i];
-                int neighborCol = waterCol + dy[i];
-                if (!isValid(row, col, neighborRow, neighborCol) || matrix[neighborRow][neighborCol] != 1) continue;
-                uf.union(waterRow * col + waterCol, neighborRow * col + neighborCol);
-            }
-            
-
-            if (uf.isConnected(leftBound, rightBound)) return day;
+        int left = 1, right = cells.length, ans = 0;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (canWalk(cells, row, col, mid)) {
+                ans = mid; // Update current answer so far
+                left = mid + 1; // Try to find a larger day
+            } else right = mid - 1; // Try to find a smaller day
         }
-        
-        return -1;
+        return ans;
     }
-    
-    private boolean isValid(int rowSize, int colSize, int row, int col) {
-        return row >= 0 && row < rowSize && col >= 0 && col < colSize;
+    int[] DIR = new int[]{0, 1, 0, -1, 0};
+    boolean canWalk(int[][] cells, int row, int col, int dayAt) {
+        int[][] grid = new int[row][col];
+        for (int i = 0; i < dayAt; ++i) grid[cells[i][0]-1][cells[i][1]-1] = 1;
+        Queue<int[]> bfs = new ArrayDeque<>();
+        for (int c = 0; c < col; ++c) {
+            if (grid[0][c] == 0) { // Add all valid start cells in the top row
+                bfs.offer(new int[]{0, c});
+                grid[0][c] = 1; // Mark as visited
+            }
+        }
+        while (!bfs.isEmpty()) {
+            int[] curr = bfs.poll();
+            int r = curr[0], c  = curr[1];
+            if (r == row - 1) return true; // Reached to bottom -> Return Valid
+            for (int i = 0; i < 4; ++i) {
+                int nr = r + DIR[i], nc = c + DIR[i+1];
+                if (nr < 0 || nr == row || nc < 0 || nc == col || grid[nr][nc] == 1) continue;
+                grid[nr][nc] = 1; // Mark as visited
+                bfs.offer(new int[]{nr, nc});
+            }
+        }
+        return false;
     }
 }
