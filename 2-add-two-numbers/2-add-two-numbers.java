@@ -20,7 +20,7 @@ class Solution {
             if(sum < 10) {
                 carry = 0;
                 l3.val = sum;
-                System.out.println(l3.val);
+               // System.out.println(l3.val);
             } 
             else 
             {
