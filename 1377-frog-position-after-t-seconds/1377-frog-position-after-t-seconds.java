@@ -1,79 +1,28 @@
 class Solution {
-    public class TreeNode {
-        int val;
-        double probability;
-        
-        TreeNode(int val, double probability){
-            this.val = val;
-            this.probability = probability;
-        }
-    }
     public double frogPosition(int n, int[][] edges, int t, int target) {
-        Map<Integer, List<Integer>> adj = new HashMap<>();
-        
-        for(int[] edge: edges) {
-            if(!adj.containsKey(edge[0]))
-                adj.put(edge[0], new ArrayList<>());
-            if(!adj.containsKey(edge[1]))
-                adj.put(edge[1], new ArrayList<>());
-            adj.get(edge[0]).add(edge[1]);
-            adj.get(edge[1]).add(edge[0]);
+        List<Integer>[] graph = new List[n];
+        for (int i = 0; i < n; i++) graph[i] = new ArrayList<>();
+        for (int[] e : edges) {
+            graph[e[0] - 1].add(e[1] - 1);
+            graph[e[1] - 1].add(e[0] - 1);
         }
-        
-        if(adj.isEmpty())
-            return 1.0;
-        
-        Queue<TreeNode> q = new LinkedList<>();
-        Set<Integer> visited = new HashSet<>();
-        TreeNode root = new TreeNode(1,1.0);
-        q.add(root);
-        visited.add(1);
-        
-        int time = 0;
-        
-        //System.out.println(adj);
-        
-        while(!q.isEmpty()) {
-            int size = q.size();
-            for(int i=0;i<size;i++) {
-                TreeNode curr = q.poll();
-                //System.out.println(curr.val + " " + curr.probability + " " + time);
-
-                if(curr.val == target) {
-                    if(time==t)
-                        return curr.probability;
-                    else if(time > t)
-                        return 0.0;
-            for(int j=0;j<adj.get(curr.val).size();j++) {
-                if(!visited.contains(adj.get(curr.val).get(j))) {
-                       return 0.0;
+        boolean[] visited = new boolean[n]; visited[0] = true;
+        double[] prob = new double[n]; prob[0] = 1f;
+        Queue<Integer> q = new LinkedList<>(); q.offer(0);
+        while (!q.isEmpty() && t-- > 0) {
+            for (int size = q.size(); size > 0; size--) {
+                int u = q.poll(), nextVerticesCount = 0;
+                for (int v : graph[u]) if (!visited[v]) nextVerticesCount++;
+                for (int v : graph[u]) {
+                    if (!visited[v]) {
+                        visited[v] = true;
+                        q.offer(v);
+                        prob[v] = prob[u] / nextVerticesCount;
                     }
                 }
-                    return curr.probability;
-                }
-                
-                if(!adj.containsKey(curr.val)) {
-                    continue;
-                }
-                
-                int nSize = adj.get(curr.val).size();
-                
-                for(int j=0;j<adj.get(curr.val).size();j++) {
-                if(visited.contains(adj.get(curr.val).get(j))) {
-                       nSize--;
-                       continue;
-                }
-                 
-                    TreeNode neighbour = new TreeNode(adj.get(curr.val).get(j),curr.probability/nSize);
-
-                    q.add(neighbour);
-                    visited.add(adj.get(curr.val).get(j));
-                }
-
+                if (nextVerticesCount > 0) prob[u] = 0; // frog don't stay vertex u, he keeps going to the next vertex
             }
-            time++;
         }
-        
-        return 0.0;
+        return prob[target - 1];
     }
 }
