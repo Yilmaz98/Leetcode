@@ -2,7 +2,9 @@ class Solution {
     public long maxPoints(int[][] P) {
         int m = P.length, n = P[0].length;
         long[] pre = new long[n];
-        for (int i = 0; i < n; ++i) pre[i] = P[0][i];
+        for (int i = 0; i < n; ++i) {
+            pre[i] = P[0][i];   
+        } 
         for (int i = 0; i < m - 1; ++i){
             long[] lft = new long[n], rgt = new long[n], cur = new long[n];
             lft[0] = pre[0];
