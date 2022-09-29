@@ -1,6 +1,6 @@
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
-         // Initialize binary search bounds
+        // Initialize binary search bounds
         int left = 0;
         int right = arr.length - k;
         
