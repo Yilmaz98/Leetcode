@@ -1,6 +1,6 @@
 class Solution {
     public int twoCitySchedCost(int[][] costs) {
-       int cityCost = 0;
+        int cityCost = 0;
         
         for(int[] cost : costs) {
             cityCost += cost[0];
@@ -19,8 +19,6 @@ class Solution {
             cityCost += refund[i];
         }
         
-        
         return cityCost;
-        
     }
 }
