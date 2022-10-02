@@ -1,6 +1,6 @@
 class Solution {
     public String decodeString(String s) {
-       String res = "";
+        String res = "";
         Stack<Integer> countStack = new Stack<>();
         Stack<String> resStack = new Stack<>();
         int idx = 0;
