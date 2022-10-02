@@ -22,7 +22,7 @@ class Solution {
         int count = 0;
         int[][] dirs = {{1,0},{-1,0},{0,1},{0,-1}};
         //bfs starting from initially rotten oranges
-        while(!queue.isEmpty()) {
+        while(!queue.isEmpty() && count_fresh>0) {
             ++count;
             int size = queue.size();
             for(int i = 0 ; i < size ; i++) {
@@ -44,6 +44,6 @@ class Solution {
                 }
             }
         }
-        return count_fresh == 0 ? count-1 : -1;
+        return count_fresh == 0 ? count : -1;
     }
 }
