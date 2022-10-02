@@ -1,10 +1,13 @@
 class Solution {
     public int secondsToRemoveOccurrences(String s) {
-        int seconds = 0;
-        while (s.indexOf("01") >= 0) {
-            s = s.replace("01", "10");
-            ++seconds;
+        int zc=0,po=0;
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i) == '0')
+                zc++;
+            else
+                if(zc!=0)
+                    po=Math.max(po+1,zc);
         }
-        return seconds;
+        return po;
     }
 }
