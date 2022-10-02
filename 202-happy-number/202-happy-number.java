@@ -1,25 +1,19 @@
 class Solution {
     
-    public int getSumOfSquares(int n) {
-        
-        int sum = 0;
-    while(n!=0)
-        {  
-        int r = n %10;
-        sum += r*r;
-        n = n/10;
+    public int getNext(int n) {
+        int totalSum = 0;
+        while (n > 0) {
+            int d = n % 10;
+            n = n / 10;
+            totalSum += d * d;
         }
-        
-        return sum;
-        
+        return totalSum;
     }
+    
     public boolean isHappy(int n) {
-        Set<Integer> s = new HashSet<>();
-        while(!s.contains(n)) {
-            s.add(n);
-            n = getSumOfSquares(n);
+        while (n != 1 && n != 4) {
+            n = getNext(n);
         }
-        
-        return n==1;
+        return n == 1;
     }
 }
