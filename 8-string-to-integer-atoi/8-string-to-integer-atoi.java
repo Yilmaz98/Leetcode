@@ -1,42 +1,28 @@
 class Solution {
-    public int myAtoi(String input) {
-         int sign = 1; 
-        int result = 0; 
-        int index = 0;
-        int n = input.length();
-        
-        // Discard all spaces from the beginning of the input string.
-        while (index < n && input.charAt(index) == ' ') { 
-            index++; 
-        }
-        
-        // sign = +1, if it's positive number, otherwise sign = -1. 
-        if (index < n && input.charAt(index) == '+') {
-            sign = 1;
-            index++;
-        } else if (index < n && input.charAt(index) == '-') {
-            sign = -1;
-            index++;
-        }
-        
-        // Traverse next digits of input and stop if it is not a digit
-        while (index < n && Character.isDigit(input.charAt(index))) {
-            int digit = input.charAt(index) - '0';
-
-            // Check overflow and underflow conditions. 
-            if ((result > Integer.MAX_VALUE / 10) || 
-                (result == Integer.MAX_VALUE / 10 && digit > Integer.MAX_VALUE % 10)) {     
-                // If integer overflowed return 2^31-1, otherwise if underflowed return -2^31.    
-                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-            }
-            
-            // Append current digit to the result.
-            result = 10 * result + digit;
-            index++;
-        }
-        
-        // We have formed a valid number without any overflow/underflow.
-        // Return it after multiplying it with its sign.
-        return sign * result;    
+    public int myAtoi(String str) {
+    int index = 0, sign = 1, total = 0;
+    //1. Empty string
+    str = str.trim();
+    if(str.length() == 0) return 0;
+    //2. Remove Spaces
+    //3. Handle signs
+    if(str.charAt(index) == '+' || str.charAt(index) == '-'){
+        sign = str.charAt(index) == '+' ? 1 : -1;
+        index ++;
     }
+    
+    //4. Convert number and avoid overflow
+    while(index < str.length()){
+        int digit = str.charAt(index) - '0';
+        if(digit < 0 || digit > 9) break;
+
+        //check if total will be overflow after 10 times and add digit
+        if(Integer.MAX_VALUE/10 < total || Integer.MAX_VALUE/10 == total && Integer.MAX_VALUE %10 < digit)
+            return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+
+        total = 10 * total + digit;
+        index ++;
+    }
+    return total * sign;
+}
 }
