@@ -8,11 +8,6 @@ class Trie {
             this.isWord = false;
             this.children = new TrieNode[26];
         }
-        
-        TrieNode(boolean isWord, TrieNode[] children) {
-            this.isWord = isWord;
-            this.children = children;
-        }
     }
     
     TrieNode root = new TrieNode();
