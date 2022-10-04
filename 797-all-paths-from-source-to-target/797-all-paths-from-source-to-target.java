@@ -35,10 +35,10 @@ class Solution {
             int size = q.size();
             while(size-->0) {
             Node current = q.poll();
-            List<Integer> currPath;
+            List<Integer> currPath = current.path;
                 
             if(current.val == n-1) {
-                result.add(current.path);
+                result.add(currPath);
             }
             
             List<Integer> neighbours = adj.get(current.val);
