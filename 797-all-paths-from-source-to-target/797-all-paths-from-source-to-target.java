@@ -21,7 +21,6 @@ class Solution {
                 adj.get(i).add(node);
             }
         }
-        //System.out.println(adj);
         
         PriorityQueue<Node> q = new PriorityQueue<>((a,b)->a.val - b.val);
         List<Integer> start = new ArrayList<>();
@@ -34,9 +33,9 @@ class Solution {
         
         while(!q.isEmpty()) {
             int size = q.size();
-            //System.out.println(q);
             while(size-->0) {
             Node current = q.poll();
+            List<Integer> currPath;
                 
             if(current.val == n-1) {
                 result.add(current.path);
@@ -45,7 +44,7 @@ class Solution {
             List<Integer> neighbours = adj.get(current.val);
             for(int i=0;i<neighbours.size();i++) {
                 if(!visited.contains(neighbours.get(i))) {
-                    List<Integer> currPath = new ArrayList<>(current.path);
+                    currPath = new ArrayList<>(current.path);
                     currPath.add(neighbours.get(i));
                     q.add(new Node(neighbours.get(i), currPath));
                 }
