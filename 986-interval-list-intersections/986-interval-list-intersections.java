@@ -1,6 +1,6 @@
 class Solution {
     public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
-    	PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0]==b[0] ? b[1]-a[1]: a[0]-b[0] );
+    	PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0]==b[0] ? b[1] - a[1]: a[0] - b[0] );
         
     	List<int[]> res = new ArrayList<>();
         
@@ -19,17 +19,16 @@ class Solution {
         
     	while(!pq.isEmpty()) {
     		pqVal = pq.poll();
-    		sum+= pqVal[1];
+    		sum += pqVal[1];
     		if (sum >= 2) {
-    			res.add(new int[] {pqVal[0], pq.peek()[0]});
+    			res.add(new int[]{pqVal[0], pq.peek()[0]});
     		}
     	}
     	
     	int[][] resVal = new int[res.size()][2];
         
     	for (int i=0; i<res.size(); i++) {
-    		resVal[i][0] = res.get(i)[0];
-    		resVal[i][1] = res.get(i)[1];
+    		resVal[i] = res.get(i);
     	}
     	
     	return resVal;
