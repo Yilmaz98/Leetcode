@@ -15,9 +15,10 @@ class Solution {
     	}
     	
     	int sum = 0;
+        int[] pqVal;
         
     	while(!pq.isEmpty()) {
-    		int[] pqVal = pq.poll();
+    		pqVal = pq.poll();
     		sum+= pqVal[1];
     		if (sum >= 2) {
     			res.add(new int[] {pqVal[0], pq.peek()[0]});
