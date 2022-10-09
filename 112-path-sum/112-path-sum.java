@@ -35,19 +35,19 @@ class Solution {
         while(!q.isEmpty()) {
             QNode curr = q.poll();
             TreeNode n = curr.node;
-            sum = curr.sum;
+            
+        if(n.left == null && n.right == null && curr.sum == targetSum) {
+                    return true;
+            }
             
             if(n.left !=null) {
-                q.offer(new QNode(n.left,n.left.val + sum));
+                q.offer(new QNode(n.left,n.left.val + curr.sum));
             }
             
             if(n.right !=null) {
-                q.offer(new QNode(n.right,n.right.val + sum));
+                q.offer(new QNode(n.right,n.right.val + curr.sum));
             }
-            
-            if(n.left == null && n.right == null && sum == targetSum) {
-                    return true;
-            }
+        
         }
         
         return false;
