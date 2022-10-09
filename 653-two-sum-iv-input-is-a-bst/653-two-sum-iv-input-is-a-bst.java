@@ -20,7 +20,6 @@ class Solution {
         
         Set<Integer> s = new HashSet<>();
         
-        
         while(!q.isEmpty()) {
             TreeNode curr = q.poll();
                         
@@ -28,18 +27,13 @@ class Solution {
                 return true;
             
             s.add(curr.val);
-            
             if(curr.left != null) {
                 q.add(curr.left);
             }
-            
             if(curr.right != null) {
                 q.add(curr.right);
             }
         }  
-        
-        s.clear();
-        
         return false;
     }
 }
