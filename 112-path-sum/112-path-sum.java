@@ -27,6 +27,7 @@ class Solution {
         if(root == null) {
             return false;
         }
+        
         int sum = 0;
         Queue<QNode> q = new LinkedList<>();
         q.offer(new QNode(root,root.val));
@@ -44,10 +45,8 @@ class Solution {
                 q.offer(new QNode(n.right,n.right.val + sum));
             }
             
-            if(n.left == null && n.right == null) {
-                if(sum == targetSum) {
+            if(n.left == null && n.right == null && sum == targetSum) {
                     return true;
-                }
             }
         }
         
