@@ -33,12 +33,15 @@ class Solution {
         q.offer(new QNode(root,root.val));
         
         while(!q.isEmpty()) {
+            int size = q.size();
+            
+            for(int i=0;i<size;i++) {
             QNode curr = q.poll();
             TreeNode n = curr.node;
             
-        if(n.left == null && n.right == null && curr.sum == targetSum) {
-                    return true;
-            }
+            if(n.left == null && n.right == null && curr.sum == targetSum) {
+                        return true;
+                }
             
             if(n.left !=null) {
                 q.offer(new QNode(n.left,n.left.val + curr.sum));
@@ -49,7 +52,8 @@ class Solution {
             }
         
         }
-        
+                        
+            }
         return false;
     }
 }
