@@ -6,10 +6,15 @@ class HitCounter {
     }
     
     public void hit(int timestamp) {
-        totalMap.put(timestamp, count++);
+        Integer prevKey = totalMap.floorKey(timestamp);
+        if(prevKey != null) {
+            totalMap.put(timestamp, totalMap.get(prevKey)+1);
+        } else {
+           totalMap.put(timestamp, 1); 
+        }
     }
     
-    public int getHits(int timestamp) {        
+    public int getHits(int timestamp) {
         int bound = timestamp - 300;
         Integer prevKey = totalMap.floorKey(timestamp);
         if(prevKey == null)
