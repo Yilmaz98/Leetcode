@@ -9,9 +9,7 @@ class HitCounter {
         totalMap.put(timestamp, count++);
     }
     
-    public int getHits(int timestamp) {
-        System.out.println(totalMap);
-        
+    public int getHits(int timestamp) {        
         int bound = timestamp - 300;
         Integer prevKey = totalMap.floorKey(timestamp);
         if(prevKey == null)
