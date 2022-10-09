@@ -1,16 +1,12 @@
 class HitCounter {    
     TreeMap<Integer, Integer> totalMap = new TreeMap<>();
+    int count = 1;
     public HitCounter() {
         
     }
     
     public void hit(int timestamp) {
-        Integer prevKey = totalMap.floorKey(timestamp);
-        if(prevKey != null) {
-            totalMap.put(timestamp, totalMap.get(prevKey)+1);
-        } else {
-           totalMap.put(timestamp, 1); 
-        }
+        totalMap.put(timestamp, count++);
     }
     
     public int getHits(int timestamp) {
