@@ -1,6 +1,5 @@
 class HitCounter {    
     TreeMap<Integer, Integer> totalMap = new TreeMap<>();
-    int count = 1;
     public HitCounter() {
         
     }
