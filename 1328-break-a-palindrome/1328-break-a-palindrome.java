@@ -1,18 +1,21 @@
 class Solution {
     public String breakPalindrome(String palindrome) {
-        char[] c = palindrome.toCharArray();
         int n = palindrome.length();
         
+        StringBuilder sb = new StringBuilder(palindrome);
+        
         for(int i=0;i<n/2;i++) {
-            if(c[i]!='a')
-            {
-                c[i]= 'a';
-                return String.valueOf(c);
+            if(palindrome.charAt(i) != 'a') {
+                sb.setCharAt(i,'a');
+                return sb.toString();
             }
         }
         
-        c[n-1] = 'b';
+        if(n == 1)
+            return "";
         
-        return n<2 ? "": String.valueOf(c);
+        sb.setCharAt(n-1,'b');
+        
+        return sb.toString();
     }
 }
