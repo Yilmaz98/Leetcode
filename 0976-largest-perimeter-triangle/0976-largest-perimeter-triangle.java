@@ -1,10 +1,6 @@
 class Solution {
     public int largestPerimeter(int[] nums) {
         int n = nums.length;
-        
-        if(n < 3)
-            return 0;
-        
         Arrays.sort(nums);
         
         for(int i=n-1;i>=2;i--) {
