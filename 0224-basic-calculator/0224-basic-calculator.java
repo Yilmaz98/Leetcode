@@ -43,9 +43,6 @@ class Solution {
 
             } else if (ch != ' ') {
                 if (n != 0) {
-
-                    // Save the operand on the stack
-                    // As we encounter some non-digit.
                     stack.push(operand);
                     n = 0;
                     operand = 0;
@@ -55,13 +52,9 @@ class Solution {
 
                     int res = evaluateExpr(stack);
                     stack.pop();
-
-                    // Append the evaluated result to the stack.
-                    // This result could be of a sub-expression within the parenthesis.
                     stack.push(res);
 
                 } else {
-                    // For other non-digits just push onto the stack.
                     stack.push(ch);
                 }
             }
