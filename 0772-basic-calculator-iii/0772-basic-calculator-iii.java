@@ -30,19 +30,7 @@ class Solution {
                     nums.push(operation(nums.pop(), ops.pop(), nums.pop()));
                 }
                 // Dealing with the negative number
-                if (c == '-') {
-                    if (nums.isEmpty()) { // case1: 1st non-empty characer is the negative number 
-                        nums.push(0);
-                    } else { // case2: 1st non-empty characer in parentheses is the negative number 
-                        int index = i - 1;
-                        while (index >= 0 && s.charAt(index) == ' ') {
-                            index--;
-                        }
-                        if (s.charAt(index) == '(') {
-                            nums.push(0);
-                        }
-                    }
-                }
+
                 ops.push(c);
             }
         }
@@ -51,6 +39,7 @@ class Solution {
         }
         return nums.pop();
     }
+    
     // Notice b is before a, since we pop b first
     private int operation(int b, char op, int a) {
         switch (op) {
@@ -61,6 +50,7 @@ class Solution {
         }
         return 0;
     }
+    
     // helper function to check precedence of the uppermost operator in the ops stack and current operator
     private boolean hasPrecedence(char op1, char op2) {
         if (op1 == '(' || op1 == ')') {
