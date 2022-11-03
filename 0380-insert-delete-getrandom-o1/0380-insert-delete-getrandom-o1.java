@@ -21,11 +21,15 @@ class RandomizedSet {
     }
     
     public int getRandom() {
-        Integer[] arr = s.stream().toArray(Integer[]::new);
         Random r = new Random();
-        int curr = r.nextInt(arr.length);
-        
-        return arr[curr];
+        int curr = r.nextInt(s.size());
+        int i =0;
+        for(Integer a : s) {
+            if(i == curr)
+                return a;
+            i++;
+        }
+        return -1;
     }
 }
 
