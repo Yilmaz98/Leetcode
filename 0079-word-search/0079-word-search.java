@@ -1,5 +1,6 @@
 class Solution {
     boolean found;
+    
     public void dfs(int i, int j, char[][] board, String word, int k, boolean[][] visited) {
         if(k >= word.length())
         {
@@ -18,7 +19,7 @@ class Solution {
         dfs(i+1,j,board,word,k+1,visited);
         dfs(i-1,j,board,word,k+1,visited);
         
-          visited[i][j] = false;
+        visited[i][j] = false;
     }
     
     public boolean exist(char[][] board, String word) {
