@@ -1,6 +1,6 @@
 class Solution {
     public List<List<Integer>> findWinners(int[][] matches) {
-        List<List<Integer>> result = new ArrayList<>();
+        List<List<Integer>> result = Arrays.asList(new ArrayList<>(), new ArrayList<>());
         Map<Integer, Integer> m = new HashMap<>();
         
         for(int[] match : matches) {
@@ -20,16 +20,11 @@ class Solution {
             }
         }
         
-        List<Integer> result0 = new ArrayList<>();
-        result0.addAll(noMatch);
-        Collections.sort(result0);
+        result.get(0).addAll(noMatch);
+        Collections.sort(result.get(0));
         
-        List<Integer> result1 = new ArrayList<>();
-        result1.addAll(oneMatch);
-        Collections.sort(result1);
-        
-        result.add(result0);
-        result.add(result1);
+        result.get(1).addAll(oneMatch);
+        Collections.sort(result.get(1));
         
         return result;
     }
