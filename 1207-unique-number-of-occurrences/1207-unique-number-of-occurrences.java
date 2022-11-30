@@ -3,15 +3,17 @@ class Solution {
         Map<Integer, Integer> m = new HashMap<>();
         
         for(int i=0;i<arr.length;i++) {
-            m.put(arr[i], m.getOrDefault(arr[i],0)+1);
+            m.put(arr[i], m.getOrDefault(arr[i],0) + 1);
         }
         
         Set<Integer> s = new HashSet<>();
         
         for(Integer i : m.keySet()) {
+            if(s.contains(m.get(i)))
+                return false;
             s.add(m.get(i));
         }
         
-        return s.size() == m.size();
+        return true;
     }
 }
