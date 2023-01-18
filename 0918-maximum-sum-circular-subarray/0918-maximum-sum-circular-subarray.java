@@ -29,12 +29,10 @@ class Solution {
             for(int i=0;i<nums.length;i++) {
                 max = Math.max(max,nums[i]);
             }
+            return max;
         }
 
-        if(max!=Integer.MIN_VALUE) {
-            maxSum = max;
-            return maxSum;
-        }
+      
         return Math.max(maxSum, justSum - minSum);
     }
 }
