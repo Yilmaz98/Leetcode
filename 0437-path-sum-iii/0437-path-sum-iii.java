@@ -5,6 +5,7 @@ public class Solution {
         helper(root, 0, sum, preSum);
         return count;
     }
+    
     int count = 0;
     public void helper(TreeNode root, long currSum, int target, Map<Long, Integer> preSum) {
         if (root == null) {
