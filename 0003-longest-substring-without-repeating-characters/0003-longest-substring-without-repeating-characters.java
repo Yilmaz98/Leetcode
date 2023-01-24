@@ -7,10 +7,10 @@ class Solution {
         for (int i=0; i<s.length(); i++) {
             char c = s.charAt(i);
             index = Math.max(index, arr[c]);
-            System.out.println(c + ":" + index);
+            //System.out.println(c + ":" + index);
             arr[c] = i+1;
             max = Math.max(max, i-index+1);
-            System.out.println(max);
+            //System.out.println(max);
         }
         return max;
     }
