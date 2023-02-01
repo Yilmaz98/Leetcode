@@ -19,7 +19,7 @@ public class Solution {
             List<Integer> path = new ArrayList<>();
             dfs(root, sum, res, path);
             return res;
-        }
+}
         
         public void dfs(TreeNode root, int sum, List<List<Integer>> res, List<Integer> path){
             if(root==null) return;
