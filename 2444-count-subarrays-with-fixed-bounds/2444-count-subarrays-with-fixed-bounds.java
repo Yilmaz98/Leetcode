@@ -1,7 +1,7 @@
 class Solution {
     public long countSubarrays(int[] nums, int minK, int maxK) {
-        // minPosition, maxPosition: the MOST RECENT positions of minK and maxK.
-        // leftBound: the MOST RECENT value outside the range [minK, maxK].
+    // minPosition, maxPosition: the MOST RECENT positions of minK and maxK.
+    // leftBound: the MOST RECENT value outside the range [minK, maxK].
         long answer = 0;
         int minPosition = -1, maxPosition = -1, leftBound = -1;
 
@@ -14,6 +14,7 @@ class Solution {
             // If the number is minK or maxK, update the most recent position.
             if (nums[i] == minK)
                 minPosition = i;
+            
             if (nums[i] == maxK)
                 maxPosition = i;
 
@@ -21,6 +22,7 @@ class Solution {
             // the smaller of the two most recent positions (minPosition and maxPosition).
             answer += Math.max(0, Math.min(maxPosition, minPosition) - leftBound);
         }
+        
         return answer;
     }
 }
