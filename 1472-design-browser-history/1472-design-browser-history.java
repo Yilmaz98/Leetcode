@@ -1,19 +1,22 @@
 class BrowserHistory {
     int index = 0;
     List<String> arr = new ArrayList<>();
+
     public BrowserHistory(String homepage) {
         arr.add(homepage);
     }
     
     public void visit(String url) {
-        if(index + 1 < arr.size())
+        if(index + 1 < arr.size()) {
             arr = arr.subList(0,index+1);
-        arr.add(url);
+        }
+        
         index++;
+        arr.add(url);
     }
     
     public String back(int steps) {
-        int idx = Math.max(0, index - steps);
+        int idx = Math.max(0,index - steps);
         index = idx;
         return arr.get(idx);
     }
