@@ -19,13 +19,11 @@ class Solution {
                 }
             }
             
-            if(low == potions.length - 1) {
                 long mult = potions[low] * (long) spells[i];
-                
-                if(mult >= success) {
-                    pairs += 1;
+                if(mult < success) {
+                    pairs =0;
                 }
-            } else 
+                else 
                 pairs += (potions.length - low);
             result[index++] = pairs;
         }
