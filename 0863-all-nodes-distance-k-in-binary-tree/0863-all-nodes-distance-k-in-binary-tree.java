@@ -13,7 +13,6 @@ class Solution {
         inorder(root, ""); 
         List<Integer> result = new ArrayList<>();
         String targetString = m.get(target.val); 
-        m.remove(target.val);
         
         for(Integer i : m.keySet()) {
             String val = m.get(i);
@@ -30,9 +29,6 @@ class Solution {
             if(diff == k)
                 result.add(i);
         }
-        
-        if(k==0)
-            result.add(target.val);
         
         return result;
     }
