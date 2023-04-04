@@ -28,8 +28,6 @@ class Solution {
             }
             finalCost += pushCost;
             
-            System.out.println(finalCost);
-            
             int finalCost2 = 0;
             
             if(start != minusStr.charAt(0))
