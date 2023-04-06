@@ -34,13 +34,12 @@ class Solution {
             }
         }
         
-        boolean[][] visited = new boolean[m][n];
         int islands = 0;
         
         for(int i=0;i<m;i++) {
             for(int j=0;j<n;j++) {
-               if(grid[i][j] == 0 && !visited[i][j]) {
-                  dfs2(i,j,m,n,grid,visited);
+               if(grid[i][j] == 0) {
+                  dfs(i,j,grid, m,n);
                   islands++;
                }
             }
