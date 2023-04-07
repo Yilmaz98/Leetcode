@@ -8,6 +8,11 @@ class Solution {
             maxScore = Math.max(maxScore, score);
         }
         
+          if(k == cardPoints.length)
+  {
+      return score;
+  }
+        
         int n = cardPoints.length - 1;
         k = k-1;
         
