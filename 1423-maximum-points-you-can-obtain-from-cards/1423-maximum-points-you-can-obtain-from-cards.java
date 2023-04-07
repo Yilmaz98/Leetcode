@@ -10,13 +10,11 @@ class Solution {
         
         int n = cardPoints.length - 1;
         k = k-1;
-        int it = k+1;
         
-        while(it>0) {
+        while(k+1>0) {
             score -=cardPoints[k--];
             score += cardPoints[n--];
             maxScore = Math.max(maxScore, score);
-            it--;
         }
         
         return maxScore;
