@@ -5,8 +5,6 @@ class Solution {
         Map<Integer, List<Integer>> m = new HashMap<>();
         
         for(int i=0;i<manager.length;i++) {
-            if(manager[i] == -1)
-                continue;
             if(!m.containsKey(manager[i])) {
                 m.put(manager[i], new ArrayList<>());
             }
