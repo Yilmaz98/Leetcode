@@ -25,13 +25,6 @@ class Solution {
             dp[i] = Math.max(dp[i], val );
         }
         
-        int result = 0;
-        
-        for(int curr : dp) {
-            //System.out.print(curr + " ");
-            result = Math.max(curr, result);
-        }
-        
-        return result;
+        return dp[startTime.length - 1];
     }
 }
