@@ -8,22 +8,35 @@ class Solution {
         
         Arrays.sort(arr, (a,b) -> a[1] - b[1]);
                 
-        int[] dp = new int[startTime.length];
+        int n = startTime.length;
+        int[] dp = new int[n];
+        dp[0] = arr[0][2];
         
-        for(int i=0;i<arr.length;i++) {
+        for(int i=1;i<arr.length;i++) {
             dp[i] += arr[i][2];
-            int max = 0;
-            for(int j=i-1;j>=0;j--) {
-                if(arr[j][1] <= arr[i][0]) {
-                    dp[i] += dp[j];
-                    break;
+            
+            int low = -1;
+            int high = i-1;
+            
+            
+            while(low < high) {
+                int mid = (int) Math.ceil((double) (low+high)/2);
+                if(arr[mid][1] <=arr[i][0]) {
+                    low = mid;
+                } else {
+                    high = mid -1;
                 }
             }
             
-            int val = i==0 ? 0 : dp[i-1];
-            dp[i] = Math.max(dp[i], val );
+            if(low !=-1)
+                dp[i] += dp[low];
+            dp[i] = Math.max(dp[i], dp[i-1]);
         }
         
-        return dp[startTime.length - 1];
+        for(int i=0;i<n;i++) {
+            System.out.print(dp[i] + " ");
+        }
+        
+        return dp[n-1];
     }
 }
