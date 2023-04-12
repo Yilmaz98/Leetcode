@@ -15,12 +15,11 @@ class Solution {
             int max = 0;
             for(int j=i-1;j>=0;j--) {
                 if(arr[j][1] <= arr[i][0]) {
-                    max = Math.max(max, dp[j]);
+                    dp[i] += dp[j];
                     break;
                 }
             }
             
-            dp[i] += max;
             int val = i==0 ? 0 : dp[i-1];
             dp[i] = Math.max(dp[i], val );
         }
