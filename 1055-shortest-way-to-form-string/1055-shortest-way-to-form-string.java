@@ -4,7 +4,7 @@ class Solution {
         
         String remaining = target;   
         while(remaining.length() > 0) {
- 
+
             int i = 0;
             int j = 0;    
             StringBuilder subsequence = new StringBuilder();
@@ -12,6 +12,8 @@ class Solution {
                 if(source.charAt(i++) == remaining.charAt(j))
                     subsequence.append(remaining.charAt(j++));
             }
+            
+            System.out.println(subsequence.toString());
             
             if(subsequence.length() == 0)
                 return -1;
