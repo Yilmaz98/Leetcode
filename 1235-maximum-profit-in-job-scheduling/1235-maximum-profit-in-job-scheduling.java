@@ -32,11 +32,7 @@ class Solution {
                 dp[i] += dp[low];
             dp[i] = Math.max(dp[i], dp[i-1]);
         }
-        
-        for(int i=0;i<n;i++) {
-            System.out.print(dp[i] + " ");
-        }
-        
+           
         return dp[n-1];
     }
 }
