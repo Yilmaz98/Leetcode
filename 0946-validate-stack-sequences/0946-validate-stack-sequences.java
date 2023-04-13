@@ -10,9 +10,7 @@ class Solution {
                 idx++;
             } 
         }
-        
-        System.out.println(st);
-        
+         
         while(idx < popped.length) {
             if(st.pop() != popped[idx]) {
                 return false;
