@@ -27,8 +27,10 @@ class Solution {
         
         int mid1 = Integer.MAX_VALUE;
         int mid2 = Integer.MAX_VALUE;
-        if (start1 + k / 2 - 1 < nums1.length) mid1 = nums1[start1 + k / 2 - 1];
-        if (start2 + k / 2 - 1 < nums2.length) mid2 = nums2[start2 + k / 2 - 1];
+        if (start1 + (k / 2) - 1 < nums1.length) 
+            mid1 = nums1[start1 + k / 2 - 1];
+        if (start2 + (k / 2) - 1 < nums2.length) 
+            mid2 = nums2[start2 + k / 2 - 1];
         
         // Throw away half of the array from nums1 or nums2. And cut k in half
         if (mid1 < mid2) {
