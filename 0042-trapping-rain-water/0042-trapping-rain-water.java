@@ -1,43 +1,30 @@
 class Solution {
     public int trap(int[] height) {
-        int maxIndex = 0;
-        int maxHeight = Integer.MIN_VALUE;
+        if (height == null || height.length == 0) {
+            return 0;
+        }
+        int left = 0; int right = height.length - 1; // Pointers to both ends of the array.
+        int maxLeft = 0; int maxRight = 0;
         
-        for(int i=0;i<height.length;i++) {
-            if(maxHeight < height[i]) {
-                maxHeight = height[i];
-                maxIndex = i;
+        int totalWater = 0;
+        while (left < right) {
+            // Water could, potentially, fill everything from left to right, if there is nothing in between.
+            if (height[left] < height[right]) {
+                if (height[left] >= maxLeft) { 
+                    maxLeft = height[left]; 
+                } else { 
+                    totalWater += maxLeft - height[left]; 
+                }
+                left++;
+            } else {
+                if (height[right] >= maxRight) { 
+                    maxRight = height[right]; 
+                } else {
+                    totalWater += maxRight - height[right]; 
+                }
+                right--;
             }
         }
-        
-        int leftMax = height[0];
-        int leftAns = 0;
-        
-        for(int i=1;i<=maxIndex;i++) {
-            if(leftMax >= height[i]) {
-                leftAns += (leftMax - height[i]);
-                continue;
-            } else if(leftMax < height[i]) {
-                leftMax = height[i];
-            } 
-        }
-        
-        
-        int rightAns = 0;
-        int rightMax = height[height.length - 1];
-        
-          for(int i=height.length - 2;i>=maxIndex;i--) {
-            if(rightMax >= height[i]) {
-                rightAns += (rightMax - height[i]);
-                continue;
-            } else if(rightMax < height[i]) {
-                rightMax = height[i];
-            } 
-        }
-        
-        return leftAns + rightAns;
-        
-        
-        
+        return totalWater;
     }
 }
