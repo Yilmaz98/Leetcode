@@ -10,33 +10,29 @@ class Solution {
             }
         }
         
-        
-        Stack<Integer> st = new Stack<>();
-        
+        int leftMax = height[0];
         int leftAns = 0;
         
-        for(int i=0;i<=maxIndex;i++) {
-            if(!st.isEmpty() && st.peek() >= height[i]) {
-                leftAns += (st.peek() - height[i]);
+        for(int i=1;i<=maxIndex;i++) {
+            if(leftMax >= height[i]) {
+                leftAns += (leftMax - height[i]);
                 continue;
-            } else if(!st.isEmpty() && st.peek() < height[i]) {
-                st.pop();
+            } else if(leftMax < height[i]) {
+                leftMax = height[i];
             } 
-            st.push(height[i]);
         }
         
         
-        st.clear();
         int rightAns = 0;
+        int rightMax = height[height.length - 1];
         
-          for(int i=height.length - 1;i>=maxIndex;i--) {
-            if(!st.isEmpty() && st.peek() >= height[i]) {
-                rightAns += (st.peek() - height[i]);
+          for(int i=height.length - 2;i>=maxIndex;i--) {
+            if(rightMax >= height[i]) {
+                rightAns += (rightMax - height[i]);
                 continue;
-            } else if(!st.isEmpty() && st.peek() < height[i]) {
-                st.pop();
+            } else if(rightMax < height[i]) {
+                rightMax = height[i];
             } 
-            st.push(height[i]);
         }
         
         return leftAns + rightAns;
