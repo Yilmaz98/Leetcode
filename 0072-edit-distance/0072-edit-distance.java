@@ -20,6 +20,13 @@ class Solution {
         for (int word2Index = 1; word2Index <= word2Length; word2Index++) {
             dp[0][word2Index] = word2Index;
         }
+        
+        for(int i=0;i<dp.length;i++) {
+            for(int j=0;j<dp[0].length;j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
 
         for (int word1Index = 1; word1Index <= word1Length; word1Index++) {
             for (int word2Index = 1; word2Index <= word2Length; word2Index++) {
