@@ -8,50 +8,47 @@
  * }
  */
 public class Codec {
-    
-    StringBuilder sb = new StringBuilder();
 
-    // Encodes a tree to a single string.
+
+     // Encodes a tree to a single string.
+    private int index = 0;
     public String serialize(TreeNode root) {
-        if(root != null)
-            sb.append(root.val + ",");
-        else    
-            sb.append("&,");
-        if(root !=null) {
-            serialize(root.left);
-            serialize(root.right);
+        StringBuilder data = new StringBuilder();
+        serialize(root, data);
+        return data.toString();
+    }
+
+    private void serialize(TreeNode node, StringBuilder data){
+        if(node == null){
+            data.append('#').append(' ');
+        }else{
+            data.append(node.val).append(' ');
+            serialize(node.left, data);
+            serialize(node.right, data);
         }
-        
-        return sb.toString();
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        String[] nodes = data.split(",");
-        Queue<String> q = new LinkedList<>();
-        
-        for(int i=0;i<nodes.length;i++) {
-            q.add(nodes[i]);
+        if(index < data.length()){
+            String value = getValue(data);
+            if("#".equals(value)){
+                return null;
+            }
+
+            TreeNode node = new TreeNode(Integer.parseInt(value));
+            node.left = deserialize(data);
+            node.right = deserialize(data);
+            return node;
         }
-        
-        return helper(q);
+
+        throw new RuntimeException("Invalid Data");        
     }
-    
-    public TreeNode helper(Queue<String> q) {
-        if(q.peek().equals("&")) {
-            q.poll();
-            return null;
-        }
-            
-        TreeNode root = new TreeNode(Integer.valueOf(q.poll()));
-        root.left = helper(q);
-        root.right = helper(q);
-        
-        return root;
+
+    private String getValue(String data){
+        int endPosition = data.indexOf(' ', index);
+        String value = data.substring(index, endPosition);
+        index = endPosition + 1;
+        return value;
     }
 }
-
-// Your Codec object will be instantiated and called as such:
-// Codec ser = new Codec();
-// Codec deser = new Codec();
-// TreeNode ans = deser.deserialize(ser.serialize(root));
