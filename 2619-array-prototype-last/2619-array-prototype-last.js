@@ -1,8 +1,5 @@
 Array.prototype.last = function() {
-    const curr = this;
-    if(curr.length == 0)
-        return -1;
-    return curr[curr.length-1];
+     return this.length ? this.slice(-1)[0] : -1;
 };
 
 /**
