@@ -51,7 +51,7 @@ class Solution {
     }
     
     public boolean hasPrecedence(char op1, char op2) {
-        if(op1 == '(' || op1 == ')')
+        if(op1 == '(' )
             return false;
         
         if((op1 == '+' || op1 == '-') && (op2 == '*' || op2 == '/')) {
