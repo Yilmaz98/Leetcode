@@ -1,7 +1,7 @@
 class Solution {
     public boolean PredictTheWinner(int[] nums) {
         int[] dp = new int[nums.length];
-        for (int s = nums.length; s >= 0; s--) {
+        for (int s = nums.length-1; s >= 0; s--) {
             for (int e = s; e < nums.length; e++) {
                 if (s == e) {
                     dp[s] = nums[s];
