@@ -30,7 +30,7 @@ class Solution {
         while(!q.isEmpty()) {
             Integer curr = q.poll();
             
-            if(!adj.containsKey(curr) || adj.get(curr).size() == 0)
+            if(!adj.containsKey(curr))
                 continue;
             
             for(Integer i: adj.get(curr)) {
