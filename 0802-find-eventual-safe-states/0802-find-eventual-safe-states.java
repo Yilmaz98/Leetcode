@@ -24,17 +24,24 @@ class Solution {
         }
         
         while(!q.isEmpty()) {
+            int size = q.size();
+            
+            for(int i=0;i<size;i++) {
+                  
             Integer curr = q.poll();
             
+
             if(!adj.containsKey(curr))
                 continue;
             
-            for(Integer i: adj.get(curr)) {
-                outdegree[i]--;
-                if(outdegree[i] == 0) {
-                    q.add(i);
+            for(Integer k: adj.get(curr)) {
+                outdegree[k]--;
+                if(outdegree[k] == 0) {
+                    q.add(k);
                 }
             }
+            }
+          
         }
         
         for(int i=0;i<outdegree.length;i++) {
