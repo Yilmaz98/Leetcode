@@ -29,7 +29,6 @@ class Solution {
         
         while(!q.isEmpty()) {
             Integer curr = q.poll();
-            System.out.println(curr);
             
             if(!adj.containsKey(curr) || adj.get(curr).size() == 0)
                 continue;
