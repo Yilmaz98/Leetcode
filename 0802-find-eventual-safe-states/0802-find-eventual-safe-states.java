@@ -34,7 +34,7 @@ class Solution {
                 outdegree[i]--;
                 if(outdegree[i] == 0) {
                     q.add(i);
-                         result.add(i);
+                    result.add(i);
                 }
             }
         }
