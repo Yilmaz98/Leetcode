@@ -1,47 +1,26 @@
 class Solution {
-    public List<Integer> eventualSafeNodes(int[][] graph) {
-        Map<Integer, List<Integer>> adj = new HashMap<>();
+      public List<Integer> eventualSafeNodes(int[][] graph) {
+        List<Integer> res = new ArrayList<>();
+        if(graph == null || graph.length == 0)  return res;
         
-        int[] outdegree = new int[graph.length];
+        int nodeCount = graph.length;
+        int[] color = new int[nodeCount];
         
-        for(int i=0;i<graph.length;i++) { 
-            outdegree[i] = graph[i].length;
-           for(int j=0;j<graph[i].length;j++) {
-                if(!adj.containsKey(graph[i][j])) {
-                    adj.put(graph[i][j], new ArrayList<>());
-                } 
-                    adj.get(graph[i][j]).add(i);
-           }
-        } 
-        
-        Queue<Integer> q = new LinkedList<>();  
-        List<Integer> result = new ArrayList<>();
-        
-        for(int i=0;i<outdegree.length;i++) {
-            if(outdegree[i] == 0)  {
-                result.add(i);
-                q.add(i);
-            }
+        for(int i = 0;i < nodeCount;i++){
+            if(dfs(graph, i, color))    res.add(i);
         }
         
-        while(!q.isEmpty()) {
-            Integer curr = q.poll();
-            
-            if(!adj.containsKey(curr))
-                continue;
-            
-            for(Integer i: adj.get(curr)) {
-                outdegree[i]--;
-                if(outdegree[i] == 0) {
-                    q.add(i);
-                    result.add(i);
-                }
-            }
+        return res;
+    }
+    public boolean dfs(int[][] graph, int start, int[] color){
+        if(color[start] != 0)   return color[start] == 1;
+        
+        color[start] = 2;
+        for(int newNode : graph[start]){
+            if(!dfs(graph, newNode, color))    return false;
         }
+        color[start] = 1;
         
-        Collections.sort(result);
-        
-        return result;
-        
+        return true;
     }
 }
