@@ -12,8 +12,7 @@ class Solution {
                 } 
                     adj.get(graph[i][j]).add(i);
            }
-        }
-        
+        } 
         
         Queue<Integer> q = new LinkedList<>();  
         List<Integer> result = new ArrayList<>();
@@ -24,8 +23,6 @@ class Solution {
                 q.add(i);
             }
         }
-
-        
         
         while(!q.isEmpty()) {
             Integer curr = q.poll();
