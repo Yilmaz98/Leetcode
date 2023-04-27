@@ -1,6 +1,6 @@
 class Solution {
     public boolean validTree(int n, int[][] edges) {     
-        if(n == 1 && edges.length == 0)
+        if(n == 1)
             return true;
         
         Map<Integer, List<Integer>> adj = new HashMap<>();
