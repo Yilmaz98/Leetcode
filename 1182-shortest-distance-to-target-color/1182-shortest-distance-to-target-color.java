@@ -29,7 +29,7 @@ class Solution {
                  result.add(Math.abs(vals.get(index-1) - target));
             }
             else if(index ==0) {
-                 result.add(Math.abs(vals.get(0) - target));
+                 result.add(Math.abs(vals.get(index) - target));
             } else {
                  int one = Math.abs(vals.get(index) - target);
                  int two = Math.abs(vals.get(index-1) - target);
