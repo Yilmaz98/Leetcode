@@ -6,7 +6,12 @@ class Solution {
         
         Arrays.sort(dist);
         
-        for(i = 0; i < dist.length && dist[i] > i; i++);
+        for(i = 0; i < dist.length; i++) {
+           if(dist[i] <= i) {
+                break;
+            } 
+        }
+            
         return i;
     }
 }
