@@ -47,14 +47,14 @@ class Solution {
                         minus.setCharAt(j, (char) (minusValue + '0'));
                     }   
                     
-                    if(!visited.contains(plus.toString()) && !dead.contains(curr)) {
+                    if(!visited.contains(plus.toString()) && !dead.contains(plus.toString())) {
                          q.add(plus.toString());
                         visited.add(plus.toString());
                     }
                     
 
                        
-                     if(!visited.contains(minus.toString())  && !dead.contains(curr)) {
+                     if(!visited.contains(minus.toString())  && !dead.contains(minus.toString())) {
                         q.add(minus.toString()); 
                            visited.add(minus.toString());
                      }
