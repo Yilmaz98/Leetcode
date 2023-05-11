@@ -3,25 +3,19 @@
 
 public class Solution extends Relation {
     public int findCelebrity(int n) {
-        int[] indegree = new int[n];
-        int[] outdegree = new int[n];
+       int candidate = 0;
         
-        for(int i=0;i<n;i++) {
-            for(int j=0;j<n;j++) {
-                if(i != j) {
-                    if(knows(i,j)) {
-                        indegree[j]++;
-                        outdegree[i]++;
-                    }
-                }
+        for(int i=1;i<n;i++) {
+            if(knows(candidate,i)) {
+                candidate = i;
             }
         }
         
         for(int i=0;i<n;i++) {
-            if(indegree[i] == n-1 && outdegree[i] == 0)
-                return i;
+            if(i != candidate && (knows(candidate,i) || !knows(i, candidate)))
+                return -1;
         }
         
-        return -1;
+        return candidate;
     }
 }
