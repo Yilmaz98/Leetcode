@@ -15,6 +15,7 @@ class Solution {
         int sum = 0;
         
         Arrays.sort(nums);
+        reverseArray(nums);
         
         for(int i=0;i<nums.length;i++) {
             sum += nums[i];
