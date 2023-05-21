@@ -13,8 +13,6 @@ class Solution {
         int count = 1;
         int ans = 1;
         
-        System.out.println(m);
-        
         for(Integer v : m.keySet()) {
                 if(v - prev == 1) {
                     count++;
