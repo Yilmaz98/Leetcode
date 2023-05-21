@@ -16,18 +16,13 @@ class Solution {
         System.out.println(m);
         
         for(Integer v : m.keySet()) {
-            if(prev == Integer.MIN_VALUE) {
-                prev = v;
-            }
-            else {
                 if(v - prev == 1) {
                     count++;
                     ans = Math.max(ans, count);
                 } else {
                     count = 1;
                 }
-            }
-            prev = v;
+                prev = v;
         }
         
         return ans;
