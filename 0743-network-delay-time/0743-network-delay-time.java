@@ -35,8 +35,7 @@ class Solution {
             int size = q.size();
             
             for(int i=0;i<size;i++) {
-                Node curr = q.poll();
-                visited.add(curr.node);    
+                Node curr = q.poll(); 
             
                 if(!adj.containsKey(curr.node))
                     continue;
