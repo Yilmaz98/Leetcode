@@ -1,32 +1,29 @@
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
-        Map<String, Integer> map = new HashMap<>();
-        return solve(triangle, 0, 0, map);
-    }
-    
-    public int solve(List<List<Integer>> triangle, int row, int index, Map<String, Integer> map) {
-        String key = row + "-" + index;
+        int m = triangle.size();
+        int n = triangle.get(m-1).size();
         
-        if (map.get(key) != null) {
-            return map.get(key);
+        int[][] dp = new int[m+1][n+1];
+        
+        for(int i=0;i<=m;i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
         
-        if (index >= triangle.get(row).size()) {
-            return 0x7FFFFFFF;
+        dp[1][1] = triangle.get(0).get(0);
+        
+        for(int i=2;i<=m;i++) {
+            for(int j=1;j<=triangle.get(i-1).size();j++) {
+                dp[i][j] = Math.min(dp[i-1][j], dp[i-1][j-1]) + triangle.get(i-1).get(j-1);
+            }
         }
         
-        if (row == triangle.size() - 1) {
-            return  triangle.get(row).get(index);
+        int result = Integer.MAX_VALUE;
+
+        
+        for(int i=0;i<=n;i++) {
+            result = Math.min(result, dp[m][i]);
         }
-        
-        
-        int below = solve(triangle, row + 1, index, map);
-        int right = solve(triangle, row + 1, index + 1, map);
-        int result = Math.min(below, right) + triangle.get(row).get(index);
-        
-        map.put(key, result);
         
         return result;
-        
     }
 }
