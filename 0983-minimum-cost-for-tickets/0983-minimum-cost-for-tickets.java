@@ -1,29 +1,23 @@
 class Solution {
     public int mincostTickets(int[] days, int[] costs) {
-        int[] dp = new int[days.length];
-        helper(days,costs,dp,0,0);
-        
-        return dp[0];
-    }
+          // length up to the last travel + 1 day is good enough (no need for 365)
+    int lastDay = days[days.length - 1]; 
+    // dp[i] means up to i-th day the minimum cost of the tickets
+    int[] dp = new int[lastDay + 1]; 
+    boolean[] isTravelDays = new boolean[lastDay + 1];
+    // mark the travel days
+    for(int day : days) isTravelDays[day] = true;
     
-    public int helper(int[] days, int[] costs, int[] dp, int i,int day) {
-        if(i >= days.length)
-            return 0;
-        
-        if(days[i] <= day) {
-            return helper(days,costs,dp,i+1,day);
-        } 
-        
-        if(dp[i] != 0) {
-            return dp[i];
+    for(int i = 1; i <= lastDay; i++) {
+        if(!isTravelDays[i]) { // no need to buy ticket if it is not a travel day
+            dp[i] = dp[i - 1];
+            continue;
         }
-            
-        int day1Pass = helper(days,costs,dp,i+1,days[i]) + costs[0];
-        int day7Pass = helper(days,costs,dp,i+1,days[i] + 6) + costs[1];
-        int day30Pass = helper(days,costs,dp,i+1,days[i] + 29) + costs[2];
-        
-        
-        int result = Math.min(Math.min(day1Pass, day7Pass),day30Pass); 
-        return dp[i] = result;
-    } 
+        // select which type of ticket to buy
+        dp[i] = costs[0] + dp[i - 1]; // 1-day
+        dp[i] = Math.min(costs[1] + dp[Math.max(i - 7, 0)], dp[i]); // 7-day
+        dp[i] = Math.min(costs[2] + dp[Math.max(i - 30, 0)], dp[i]); // 30-day
+    }
+    return dp[lastDay];
+    }
 }
