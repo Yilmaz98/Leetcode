@@ -3,9 +3,6 @@ class Solution {
         int[] dp = new int[days.length];
         helper(days,costs,dp,0,0);
         
-        for(int i=0;i<dp.length;i++) {
-            System.out.print(dp[i] + " ");
-        }
         return dp[0];
     }
     
