@@ -1,7 +1,7 @@
 class Solution {
       public int getMoneyAmount(int n) {
         int[][] dp = new int[n+1][n+1];
-        return helper(0, n, dp);
+        return helper(1, n, dp);
     }
     
     int helper(int start, int end, int[][] dp) {
