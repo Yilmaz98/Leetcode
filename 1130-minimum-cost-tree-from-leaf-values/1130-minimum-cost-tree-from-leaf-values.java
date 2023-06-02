@@ -11,7 +11,26 @@ class Solution {
             }
         }
         
-        return helper(memo,maxx, arr,0,arr.length-1);
+           for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++) {
+               System.out.print(maxx[i][j] + " ");
+            }
+             
+            System.out.println();
+        }
+        
+        
+        int ans= helper(memo,maxx, arr,0,arr.length-1);
+        
+         for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++) {
+               System.out.print(memo[i][j] + " ");
+            }
+             
+            System.out.println();
+        }
+        
+        return ans;
     
     }
     
