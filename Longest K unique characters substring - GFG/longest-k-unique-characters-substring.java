@@ -52,9 +52,7 @@ class Solution {
                      minStart = start;
             }
         }
-        
-        if(unique == k)
-            return len;
+    
         
         return len >= k ? -1 : len ;
     }
