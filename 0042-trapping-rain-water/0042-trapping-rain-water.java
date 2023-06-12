@@ -16,7 +16,6 @@ class Solution {
         for(int i=1;i<=maxIndex;i++) {
             if(leftMax >= height[i]) {
                 leftAns += (leftMax - height[i]);
-                continue;
             } else if(leftMax < height[i]) {
                 leftMax = height[i];
             } 
@@ -29,7 +28,6 @@ class Solution {
           for(int i=height.length - 2;i>=maxIndex;i--) {
             if(rightMax >= height[i]) {
                 rightAns += (rightMax - height[i]);
-                continue;
             } else if(rightMax < height[i]) {
                 rightMax = height[i];
             } 
