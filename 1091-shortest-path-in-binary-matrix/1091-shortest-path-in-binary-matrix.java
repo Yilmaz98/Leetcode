@@ -9,11 +9,10 @@ class Solution {
     public int shortestPathBinaryMatrix(int[][] grid) {
         int[][] dirs = {{-1,0}, {0,1}, {0,-1}, {1,0}, {1,-1}, {1,1},{-1,1},{-1,-1}};
         
-        Queue<int[]> q = new LinkedList<>();
-        Set<String>visited = new HashSet<>();
-        
         if(grid[0][0] == 1)
             return -1;
+        Queue<int[]> q = new LinkedList<>();
+        Set<String>visited = new HashSet<>();
         q.add(new int[]{0,0});
         
         int n = grid.length;
