@@ -1,39 +1,36 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        List<Integer> list = new ArrayList<>();
-        for (int num: nums) {
-            list.add(num);
-        }
-        
-        return quickSelect(list, k);
+        k = nums.length - k;
+        return quickselect(nums, k, 0, nums.length - 1);
     }
     
-    public int quickSelect(List<Integer> nums, int k) {
-        int pivotIndex = new Random().nextInt(nums.size());
-        int pivot = nums.get(pivotIndex);
-        
-        List<Integer> left = new ArrayList<>();
-        List<Integer> mid = new ArrayList<>();
-        List<Integer> right = new ArrayList<>();
-        
-        for (int num: nums) {
-            if (num > pivot) {
-                left.add(num);
-            } else if (num < pivot) {
-                right.add(num);
-            } else {
-                mid.add(num);
+    public void printNums(int[] nums) {
+        for(int i=0;i<nums.length;i++) {
+            System.out.print(nums[i] + " ");
+        }
+        System.out.println();
+    }
+    
+    public int quickselect(int[] nums, int k, int l , int r) {
+        int pivot = nums[r], p = l;
+        for(int i=l;i<r;i++) {
+            if(nums[i] <= pivot) {
+                int temp = nums[i];
+                nums[i] = nums[p];
+                nums[p] = temp;
+                p++;
             }
         }
+        int temp = nums[p];
+        nums[p] = nums[r];
+        nums[r] = temp;
         
-        if (k <= left.size()) {
-            return quickSelect(left, k);
+        if(k == p) {
+            return nums[p];
+        } else if(k < p) {
+            return quickselect(nums,k,l,p-1);
+        } else {
+            return quickselect(nums,k,p+1,r);
         }
-        
-        if (left.size() + mid.size() < k) {
-            return quickSelect(right, k - left.size() - mid.size());
-        }
-        
-        return pivot;
     }
 }
