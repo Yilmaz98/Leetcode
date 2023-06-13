@@ -1,68 +1,47 @@
 class Solution {
-    int x[] = {-1,-1,-1,0,0,1,1,1};
-    int y[] = {-1,0,1,1,-1,-1,1,0};
     
-    public class Node {
-        int x;
-        int y;
-        int dist;
-        Node(int x, int y, int dist) {
-            this.x = x;
-            this.y = y;
-            this.dist = dist;
-        }
-    }
-    
-    public boolean isSafe(int x, int y, int m, int n, int[][] grid, boolean[][] visited) {
-        if(x<0 || x>=n || y<0 || y>=n || grid[x][y] == 1 || visited[x][y]) {
+    public boolean isValid(int x, int y, int[][] grid, int n) {
+        if(x<0 || x>=n || y<0 || y>=n || grid[x][y] == 1)
             return false;
-        }
         
         return true;
     }
-    
-    
     public int shortestPathBinaryMatrix(int[][] grid) {
-        if(grid[0][0] == 1) {
+        int[][] dirs = {{-1,0}, {0,1}, {0,-1}, {1,0}, {1,-1}, {1,1},{-1,1},{-1,-1}};
+        
+        if(grid[0][0] == 1)
             return -1;
-        }
-        int m = grid.length;
-        int n = grid[0].length;
+        Queue<int[]> q = new LinkedList<>();
+        Set<String>visited = new HashSet<>();
+        q.add(new int[]{0,0});
         
-        PriorityQueue<Node> q = new PriorityQueue<>((a,b) -> a.dist - b.dist);
-        q.offer(new Node(0,0,1));
+        int n = grid.length;
+        visited.add(0 + "," + 0);
         
-        
-        int[][] dist = new int[m][n];
-        boolean[][] visited = new boolean[m][n];
-        
-        for(int i=0;i<m;i++) {
-            for(int j=0;j<n;j++) {
-                dist[i][j] = Integer.MAX_VALUE;
-            }
-        }
-        
-        dist[0][0] = 1;
+        int steps = 1;
         
         while(!q.isEmpty()) {
-            Node no = q.poll();
-            int currX = no.x;
-            int currY = no.y;
-            visited[currX][currY] = true;
-            for(int i=0;i<8;i++) {
-                int newX = currX + x[i];
-                int newY = currY + y[i];
-                if(isSafe(newX,newY,m,n, grid, visited)) {
-                    if(no.dist + 1 < dist[newX][newY]) {
-                        dist[newX][newY] = no.dist + 1;
-                        q.offer(new Node(newX,newY,dist[newX][newY]));
-                    }
-                }
+            int size = q.size();
+            for(int i=0;i<size;i++) {
+            int[] curr = q.poll();
+            
+            if(curr[0] == n-1 && curr[1] == n-1) {
+                return steps;
             }
+            
+            for(int[] dir : dirs) {
+                int newX = curr[0] + dir[0];
+                int newY = curr[1] + dir[1];
+                
+                if(isValid(newX, newY, grid, n) && !visited.contains(newX + "," + newY)) {
+                    visited.add(newX + "," + newY);
+                    q.add(new int[]{newX, newY});
+                }
+            } 
+            }
+            steps++;
         }
         
-        if(dist[m-1][n-1]  == Integer.MAX_VALUE)
-            return -1;
-        return dist[m-1][n-1];
+        return -1;
     }
 }
