@@ -1,40 +1,47 @@
-public class Solution {
-public int[] searchRange(int[] nums, int target) {
-    int[] result = new int[2];
-    result[0] = findFirst(nums, target);
-    result[1] = findLast(nums, target);
-    return result;
-}
-
-private int findFirst(int[] nums, int target){
-    int idx = -1;
-    int start = 0;
-    int end = nums.length - 1;
-    while(start <= end){
-        int mid = (start + end) / 2;
-        if(nums[mid] >= target){
-            end = mid - 1;
-        }else{
-            start = mid + 1;
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length - 1;
+        int idx = -1;
+        
+        if(nums.length == 1) {
+            if(nums[0] == target)
+                return new int[]{0,0};
         }
-        if(nums[mid] == target) idx = mid;
-    }
-    return idx;
-}
-
-private int findLast(int[] nums, int target){
-    int idx = -1;
-    int start = 0;
-    int end = nums.length - 1;
-    while(start <= end){
-        int mid = (start + end) / 2;
-        if(nums[mid] <= target){
-            start = mid + 1;
-        }else{
-            end = mid - 1;
+        
+        while(low <= high) {
+            int mid = low + (high - low)/2;
+            
+            if(nums[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid -1;
+            }
+            
+            if(nums[mid] == target) idx = mid;
         }
-        if(nums[mid] == target) idx = mid;
+        
+        int[] result = new int[2];
+        result[0] = idx;
+        
+        low = 0;
+        high = nums.length - 1;
+        idx = -1;
+        
+        while(low <= high) {
+            int mid = low + (high - low)/2;
+            
+            if(nums[mid] <= target) {
+                low = mid + 1;
+            } else {
+                high = mid-1;
+            }
+            
+            if(nums[mid] == target) idx = mid;
+        }
+        
+        result[1] = idx;
+        
+        return result;
     }
-    return idx;
-}
 }
