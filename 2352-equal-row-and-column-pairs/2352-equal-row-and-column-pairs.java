@@ -1,24 +1,27 @@
 class Solution {
     public int equalPairs(int[][] grid) {
-        int count = 0;
+        Map<String, Integer> m  = new HashMap<>();
+        
         int n = grid.length;
-
-        // Keep track of the frequency of each row.
-        Map<String, Integer> rowCounter = new HashMap<>();
-        for (int[] row : grid) {
-            String rowString = Arrays.toString(row);
-            rowCounter.put(rowString, 1 + rowCounter.getOrDefault(rowString, 0));
+        
+        for(int i=0;i<n;i++) {
+            String row = Arrays.toString(grid[i]);
+            m.put(row, m.getOrDefault(row,0) + 1);
         }
-
-        // Add up the frequency of each column in map.
-        for (int c = 0; c < n; c++) {
-            int[] colArray = new int[n];
-            for (int r = 0; r < n; ++r) {
-                colArray[r] = grid[r][c];
+        
+        int ans = 0;
+        for(int j=0;j<n;j++) {
+            int[] col = new int[n];
+            for(int i=0;i<n;i++) {
+                col[i] = grid[i][j];
             }
-            count += rowCounter.getOrDefault(Arrays.toString(colArray), 0);
+            
+            String cols = Arrays.toString(col);
+            
+            if(m.containsKey(cols))
+                ans += m.get(cols);
         }
-
-        return count;
+        
+        return ans;
     }
 }
