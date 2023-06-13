@@ -3,19 +3,22 @@ class Solution {
         if(x < 0)
             return false;
         
-        List<Integer> arr1 = new ArrayList<>();
+        List<Integer> arr = new ArrayList<>();
         while(x!=0) {
-            arr1.add(x%10);
+            arr.add(x%10);
             x/=10;
         }
         
-        List<Integer> arr2 = new ArrayList<>(arr1);
         
-        Collections.reverse(arr2);
+        int i = 0;
+        int j = arr.size() - 1;
         
-        for(int i=0;i<arr1.size();i++) {
-            if(arr1.get(i) != arr2.get(i))
+        while(i<j) {
+            if(arr.get(i) != arr.get(j))
                 return false;
+            
+            i++;
+            j--;
         }
         
         return true;
