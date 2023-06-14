@@ -3,8 +3,8 @@ class Solution {
         List<Integer> result = new ArrayList<>();
         int n = heights.length;
         int prev = heights[n-1];
+        result.add(n-1);
         
-        result.add(0,n-1);
         for(int i=n-2;i>=0;i--) {
             if(heights[i] > prev) {
                 result.add(0, i);
