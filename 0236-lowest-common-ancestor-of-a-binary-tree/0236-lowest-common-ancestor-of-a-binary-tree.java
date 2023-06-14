@@ -9,31 +9,38 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(root == null)
-            return null;
+        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
         
-        if(root == p || root == q)
-            return root;
+        parentMap.put(root, null);
+        Queue<TreeNode> qu = new LinkedList<>();
+        qu.offer(root);
         
-        return lca(root, p,q);
-    }
-    
-    public TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {
-          if(root.val == p.val || root.val == q.val)
-            return root;
-        if(root == null)
-            return null;
+        while(!parentMap.containsKey(p) || !parentMap.containsKey(q) ) {
+            TreeNode n = qu.poll();
+            
+            if(n.left != null) {
+               qu.offer(n.left);
+                parentMap.put(n.left, n);
+            }
+                
+            if(n.right != null) {
+                qu.offer(n.right);
+                 parentMap.put(n.right, n);
+            }   
+        }
         
-        TreeNode left = null, right = null;
-        if(root.left != null) 
-             left = lca(root.left, p, q);
+        Set<TreeNode> ancestors = new HashSet<>();
         
-        if(root.right != null)
-             right = lca(root.right, p, q);
+        while(p !=null) {
+            ancestors.add(p);
+            p = parentMap.get(p);
+        }
         
-        if(left != null && right != null)
-            return root;
+        while(!ancestors.contains(q)) {
+            q = parentMap.get(q);
+        }
         
-        return left != null ? left : right;
+        return q;
+        
     }
 }
