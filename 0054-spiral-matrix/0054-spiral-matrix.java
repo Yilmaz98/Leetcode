@@ -1,33 +1,30 @@
 class Solution {
-    List<Integer> result = new ArrayList<>();
-      public void dfs(int[][] arr, int i, int j, boolean[][] visited, boolean up) {
-        if(i<0 || i>=arr.length || j<0 || j>= arr[0].length || visited[i][j]) {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ans = new ArrayList<>();
+        
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        dfs(0,0,matrix,m, n,ans, false, new boolean[m][n]);
+        
+        return ans;
+    }
+    
+    public void dfs(int i, int j, int[][] matrix, int m, int n, List<Integer> ans, boolean up, boolean[][] visited) {
+        if(i<0 || i>=m || j<0 || j>=n || visited[i][j]) {
             return;
         }
-          
+        
+        ans.add(matrix[i][j]);
         visited[i][j] = true;
-          result.add(arr[i][j]);
-          
-          System.out.println(i + ":" + j);
         
         if(up) {
-            dfs(arr,i-1,j, visited, true);
-        }
+            dfs(i-1,j,matrix,m,n,ans, true, visited);
+        }    
         
-        dfs(arr,i,j+1, visited, false);
-        dfs(arr,i+1,j, visited, false);
-        dfs(arr,i,j-1, visited, false);
-        dfs(arr,i-1,j, visited, true);
-    } 
-    
-    
-    public List<Integer> spiralOrder(int[][] arr) {
-        int m = arr.length;
-        int n = arr[0].length;
-    boolean[][] visited = new boolean[m][n];
-        
-    dfs(arr, 0, 0, visited, false);
-        
-        return result;
+        dfs(i,j+1,matrix,m, n,ans, false, visited);
+        dfs(i+1,j,matrix,m,n,ans, false, visited);
+        dfs(i,j-1,matrix,m,n,ans, false, visited);
+        dfs(i-1,j,matrix,m,n,ans, true, visited);
     }
 }
