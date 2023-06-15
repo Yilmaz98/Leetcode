@@ -12,24 +12,42 @@ class SparseVector {
     
 	// Return the dotProduct of two sparse vectors
     public int dotProduct(SparseVector vec) {
-        
+        if(idxList.size() < vec.idxList.size())
+            return dotProd(this,vec);
+        else 
+            return dotProd(vec, this);
+    }
+    
+    public int dotProd(SparseVector a, SparseVector b) {
         int result = 0;
-        int p = 0;
-        int q = 0;
-           
-        while(p < idxList.size() && q < vec.idxList.size()) {
-            if(idxList.get(p)[0] == vec.idxList.get(q)[0]) {
-                result += idxList.get(p)[1] * vec.idxList.get(q)[1];
-                p++;
-                q++;
-            } else if(idxList.get(p)[0] > vec.idxList.get(q)[0]) {
-                q++;
-            } else {
-                p++;
-            }
-         }
+        for(int i=0;i<a.idxList.size();i++) {
+            int[] curr = a.idxList.get(i);
+            
+            int[] even = binarySearch(curr[0], b.idxList);
+            
+            if(curr[0] == even[0]) {
+                result += curr[1] * even[1];
+            } 
+        }
         
         return result;
+    }
+    
+    public int[] binarySearch(int idx, List<int[]> searchList) {
+        int low = 0;
+        int high = searchList.size() -1;
+        
+        while(low < high) {
+            int mid = low + (high - low)/2;
+            
+            if(searchList.get(mid)[0] < idx) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        
+        return searchList.get(low);
     }
 }
 
