@@ -1,23 +1,27 @@
 class Solution {
-   public int[] exclusiveTime(int n, List<String> logs) {
-		int[] res = new int[n];
-		Deque<Integer> stack = new LinkedList<>();
-		int prevTime = 0;
-
-		for (String log : logs) {
-			String[] split = log.split(":");
-			int funcId = Integer.parseInt(split[0]);
-			boolean isStart = split[1].equals("start");
-			int time = Integer.parseInt(split[2]);
-			if (!isStart) time++;
-
-			if (!stack.isEmpty()) {
-				res[stack.peek()] += time - prevTime;
-			}
-			if (isStart) stack.push(funcId);
-			else stack.pop();
-			prevTime = time;
-		}
-		return res;
-	}
+    public int[] exclusiveTime(int n, List<String> logs) {
+        int[] result = new int[n];
+        Stack<Integer> st = new Stack<>();
+        int prevtime = 0;
+        
+        for(int i=0;i<logs.size();i++) {
+            String[] vals = logs.get(i).split(":");
+            int func = Integer.parseInt(vals[0]);
+            boolean start = vals[1].equals("start");
+            int time = Integer.parseInt(vals[2]);
+            if(!start)
+                time++;
+            
+            if(!st.isEmpty())
+                result[st.peek()] += time - prevtime;
+            if(start) {
+                st.push(func);
+            } else {
+                st.pop();
+            }
+            prevtime = time;
+        }
+        
+        return result;
+    }
 }
