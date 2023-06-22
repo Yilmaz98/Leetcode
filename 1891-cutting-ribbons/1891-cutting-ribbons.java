@@ -27,6 +27,6 @@ class Solution {
             }
         }
         
-        return high > 0 ? high : 0;
+        return low > 1 ? low-1 : 0;
     }
 }
