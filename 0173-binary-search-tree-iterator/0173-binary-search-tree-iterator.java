@@ -22,7 +22,7 @@ class BSTIterator {
     }
     
     public int next() {
-            return arr.get(++i);
+        return arr.get(++i);
     }
     
     public boolean hasNext() {
