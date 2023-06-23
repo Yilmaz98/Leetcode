@@ -19,15 +19,10 @@ class BSTIterator {
     
     public BSTIterator(TreeNode root) {
         inorder(root);
-        System.out.println(arr);
     }
     
     public int next() {
-        int nextEle =  ++i;
-        if(nextEle < arr.size()) {
-            return arr.get(nextEle);
-        }
-        return 0;
+            return arr.get(++i);
     }
     
     public boolean hasNext() {
