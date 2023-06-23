@@ -9,14 +9,14 @@ class Solution {
             map[c1]++;
             end++;
             
-            while(map[c1] > 1) {            
+            while(map[c1] > 1) {
                 char c2 = s.charAt(start);
                 map[c2]--;
                 start++;
             }
             
             if(len < end - start) {
-                len = end - start;
+                    len = end - start;
                 minStart = start;
             }
         }
