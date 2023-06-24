@@ -1,8 +1,4 @@
-public class MeetingComparator implements Comparator<int[]> {
-        public int compare(int[] a, int[] b) {
-            return a[1] - b[1];
-        }
-};
+
 class Solution {    
     public int minMeetingRooms(int[][] intervals) {
         Arrays.sort(intervals, (a,b) -> a[0] - b[0]);
