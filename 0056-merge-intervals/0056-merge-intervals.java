@@ -1,29 +1,34 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
+        if(intervals.length <= 1)
+            return intervals;
         
-    	Arrays.sort(intervals, (a, b) -> a[0]-b[0]);
-    	
-    	List<int[]> res = new ArrayList<>();
-    	
-    	int[] r = new int[2];
-    	r[0] = intervals[0][0];
-    	r[1] = intervals[0][1];
-    	for (int i=1; i<intervals.length; i++) {
-    		if (intervals[i][0] <= r[1]) {
-    			r[1] = Math.max(r[1], intervals[i][1]);
-    		} else {
-    			res.add(r);
-    			r=new int[2];
-    			r[0] = intervals[i][0];
-    			r[1] = intervals[i][1];
-    		}
-    	}
-    	
-    	if (res.isEmpty() || r[0] != res.get(res.size()-1)[0]) {
-    		res.add(r);
-    	}
-    	
-    	
-        return res.toArray(new int[res.size()][]);
+        Stack<int[]> st = new Stack<>();
+        
+        Arrays.sort(intervals, (a,b) -> a[0] - b[0]);
+        for(int i=0;i<intervals.length;i++) {
+            if(st.isEmpty()) {
+                st.push(intervals[i]);
+            } else {
+                int[] prev = st.peek();
+                int[] curr = intervals[i];
+                
+                if(prev[1] >= curr[0]) {
+                    st.pop();
+                    st.push(new int[]{prev[0], Math.max(prev[1],curr[1])});
+                } else {
+                    st.push(curr);
+                }
+                
+            }
+        }
+        
+        int[][] arr = new int[st.size()][2];
+        
+        for(int i = arr.length - 1;i>=0;i--) {
+            arr[i] = st.pop();
+        }
+        
+        return arr;
     }
 }
