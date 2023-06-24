@@ -10,7 +10,11 @@ class Solution {
             return 0;
         
         
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new MeetingComparator());
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<>() {
+            public int compare(int[] a, int[] b){
+                return a[1] - b[1];
+            }
+        });
         int ans = 1;
         for(int[] interval : intervals) {
             if(!pq.isEmpty()) 
