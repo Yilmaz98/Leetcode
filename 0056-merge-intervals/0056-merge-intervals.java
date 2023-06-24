@@ -10,13 +10,13 @@ class Solution {
             if(st.isEmpty()) {
                 st.push(intervals[i]);
             } else {
-                int[] prev = st.peek();
+                int[] prev = st.pop();
                 int[] curr = intervals[i];
                 
                 if(prev[1] >= curr[0]) {
-                    st.pop();
                     st.push(new int[]{prev[0], Math.max(prev[1],curr[1])});
                 } else {
+                    st.push(prev);
                     st.push(curr);
                 }
                 
