@@ -6,7 +6,7 @@ class Solution {
             return 0;
         
         
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<>() {
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
             public int compare(int[] a, int[] b){
                 return a[1] - b[1];
             }
