@@ -51,7 +51,7 @@ class Solution {
         }
         
         while(!numStack.isEmpty()) {
-            result += numStack.pop();
+            result += numStack.pollFirst();
         }
         
         
