@@ -1,40 +1,63 @@
 class Solution {
     public int calculate(String s) {
-        if(s == null || s.length() == 0)
-            return 0;
         
-        Stack<Integer> st = new Stack<>();
-        char operation = '+';
-        int currentNumber = 0;
+        Deque<Integer> numStack = new LinkedList<>();
+        Deque<Character> opStack = new LinkedList<>();
         
-        for(int i=0;i<s.length();i++) {
-            if(s.charAt(i) == ' ' && i!=s.length()-1)
-                continue;
+        int result = 0;
+        
+        for(int i = 0;i< s.length(); i++) {
+            char c  = s.charAt(i);
             
-            if(Character.isDigit(s.charAt(i))) {
-                currentNumber = currentNumber *10 + (s.charAt(i)-'0');
-            }
-            
-            if(!Character.isDigit(s.charAt(i)) || i == s.length() - 1){
-                if(operation == '+') {
-                    st.push(currentNumber);
-                } else if(operation == '-') {
-                    st.push(-currentNumber);
-                }
-                else if(operation == '*') {
-                    st.push(st.pop() * currentNumber);
-                } else if(operation  == '/') {
-                    st.push(st.pop() / currentNumber);
+            if(Character.isDigit(c)) {
+                int val = c-'0';
+                
+                while(i+1 < s.length() && Character.isDigit(s.charAt(i+1))) {
+                    val = val * 10 + (s.charAt(i+1) - '0');
+                    i++;
                 }
                 
-                operation = s.charAt(i);
-                currentNumber = 0;
+            numStack.addLast(val);
+            if(!opStack.isEmpty()) {
+                char prevOp = opStack.peekLast();
+                if(prevOp == '*' || prevOp == '/') {
+                                     
+                    int num1 = numStack.pollLast();
+                    int num2 = numStack.pollLast();
+  
+                    opStack.pollLast();
+                    if(prevOp == '*')
+                        numStack.addLast(num2 * num1);
+                    else 
+                        numStack.addLast(num2 / num1);
+                } 
+            }
+                
+            } else if(c == '+' || c == '-' || c == '*' || c == '/') {
+                opStack.addLast(c);
+            }
+        }  
+        
+    
+        System.out.println(numStack);
+        System.out.println(opStack);
+        
+        while(!numStack.isEmpty() && !opStack.isEmpty()) {
+            int num1 = numStack.pollFirst();
+            int num2 = numStack.pollFirst();
+            char op = opStack.pollFirst();
+            
+            if(op == '+') {
+                numStack.addFirst(num1 + num2);
+            } else {
+                numStack.addFirst(num1 - num2);
             }
         }
-        int result = 0;
-        while(!st.isEmpty()) {
-            result += st.pop();
+        
+        while(!numStack.isEmpty()) {
+            result += numStack.pop();
         }
+        
         
         return result;
     }
