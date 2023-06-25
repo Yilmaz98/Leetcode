@@ -38,10 +38,6 @@ class Solution {
             }
         }  
         
-    
-        System.out.println(numStack);
-        System.out.println(opStack);
-        
         while(!numStack.isEmpty() && !opStack.isEmpty()) {
             int num1 = numStack.pollFirst();
             int num2 = numStack.pollFirst();
