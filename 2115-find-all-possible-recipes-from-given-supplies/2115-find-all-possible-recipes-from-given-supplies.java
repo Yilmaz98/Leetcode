@@ -1,37 +1,60 @@
 class Solution {
     public List<String> findAllRecipes(String[] recipes, List<List<String>> ingredients, String[] supplies) {
-       Map<String, Set<String>> adj = new HashMap<>();
-       Map<String, Integer> indegree = new HashMap<>();
+        HashSet<String> sup = new HashSet<>();
+        HashMap<String, Integer> index = new HashMap<>();
+        HashMap<String, List<String>> map = new HashMap<>();
         
-        for(int i=0;i<recipes.length;i++) {
-            adj.put(recipes[i], new HashSet<>());
-            adj.get(recipes[i]).addAll(ingredients.get(i));
-        indegree.put(recipes[i], indegree.getOrDefault(recipes[i],0)+ adj.get(recipes[i]).size());
+        // create hashset of supplies
+        for(String s: supplies) {
+            sup.add(s);
         }
         
-        Queue<String> q = new LinkedList<>();
-        
-        for(String s : supplies) {
-            q.add(s);
+        // store index of all recipes
+        for(int i = 0; i < recipes.length; i++) {
+            index.put(recipes[i], i);
         }
         
-        List<String> result = new ArrayList<>();
+        int[] indegree = new int[recipes.length];
+        // create a mapping of all the recipes that are Ingredients as well
+        // to the recipes they are ingredients for
+        for(int i = 0; i < recipes.length; i++) {
+            for(String need: ingredients.get(i)) {
+                if(sup.contains(need))
+                    continue;
+                
+                map.putIfAbsent(need, new ArrayList<String>());
+                map.get(need).add(recipes[i]);
+                indegree[i]++;
+            }
+        }
         
+        LinkedList<Integer> q = new LinkedList<>();
+        // add all the recipes with indegree 0 to the queue
+        for(int i = 0; i < recipes.length; i++) {
+            if(indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+        
+        List<String> cooked = new ArrayList<>();
         while(!q.isEmpty()) {
-            String curr = q.poll();
+            int i = q.poll();
+            cooked.add(recipes[i]);
             
-            for(String s: adj.keySet()) {
-                if(adj.get(s).contains(curr)) {
-                    indegree.put(s,indegree.get(s)-1);
-                    if(indegree.get(s) == 0) {
-                        q.add(s);
-                        result.add(s);
-                    }
+            if(!map.containsKey(recipes[i])) {
+                // if the map does not contain this recipe, this means
+                // this recipe is not an ingredient for any other recipe
+                // and no further processing is required
+                continue;
+            }
+            
+            for(String recipe: map.get(recipes[i])) {
+                if(--indegree[index.get(recipe)] == 0) {
+                    q.add(index.get(recipe));
                 }
             }
         }
         
-        
-        return result;
+        return cooked;
     }
 }
