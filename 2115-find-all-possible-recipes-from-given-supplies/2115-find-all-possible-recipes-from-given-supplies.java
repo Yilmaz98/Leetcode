@@ -28,6 +28,8 @@ class Solution {
             }
         }
         
+        System.out.println(map);
+        
         LinkedList<Integer> q = new LinkedList<>();
         // add all the recipes with indegree 0 to the queue
         for(int i = 0; i < recipes.length; i++) {
@@ -35,6 +37,8 @@ class Solution {
                 q.add(i);
             }
         }
+        
+        System.out.println(map);
         
         List<String> cooked = new ArrayList<>();
         while(!q.isEmpty()) {
