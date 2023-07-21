@@ -6,17 +6,12 @@ class Solution {
             m.put(nums[i], i);
         }
         
-        int[] ans = new int[2];
-        
         for(int i=0;i<nums.length;i++) {
-            if(m.containsKey(target-nums[i]) && m.get(target-nums[i]) != i) {
-                ans[0] = i;
-                ans[1] = m.get(target-nums[i]);
-                break;
+            if(m.containsKey(target - nums[i]) && m.get(target - nums[i]) != i) {
+                return new int[]{i, m.get(target - nums[i])};
             }
-              
         }
         
-        return ans;
-    }
+        return new int[]{-1,-1};
+    } 
 }
