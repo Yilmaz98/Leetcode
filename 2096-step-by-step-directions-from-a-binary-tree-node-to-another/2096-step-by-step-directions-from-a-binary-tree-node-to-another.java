@@ -14,22 +14,54 @@
  * }
  */
 class Solution {
-    private boolean find(TreeNode n, int val, StringBuilder sb) {
-    if (n.val == val) 
-        return true;
-    if (n.left != null && find(n.left, val, sb))
-        sb.append("L");
-    else if (n.right != null && find(n.right, val, sb))
-        sb.append("R");
-    return sb.length() > 0;
-}
-public String getDirections(TreeNode root, int startValue, int destValue) {
-    StringBuilder s = new StringBuilder(), d = new StringBuilder();
-    find(root, startValue, s);
-    find(root, destValue, d);
-    int i = 0, max_i = Math.min(d.length(), s.length());
-    while (i < max_i && s.charAt(s.length() - i - 1) == d.charAt(d.length() - i - 1))
-        ++i;
-    return "U".repeat(s.length() - i) + d.reverse().toString().substring(i);
-}
+    public String getDirections(TreeNode root, int startValue, int destValue) {
+        TreeNode ancestor = lowestCommonAncestor(root, startValue, destValue);
+        
+        List<Character> toStart = new ArrayList<>();
+        getDirections(ancestor,startValue,toStart);
+        
+        List<Character> toDest = new ArrayList<>();
+        getDirections(ancestor,destValue,toDest);
+        
+        StringBuilder result = new StringBuilder();
+        for(int i=0;i<toStart.size();i++) 
+            result.append('U');
+        
+        for(char c : toDest)
+            result.append(c);
+        
+        return result.toString();
+    }
+    
+    public boolean getDirections(TreeNode root, int target, List<Character> dirs) {
+        if(root == null)
+            return false;
+        
+        dirs.add('L');
+        if(getDirections(root.left, target, dirs))
+            return true;
+        dirs.remove(dirs.size() -1);
+        
+        dirs.add('R');
+        if(getDirections(root.right, target, dirs))
+            return true;
+        dirs.remove(dirs.size() -1);
+        
+        return root.val == target;
+    }
+    
+    public TreeNode lowestCommonAncestor(TreeNode root, int p, int q) {
+        if(root == null || root.val == p || root.val == q)
+            return root;
+        
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        
+        if(left != null && right != null)
+            return root;
+        else if(left == null)
+            return right;
+        else
+            return left;
+    }
 }
