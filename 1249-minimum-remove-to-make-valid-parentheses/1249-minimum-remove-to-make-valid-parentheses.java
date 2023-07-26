@@ -1,24 +1,22 @@
 class Solution {
-
     public String minRemoveToMakeValid(String s) {
-
-        // Pass 1: Remove all invalid ")"
-        StringBuilder sb = new StringBuilder();
         int openSeen = 0;
         int balance = 0;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '(') {
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i=0;i<s.length();i++) {
+            if(s.charAt(i) == '(') {
                 openSeen++;
                 balance++;
-            } if (c == ')') {
-                if (balance == 0) continue;
+            } else if(s.charAt(i) == ')') {
+                if(balance == 0)
+                    continue;
                 balance--;
             }
-            sb.append(c);
+            sb.append(s.charAt(i));
         }
-
-        // Pass 2: Remove the rightmost "("
+        
+             // Pass 2: Remove the rightmost "("
         StringBuilder result = new StringBuilder();
         int openToKeep = openSeen - balance;
         for (int i = 0; i < sb.length(); i++) {
