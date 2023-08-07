@@ -44,7 +44,7 @@ class Solution {
                 int newX = curr[0] + dir[i][0];
                 int newY = curr[1] + dir[i][1];
                 
-                if(newX >=0 && newX < m && newY >= 0 && newY < n && rooms[newX][newY] != -1 && rooms[newX][newY] != 0 && !visited[newX][newY]) {
+                if(newX >=0 && newX < m && newY >= 0 && newY < n && rooms[newX][newY] == INF && !visited[newX][newY]) {
                     if(dist[curr[0]][curr[1]] + 1 < dist[newX][newY] ) {
                         dist[newX][newY] = dist[curr[0]][curr[1]] + 1;
                     }
