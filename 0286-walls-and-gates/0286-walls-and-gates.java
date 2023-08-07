@@ -13,7 +13,7 @@ class Solution {
             Arrays.fill(dist[i], Integer.MAX_VALUE);
         }
         
-        boolean[][] visited = new boolean[m][n];
+        boolean[][] visited;
         
         for(int i=0;i<rooms.length;i++) {
             for(int j=0;j<rooms[0].length;j++) {
