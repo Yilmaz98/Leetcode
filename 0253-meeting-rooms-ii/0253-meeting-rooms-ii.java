@@ -1,30 +1,22 @@
-
-class Solution {    
+class Solution {
     public int minMeetingRooms(int[][] intervals) {
         Arrays.sort(intervals, (a,b) -> a[0] - b[0]);
-        if(intervals.length == 0)
-            return 0;
         
-        
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
-            public int compare(int[] a, int[] b){
-                return a[1] - b[1];
+        int minConferenceRooms = 1;
+    
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a,b) -> a[1] - b[1]);
+        queue.offer(new int[]{intervals[0][0], intervals[0][1]});
+        for(int i=1;i<intervals.length;i++) {
+            int endTime = queue.peek()[1];
+            int startTime = intervals[i][0];
+            if(endTime > startTime) {
+                minConferenceRooms++;
+            } else{
+                queue.poll();
             }
-        });
-        int ans = 1;
-        for(int[] interval : intervals) {
-            if(!pq.isEmpty()) 
-            {
-                int[] prev = pq.peek();
-                
-                if(prev[1] > interval[0]) 
-                    ans++;
-                else 
-                    pq.poll();
-            }
-            pq.add(interval);
+            queue.offer(new int[]{intervals[i][0],intervals[i][1]});
         }
-            
-        return ans;
+        
+        return minConferenceRooms;
     }
 }
