@@ -1,54 +1,54 @@
 class Solution {
+    List<String> result = new ArrayList<>();
     public List<String> generateParenthesis(int n) {
-        int openN = 0;
-        int closedN = 0;
-        
-        List<String> result = new ArrayList<>();
-        
-        generate(openN,closedN, result,n, "");
-        
+        int open = n, closed = n;
+        generate(open, closed, new StringBuilder());
         return result;
     }
     
-    public boolean wellFormed(String s) {
+    public boolean checkString(String s) {
         Stack<Character> st = new Stack<>();
         
         for(int i=0;i<s.length();i++) {
-            if(s.charAt(i)=='(')
-                st.push(s.charAt(i));
-            
-            if(s.charAt(i) == ')') {
-                if(st.isEmpty()) {
+            if(s.charAt(i) == '(') {
+                st.add(s.charAt(i));
+            } else {
+                if(st.isEmpty())
                     return false;
+                else {
+                    if(st.peek() == ')')
+                        return false;
+                    else 
+                         st.pop();
                 }
-                
-                if(st.peek()!='(')
-                    return false;
-                
-                st.pop();
+               
+            }
+        }
+        return true;
+    }
+    
+    public void generate(int open, int closed, StringBuilder sb) {
+        if(open == 0 && closed == 0) {
+
+            boolean valid = checkString(sb.toString());
+            if(valid) {
+                result.add(sb.toString());
+                return;
             }
         }
         
-        return true;
-        
-    }
-    
-    public void generate(int o, int c, List<String> result, int n, String curr) {
-        
-        if(o == n && c == n ) {
-            if(wellFormed(curr))
-                result.add(curr);
+        if(open < 0 || closed < 0) {
             return;
         }
         
-        if(o < n) {
-            generate(o+1,c,result, n, curr + "(");
-        }
-        
-         if(c < n) {
-            generate(o,c+1,result, n, curr + ")");
-        }
-        
-        return;
+        sb.append("(");
+        generate(open-1, closed, sb);
+        if(sb.length() != 0)
+        sb.deleteCharAt(sb.length()-1);
+        sb.append(")");
+        generate(open, closed - 1, sb);
+        if(sb.length() != 0)
+        sb.deleteCharAt(sb.length()-1);
     }
+    
 }
