@@ -1,34 +1,26 @@
 class Solution {
     public int[][] merge(int[][] intervals) {
-        if(intervals.length <= 1)
-            return intervals;
+        Arrays.sort(intervals, (a,b)-> a[0] - b[0]);
+        Deque<int[]> q = new ArrayDeque<>();
+        q.addLast(intervals[0]);
         
-        Stack<int[]> st = new Stack<>();
         
-        Arrays.sort(intervals, (a,b) -> a[0] - b[0]);
-        for(int i=0;i<intervals.length;i++) {
-            if(st.isEmpty()) {
-                st.push(intervals[i]);
+        for(int i=1;i<intervals.length;i++) {
+            if(intervals[i][0] <= q.peekLast()[1]) {
+                int[] prev = q.pollLast();
+                prev[1] = Math.max(prev[1], intervals[i][1]);
+                q.addLast(prev);
             } else {
-                int[] prev = st.pop();
-                int[] curr = intervals[i];
-                
-                if(prev[1] >= curr[0]) {
-                    st.push(new int[]{prev[0], Math.max(prev[1],curr[1])});
-                } else {
-                    st.push(prev);
-                    st.push(curr);
-                }
-                
+                q.addLast(intervals[i]);
             }
         }
         
-        int[][] arr = new int[st.size()][2];
-        
-        for(int i = arr.length - 1;i>=0;i--) {
-            arr[i] = st.pop();
+        int[][] result = new int[q.size()][2];
+        int idx = 0;
+        while(!q.isEmpty()) {
+            result[idx++] = q.pollLast();
         }
         
-        return arr;
+        return result;
     }
 }
