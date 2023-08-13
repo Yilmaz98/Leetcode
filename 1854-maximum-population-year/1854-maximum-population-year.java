@@ -14,7 +14,7 @@ class Solution {
             sum += m.get(curr);
             if(sum > result) {
                 year = curr;
-                result = Math.max(result, sum);
+                result = sum;
             }
             
         }
