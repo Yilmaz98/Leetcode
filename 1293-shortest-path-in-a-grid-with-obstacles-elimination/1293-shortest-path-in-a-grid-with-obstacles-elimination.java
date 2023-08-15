@@ -5,7 +5,10 @@ class Solution {
     public int bfs(int[][] grid, int m, int n, int k) {
         Queue<int[]> q = new LinkedList<>();
         q.offer(new int[]{0,0,k});
-        boolean[][][] visited = new boolean[m][n][k+1];
+        int[][] visited = new int[m][n];
+        
+        for(int i=0;i<m;i++)
+            Arrays.fill(visited[i], -1);
         int steps = 0;
         while(!q.isEmpty()) {
         int size = q.size();
@@ -18,13 +21,13 @@ class Solution {
               int newX = curr[0] + dirX[i];
               int newY = curr[1] + dirY[i];
               int obs = curr[2];                
-             if(newX>=0 && newX < m && newY >= 0 && newY< n && obs>=0 && !visited[newX][newY][obs]) {
-                  visited[newX][newY][obs] = true;
-                 if(grid[newX][newY] == 1) {
-                    q.add(new int[]{newX,newY, obs - 1}); 
-                 } else {
-                     q.add(new int[]{newX,newY,obs}); 
-                 } 
+             if(newX>=0 && newX < m && newY >= 0 && newY< n && obs>=0) {
+                 int newK = grid[newX][newY] == 1 ? obs - 1 : obs;
+                 if(newK<= visited[newX][newY])
+                     continue;
+                 
+                    visited[newX][newY] = newK;
+                    q.add(new int[]{newX,newY, newK}); 
              }
             }
                     
