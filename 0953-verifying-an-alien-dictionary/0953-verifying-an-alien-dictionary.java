@@ -1,42 +1,29 @@
 class Solution {
-    public boolean compare(String word1, String word2, Map<Character, Integer> m) {
-        int i = 0;
-        int j = 0;
-                
-        while(i < word1.length() && j < word2.length()) {   
-            if(m.get(word1.charAt(i)) > m.get(word2.charAt(i)))
-                return false;
-            else if(m.get(word1.charAt(i)) < m.get(word2.charAt(i)))
-                return true;
-            i++;
-            j++;
-        }
-        
-        if(i < word1.length())
-            return false;
-        
-        return true;
-    }
-    
     public boolean isAlienSorted(String[] words, String order) {
-        Map<Character, Integer> m = new HashMap<>();
+        int[] orderMap = new int[26];
         
-        for(int i=0;i<order.length();i++) {
-            m.put(order.charAt(i), i);
+        for (int i = 0; i < order.length(); i++){
+            orderMap[order.charAt(i) - 'a'] = i;
         }
-        
-        
-        for(int i=0;i<words.length;i++) {
-            for(int j=i+1;j<words.length;j++) {
-                String word1 = words[i];
-                String word2 = words[j];
-                
-                if(!compare(word1, word2, m)) {
-                    return false;
-                }
+
+        for (int i = 0; i < words.length - 1; i++) {
+            String curr = words[i];
+            String next = words[i+1];
+            
+            if(next.length() < curr.length() && curr.startsWith(next)) return false;
+            
+            int minLength = Math.min(next.length(), curr.length());
+            
+            for (int j = 0; j < minLength; j++) {
+               if(curr.charAt(j) != next.charAt(j)) {
+                   if(orderMap[curr.charAt(j) -'a'] > orderMap[next.charAt(j) -'a'])
+                       return false;
+                   
+                   break;
+               }
             }
         }
-        
+
         return true;
     }
 }
