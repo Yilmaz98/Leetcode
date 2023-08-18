@@ -1,34 +1,53 @@
 class Solution {
     public int[] sortArray(int[] nums) {
-        mergeSort(nums,0,nums.length-1);
+        mergeSort(nums, 0, nums.length - 1);
         return nums;
     }
-    public static void mergeFun(int[] arr, int l, int m, int r) {
-        int n1 = m + 1 - l;
-        int n2 = r - m;
-        int[] left = new int[n1];
-        for (int i = 0; i < n1; i++) {
-            left[i] = arr[l + i];
-        }
-        int[] right = new int[n2];
-        for (int i = 0; i < n2; i++) {
-            right[i] = arr[m + 1 + i];
-        }
-        int i = 0, j = 0, k = l;
-        while (i < n1 || j < n2) {
-            if (j == n2 || i < n1 && left[i] < right[j])
-                arr[k++] = left[i++];
-            else
-                arr[k++] = right[j++];
+    
+    public void mergeSort(int[] nums, int low, int high) {
+        if(low < high) {
+            int mid = low + (high - low) /2;
+            
+            mergeSort(nums, low, mid);
+            mergeSort(nums, mid + 1, high);
+            merge(nums, low, mid, high);
         }
     }
-
-    public static void mergeSort(int[] arr, int low, int high) {
-        if (low < high) {
-            int middle = (high - low) / 2 + low;
-            mergeSort(arr, low, middle);
-            mergeSort(arr, middle + 1, high);
-            mergeFun(arr, low, middle, high);
+    
+    public void merge(int[] nums, int low, int mid, int high) {
+        
+        int[] left = new int[mid - low +1];
+        int[] right = new int[high - mid];
+        
+            
+        for(int i=0;i<left.length;i++) {
+            left[i] = nums[low + i];
+        }
+            
+        for(int i=0;i<right.length;i++) {
+            right[i] = nums[mid + i + 1];
+        }
+        
+                int i = 0;
+        int j = 0;
+        int m = left.length;
+        int n = right.length;
+        int idx = low;
+        
+        while(i < m && j < n) {
+            if(left[i] <= right[j]) {
+                nums[idx++] = left[i++];
+            } else {
+                nums[idx++] = right[j++];
+            }
+        }
+        
+        while(i < m) {
+            nums[idx++] = left[i++];
+        }
+        
+        while(j < n) {
+            nums[idx++] = right[j++];
         }
     }
 }
