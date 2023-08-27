@@ -22,10 +22,17 @@ class Solution {
         return false;
     }
     
-    public boolean matches(Map<Character, Integer> m1, Map<Character, Integer> m2) {
+    public boolean matches(Map<Character, Integer> m1, Map<Character, Integer> m2) {        
         for(Character c : m1.keySet()) {
-            if(m1.get(c) - m2.getOrDefault(c,-1) != 0)
-                return false;
+            if(!m2.containsKey(c)) {
+                return false; 
+            }
+               
+            
+            if(m1.get(c) - m2.get(c) != 0) {
+                 return false;
+            }
+               
         }
         
         return true;
