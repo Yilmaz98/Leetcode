@@ -3,7 +3,6 @@ class Solution {
         if(Math.abs(s.length() - t.length()) > 1)
             return false;
         
-        Map<Character, Integer> m = new HashMap<>();
         if(s.length() == t.length()) {
              int ans = 0;
             for(int i=0;i<s.length();i++) {
@@ -30,18 +29,7 @@ class Solution {
                
                return j == s.length();
            } else {
-               int i = 0;
-               int j = 0;
-               while(i < s.length() && j < t.length()) {
-                   if(s.charAt(i) != t.charAt(j)) {
-                       i++;
-                       continue;
-                   }
-                   
-                   j++;
-                   i++;
-               }
-               return j == t.length();
+               return isOneEditDistance(t,s);
            }
         }
     }
