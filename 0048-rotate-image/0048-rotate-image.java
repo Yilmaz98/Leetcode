@@ -1,27 +1,27 @@
 class Solution {
     public void rotate(int[][] matrix) {
         transpose(matrix);
-        reverse(matrix);
+        flip(matrix);
     }
     
-    public void transpose(int[][] matrix) {
-        int n = matrix.length;
+    public void transpose(int[][] arr) {
+        int n = arr.length;
         for(int i=0;i<n;i++) {
             for(int j=0;j<i;j++) {
-                int temp =  matrix[i][j];
-                matrix[i][j] = matrix[j][i];
-                matrix[j][i] = temp;
+                int temp = arr[i][j];
+                arr[i][j] = arr[j][i];
+                arr[j][i] = temp;
             }
         }
     }
     
-    public void reverse(int[][] matrix) {
-        int n = matrix.length;
+    public void flip(int[][] arr) {
+            int n = arr.length;
         for(int i=0;i<n;i++) {
             for(int j=0;j<n/2;j++) {
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[i][n-j-1];
-                matrix[i][n-j-1] = temp;
+                int temp = arr[i][j];
+                arr[i][j] = arr[i][n-j-1];
+                arr[i][n-j-1] = temp;
             }
         }
     }
