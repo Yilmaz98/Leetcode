@@ -37,7 +37,6 @@ class Solution {
         ListNode rev = reverse(slow);
         
         while(temp != null && rev != null) {
-            System.out.println(temp.val + ":" + rev.val);
             if(temp.val != rev.val)
                 return false;
             
