@@ -23,7 +23,6 @@ class Solution {
             return false;
               
         if(head.val != front.val) {
-             front = front.next;
             return false;
         }
             
