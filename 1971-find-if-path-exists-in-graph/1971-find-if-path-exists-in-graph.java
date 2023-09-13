@@ -4,38 +4,39 @@ class Solution {
         for(int[] edge : edges) {
             if(!adj.containsKey(edge[0]))
                 adj.put(edge[0], new ArrayList<>());
-            
-            if(!adj.containsKey(edge[1]))
+              if(!adj.containsKey(edge[1]))
                 adj.put(edge[1], new ArrayList<>());
             
             adj.get(edge[0]).add(edge[1]);
-            adj.get(edge[1]).add(edge[0]);   
+            adj.get(edge[1]).add(edge[0]);
         }
         
-        Queue<Integer> q = new LinkedList<>();
-        q.add(source);
         
-        Set<Integer> visited = new HashSet<>();
         
-        while(!q.isEmpty()) {
-            Integer curr = q.poll();
-            visited.add(curr);    
-            
-            if(curr == destination) {
-                return true;
-            }
-            
-            if(!adj.containsKey(curr))
-                continue;
-            
-            for(int ne : adj.get(curr)) {
-                if(!visited.contains(ne)) {
-                    visited.add(ne);
-                    q.add(ne);
-                }   
+        return dfs(source, adj, destination, new HashSet<>());
+    }
+    
+    public boolean dfs(int curr, Map<Integer, List<Integer>> adj, int destination, Set<Integer> visited) { 
+        if(visited.contains(curr))
+            return false;
+        
+        visited.add(curr);
+        
+        if(curr == destination) {
+            return true;
+        }
+                
+        if(!adj.containsKey(curr))
+            return false;
+        
+        for(int n : adj.get(curr)) {
+            if(!visited.contains(n)) {
+                if(dfs(n, adj, destination, visited)) {
+                   return true; 
+                }
+                    
             }
         }
-        
         
         return false;
     }
