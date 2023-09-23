@@ -1,29 +1,44 @@
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         int m = triangle.size();
-        int n = triangle.get(m-1).size();
+        int[][] dp = new int[m+1][m+1];
         
-        int[][] dp = new int[m+1][n+1];
-        
-        for(int i=0;i<=m;i++) {
-            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        for(int i=0;i<m;i++) {
+            Arrays.fill(dp[i], -1);
         }
         
-        dp[1][1] = triangle.get(0).get(0);
+        return backtrack(triangle, m-1, 0, m, dp);
+    }
+    
+    public int backtrack(List<List<Integer>> triangle, int row, int col, int m, int[][] dp) {
+        if(row == 0 && col == 0)
+            return triangle.get(row).get(col);
         
-        for(int i=2;i<=m;i++) {
-            for(int j=1;j<=triangle.get(i-1).size();j++) {
-                dp[i][j] = Math.min(dp[i-1][j], dp[i-1][j-1]) + triangle.get(i-1).get(j-1);
-            }
+        if(col < 0 || row < 0 || col >= triangle.get(row).size())
+            return 100000;
+        
+        if(dp[row][col] != -1)
+            return dp[row][col];
+        
+        int mini = Integer.MAX_VALUE;
+        int curr = 0;
+        
+        if(row == m-1)  {
+             for(col = 0;col < triangle.get(row).size();col++) {
+                int up = triangle.get(row).get(col) + backtrack(triangle, row - 1, col,m,dp);
+                int diagonal = triangle.get(row).get(col) + backtrack(triangle, row - 1, col - 1,m,dp);
+                        
+                curr = Math.min(up, diagonal);
+                mini = Math.min(mini, curr);
+        }
+        } else {
+            int up = triangle.get(row).get(col) + backtrack(triangle, row - 1, col,m,dp);
+            int diagonal = triangle.get(row).get(col) + backtrack(triangle, row - 1, col - 1,m,dp);
+            
+            curr = Math.min(up, diagonal);
+            mini = Math.min(mini, curr);
         }
         
-        int result = Integer.MAX_VALUE;
-
-        
-        for(int i=0;i<=n;i++) {
-            result = Math.min(result, dp[m][i]);
-        }
-        
-        return result;
+        return dp[row][col] = mini;
     }
 }
