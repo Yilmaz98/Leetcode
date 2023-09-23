@@ -3,42 +3,28 @@ class Solution {
         int m = triangle.size();
         int[][] dp = new int[m+1][m+1];
         
-        for(int i=0;i<m;i++) {
-            Arrays.fill(dp[i], -1);
+        for(int i=0;i<dp.length;i++) {
+            Arrays.fill(dp[i], 100000);
         }
         
-        return backtrack(triangle, m-1, 0, m, dp);
-    }
-    
-    public int backtrack(List<List<Integer>> triangle, int row, int col, int m, int[][] dp) {
-        if(row == 0 && col == 0)
-            return triangle.get(row).get(col);
+        dp[0][0] = triangle.get(0).get(0);
         
-        if(col < 0 || row < 0 || col >= triangle.get(row).size())
-            return 100000;
-        
-        if(dp[row][col] != -1)
-            return dp[row][col];
-        
-        int mini = Integer.MAX_VALUE;
-        int curr = 0;
-        
-        if(row == m-1)  {
-             for(col = 0;col < triangle.get(row).size();col++) {
-                int up = triangle.get(row).get(col) + backtrack(triangle, row - 1, col,m,dp);
-                int diagonal = triangle.get(row).get(col) + backtrack(triangle, row - 1, col - 1,m,dp);
-                        
-                curr = Math.min(up, diagonal);
-                mini = Math.min(mini, curr);
-        }
-        } else {
-            int up = triangle.get(row).get(col) + backtrack(triangle, row - 1, col,m,dp);
-            int diagonal = triangle.get(row).get(col) + backtrack(triangle, row - 1, col - 1,m,dp);
-            
-            curr = Math.min(up, diagonal);
-            mini = Math.min(mini, curr);
+        for(int i = 1;i<triangle.size();i++) {
+            for(int j = 0;j<triangle.get(i).size();j++) {
+                
+                int up = i > 0 && j < triangle.get(i).size() ? triangle.get(i).get(j) + dp[i - 1][j] : 100000;
+                int diagonal = i > 0 && j > 0 ? triangle.get(i).get(j) + dp[i - 1][j - 1] : 100000;
+                
+                int curr = Math.min(up, diagonal);
+                dp[i][j] = Math.min(dp[i][j], curr);
+            }
         }
         
-        return dp[row][col] = mini;
+        int result = Integer.MAX_VALUE;
+        for(int i =0;i<triangle.get(m-1).size();i++) {
+            result = Math.min(result,dp[m-1][i]);
+        }
+        
+        return result;
     }
 }
