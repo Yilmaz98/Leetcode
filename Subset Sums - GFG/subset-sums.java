@@ -36,7 +36,8 @@ class Solution{
     ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
         // code here
         ArrayList<Integer> sums = new ArrayList<>();
-        backtrack(arr, 0, 0, sums);
+        backtrack(arr,0,0,sums);
+        
         return sums;
     }
     
