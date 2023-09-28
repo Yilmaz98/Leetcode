@@ -39,16 +39,17 @@ class Solution
         if(n <= 2)
             return n;
         
-        // your code here
-        int[] dp = new int[n+1];
-        dp[1] = 1;
-        dp[2] = 2;
+        int prev = 2;
+        int prevprev = 1;
+        int curr = 0;
         
         for(int i=3;i<=n;i++) {
-            dp[i] = (dp[i-1] + dp[i-2]) % (int) (Math.pow(10,9) + 7);
+            curr = (prev + prevprev) % (int) (Math.pow(10,9) + 7);
+            prevprev = prev;
+            prev = curr;
         }
         
-        return dp[n];
+        return prev;
     }
 }
 
