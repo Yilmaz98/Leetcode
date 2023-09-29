@@ -7,19 +7,17 @@ class Solution {
             if(word.charAt(i) == abbr.charAt(j)) {
                 i++;
                 j++;
-                continue;
             }
-            
-            if(Character.isDigit(abbr.charAt(j))) {
-                int sum  = 0;
-                while(j< abbr.length() && Character.isDigit(abbr.charAt(j))) {
-                    if(sum == 0 && (abbr.charAt(j) - '0') == 0)
+            else if(Character.isDigit(abbr.charAt(j))) {
+                int digit = 0;
+                while(j < abbr.length() && Character.isDigit(abbr.charAt(j))) {
+                    if(digit == 0 && abbr.charAt(j) == '0')
                         return false;
-                    sum = sum * 10 + (abbr.charAt(j) - '0');
+                    digit = digit * 10 + abbr.charAt(j) - '0';
                     j++;
                 }
-                i += sum;
-            } else if(word.charAt(i) != abbr.charAt(j)) {
+                i += digit;
+            } else {
                 return false;
             }
         }
