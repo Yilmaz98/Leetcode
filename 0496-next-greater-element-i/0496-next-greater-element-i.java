@@ -4,11 +4,9 @@ class Solution {
         Stack<Integer> st = new Stack<>();
         
         for(int i=0;i<nums2.length;i++) {
-            if(!st.isEmpty()) {
-                while(!st.isEmpty() && st.peek() <= nums2[i]) {
+            while(!st.isEmpty() && st.peek() <= nums2[i]) {
                    m.put(st.peek(), nums2[i]); 
                    st.pop();
-                }
             }
             
             st.push(nums2[i]);
