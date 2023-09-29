@@ -1,23 +1,24 @@
 class Solution {
     public int[] findBuildings(int[] heights) {
-        List<Integer> result = new ArrayList<>();
-        int n = heights.length;
-        int prev = heights[n-1];
-        result.add(n-1);
+        List<Integer> arr = new ArrayList<>();
+        arr.add(heights.length-1);
         
-        for(int i=n-2;i>=0;i--) {
-            if(heights[i] > prev) {
-                result.add(0, i);
-                prev = heights[i];
-            }
+        int max = heights[heights.length-1];
+        
+        for(int i=heights.length-2;i>=0;i--) {
+            if(max < heights[i]) {
+                max = heights[i];
+                arr.add(i);
+            } else 
+                continue;
         }
         
-        int[] ans = new int[result.size()];
+        int[] result = new int[arr.size()];
         
-        for(int i=0;i<result.size();i++) {
-            ans[i] = result.get(i);
+        for(int i = arr.size()-1;i>=0;i--) {
+            result[arr.size() - i - 1] = arr.get(i);
         }
         
-        return ans;
+        return result;
     }
 }
