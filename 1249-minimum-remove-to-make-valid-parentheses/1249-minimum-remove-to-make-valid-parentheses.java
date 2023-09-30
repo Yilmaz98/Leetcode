@@ -15,9 +15,7 @@ class Solution {
             }
             sb.append(s.charAt(i));
         }
-        
-
-        
+    
         // Remove starting paranthesis which are unnecessary
         int openToKeep = open - balance;
         StringBuilder sb2 = new StringBuilder();
