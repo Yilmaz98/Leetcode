@@ -9,38 +9,61 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+        Stack<TreeNode> firstNodePath = new Stack<>();
+        Set<TreeNode> secondNodePath = new HashSet<>();
         
-        parentMap.put(root, null);
-        Queue<TreeNode> qu = new LinkedList<>();
-        qu.offer(root);
+        inorderFirst(root, p, firstNodePath);
+        inorderSecond(root, q, secondNodePath);
         
-        while(!parentMap.containsKey(p) || !parentMap.containsKey(q) ) {
-            TreeNode n = qu.poll();
+        while(!firstNodePath.isEmpty()) {
+            TreeNode curr = firstNodePath.pop();
+            if(secondNodePath.contains(curr))
+                return curr;
+        }
+        
+        
+        return root;
+    }
+    
+    public boolean inorderFirst(TreeNode root, TreeNode p, Stack<TreeNode> firstNodePath) {
+        if(root != null) {
+            firstNodePath.add(root);
             
-            if(n.left != null) {
-               qu.offer(n.left);
-                parentMap.put(n.left, n);
+            if(!firstNodePath.isEmpty() && firstNodePath.peek() == p) {
+                return true;
             }
-                
-            if(n.right != null) {
-                qu.offer(n.right);
-                 parentMap.put(n.right, n);
-            }   
+            
+            if(inorderFirst(root.left, p, firstNodePath))
+                return true;
+          
+            
+            if(inorderFirst(root.right, p, firstNodePath)) {
+                    return true;
+            }
+            
+            firstNodePath.pop();
         }
-        
-        Set<TreeNode> ancestors = new HashSet<>();
-        
-        while(p !=null) {
-            ancestors.add(p);
-            p = parentMap.get(p);
+        return false;
+    }
+    
+    public boolean inorderSecond(TreeNode root, TreeNode p, Set<TreeNode> secondNodePath) {
+        if(root != null) {
+            secondNodePath.add(root);
+            
+            if(secondNodePath.contains(p)) {
+                return true;
+            }
+            
+            if(inorderSecond(root.left, p, secondNodePath))
+                return true;
+          
+            
+            if(inorderSecond(root.right, p, secondNodePath)) {
+                    return true;
+            }
+            
+            secondNodePath.remove(root);
         }
-        
-        while(!ancestors.contains(q)) {
-            q = parentMap.get(q);
-        }
-        
-        return q;
-        
+        return false;
     }
 }
