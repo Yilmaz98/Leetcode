@@ -22,10 +22,12 @@ class Solution {
     
     public void inorder(TreeNode root, int low, int high) {
         if(root != null) {
-                    inorder(root.left, low, high);
+          if (low < root.val)
+             inorder(root.left, low, high);
         if(root.val <= high && root.val >= low) {
             sum += root.val;
         }
+                if (root.val < high)
         inorder(root.right, low, high);
         }
     }
