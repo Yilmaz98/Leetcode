@@ -15,18 +15,18 @@
  */
 class Solution {
     int sum = 0;
-    public void dfs(TreeNode root, int low, int high) {
-        if(root != null) {
-            if(root.val >= low && root.val <= high) {
-                sum += root.val;
-            }
-            dfs(root.left, low, high);
-            dfs(root.right, low, high);
-        }    
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        inorder(root, low, high);
+        return sum;
     }
     
-    public int rangeSumBST(TreeNode root, int low, int high) {
-        dfs(root, low, high);
-        return sum;
+    public void inorder(TreeNode root, int low, int high) {
+        if(root != null) {
+                    inorder(root.left, low, high);
+        if(root.val <= high && root.val >= low) {
+            sum += root.val;
+        }
+        inorder(root.right, low, high);
+        }
     }
 }
