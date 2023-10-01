@@ -8,41 +8,28 @@
  * }
  */
 class Solution {
+    TreeNode ans;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+        ans = null;
+        recurseTree(root, p, q);
+        return ans;
+    }
+    
+    
+    public int recurseTree(TreeNode root, TreeNode p, TreeNode q) {        
+        if(root == null)
+            return 0;
         
-        Queue<TreeNode> qu = new LinkedList<>();
-        qu.add(root);
+        int left = recurseTree(root.left, p, q) > 0 ? 1 : 0;
+        int right = recurseTree(root.right, p, q) > 0 ? 1 : 0;
         
-        while(!qu.isEmpty()) {
-            TreeNode curr = qu.poll();
-            
-            if(curr.left != null) {
-                parentMap.put(curr.left,curr);
-                qu.add(curr.left);
-            }
-            
-            if(curr.right != null) {
-                 parentMap.put(curr.right,curr);
-                 qu.add(curr.right);
-            }
+        int mid = (root == p) || (root == q) ? 1 : 0;
+        
+        if(mid + left + right >= 2) {
+            ans = root;
+            return 1;
         }
         
-        if(!parentMap.containsKey(p) || !parentMap.containsKey(q))
-                return null;
-        
-        
-        Set<TreeNode> ancestors = new HashSet<>();
-        
-        while(p != null) {
-            ancestors.add(p);
-            p = parentMap.get(p);
-        }
-        
-        while(!ancestors.contains(q)) {
-            q = parentMap.get(q);
-        }
-        
-        return q;
+        return (mid + left + right > 0 ? 1 : 0);
     }
 }
