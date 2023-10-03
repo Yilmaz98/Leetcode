@@ -1,66 +1,56 @@
 class Solution {
-    public Map<Character, Integer> precedenceMap() {
-        Map<Character, Integer> m = new HashMap<>();
-        m.put('+', 1);
-        m.put('-', 1);
-        m.put('*',2);
-        m.put('/',2);
-        m.put('(',0);
-        
-        return m;
-        
-    }
-    
-    public int applyOp(char op, int b, int a) {
-        switch(op) {
-            case '+': return a + b;
-            case '-': return a - b;
-            case '*': return a * b;
-            case '/': return a / b;
-        }
-        
-        return Integer.MIN_VALUE;
+    public int precedence(char op) {
+        if(op == '/' || op == '*')
+            return 2;
+        else if (op == '+' || op == '-') 
+            return 1;
+         else 
+            return 0;
     }
     
     public int calculate(String s) {
-        char[] tokens = s.toCharArray();
-        
-        Map<Character, Integer> m = precedenceMap();
         Stack<Integer> nums = new Stack<>();
         Stack<Character> ops = new Stack<>();
+        int ans = 0;
         
-        
-        for(int i=0;i<tokens.length;i++) {
-            char c = tokens[i];
-            
-            if(Character.isDigit(c)) {
-                int num = 0;
-                while(i < tokens.length && Character.isDigit(tokens[i])) {
-                    num = num * 10 + (tokens[i]  - '0');
+        for(int i=0;i<s.length();i++) {
+            if(Character.isDigit(s.charAt(i))) {
+                int result = 0;
+                while(i < s.length() && Character.isDigit(s.charAt(i))) {
+                    result = result * 10 + s.charAt(i) - '0';
                     i++;
                 }
-                nums.add(num);
+                nums.add(result);
                 i--;
-            }
-            else if(c == '(') {
-                ops.push(c);
-            } else if(c == ')') {
+            } else if(s.charAt(i) == '(') {
+                ops.add(s.charAt(i));
+            } else if(s.charAt(i) == ')') {
                 while(ops.peek() != '(') {
-                    nums.push(applyOp(ops.pop(), nums.pop(), nums.pop()));
+                    nums.add(calculate(ops.pop(), nums.pop(), nums.pop()));
                 }
                 ops.pop();
-            } else {
-                while(!ops.isEmpty() && m.get(c) <= m.get(ops.peek()))
-                    nums.push(applyOp(ops.pop(), nums.pop(), nums.pop()));
-                    
-                ops.push(c);
+            } else if(s.charAt(i) == '+' || s.charAt(i) == '-' || s.charAt(i) == '*' || s.charAt(i) == '/') {
+            while(!ops.isEmpty() && precedence(ops.peek()) >= precedence(s.charAt(i))) {
+                nums.add(calculate(ops.pop(), nums.pop(), nums.pop()));
+            }
+            ops.add(s.charAt(i));
             }
         }
         
         while(!ops.isEmpty()) {
-             nums.push(applyOp(ops.pop(), nums.pop(), nums.pop()));
+            nums.add(calculate(ops.pop(), nums.pop(), nums.pop()));
         }
         
         return nums.pop();
+    }
+    
+    public int calculate(char op, int b, int a) {
+        switch(op) {
+            case '+' : return a + b;
+            case '-' : return a - b;
+            case '*' : return a * b;
+            case '/' : return a / b;
+        }
+        return -1;
     }
 }
