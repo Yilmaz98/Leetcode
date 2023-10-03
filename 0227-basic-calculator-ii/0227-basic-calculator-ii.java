@@ -30,11 +30,6 @@ class Solution {
                 }
                 ops.pop();
             } else if(s.charAt(i) == '+' || s.charAt(i) == '-' || s.charAt(i) == '*' || s.charAt(i) == '/') {
-            if(s.charAt(i) == '-') {
-                if(nums.isEmpty() || !ops.isEmpty() && ops.peek() == '(') {
-                    nums.add(0);
-                }
-            }
             while(!ops.isEmpty() && precedence(ops.peek()) >= precedence(s.charAt(i))) {
                 nums.add(calculate(ops.pop(), nums.pop(), nums.pop()));
             }
