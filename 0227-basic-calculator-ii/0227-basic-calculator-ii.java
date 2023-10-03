@@ -51,6 +51,6 @@ class Solution {
             case '*' : return a * b;
             case '/' : return a / b;
         }
-        return -1;
+        return 0;
     }
 }
