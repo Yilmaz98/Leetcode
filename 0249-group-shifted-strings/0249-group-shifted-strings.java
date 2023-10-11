@@ -1,27 +1,25 @@
 class Solution {
-    public String getHashCode(String s) {
-        StringBuilder sb  = new StringBuilder();
-        
-        for(int i=1;i<s.length();i++) {
-            char c = (char) ((s.charAt(i) - s.charAt(i-1) + 26) % 26 + 'a');
-            sb.append(c);
-        }    
-        
-        return sb.toString();
-    }
-    
     public List<List<String>> groupStrings(String[] strings) {
-        Map<String, List<String>> groups = new HashMap<>();
+        List<List<String>> result = new ArrayList<>();
+        Map<String, List<String>> m = new HashMap<>();
         
-        for(String str : strings) {
-            String hashCode = getHashCode(str);
-            if(!groups.containsKey(hashCode)) {
-                groups.put(hashCode, new ArrayList<>());
+        for(String word : strings) {
+            char[] curr = word.toCharArray();
+            StringBuilder key = new StringBuilder();
+            
+            for(int i=1;i<curr.length;i++) {
+                int diff = curr[i] - curr[i-1];
+                if(diff < 0)
+                    diff = diff + 26;
+                key.append(diff + ",");
             }
             
-            groups.get(hashCode).add(str);
+            if(!m.containsKey(key.toString()))
+                m.put(key.toString(), new ArrayList<>());
+            
+            m.get(key.toString()).add(word);
         }
-        
-        return new ArrayList<>(groups.values());
+                
+        return new ArrayList<>(m.values());
     }
 }
