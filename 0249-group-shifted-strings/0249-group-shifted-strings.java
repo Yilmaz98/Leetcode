@@ -1,6 +1,5 @@
 class Solution {
     public List<List<String>> groupStrings(String[] strings) {
-        List<List<String>> result = new ArrayList<>();
         Map<String, List<String>> m = new HashMap<>();
         
         for(String word : strings) {
