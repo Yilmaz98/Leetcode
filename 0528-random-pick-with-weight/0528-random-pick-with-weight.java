@@ -1,31 +1,30 @@
 class Solution {
-    private int[] prefixSums;
-    private int totalSum;
-
+    public int[] prefixSums;
+    public int totalSum;
+    
     public Solution(int[] w) {
-        this.prefixSums = new int[w.length];
-
-        int prefixSum = 0;
-        for (int i = 0; i < w.length; ++i) {
-            prefixSum += w[i];
-            this.prefixSums[i] = prefixSum;
+        prefixSums = new int[w.length];
+        for(int i = 0;i<w.length;i++) {
+            this.prefixSums[i] =  i > 0 ? prefixSums[i-1] + w[i] : w[i];
+            this.totalSum += w[i];
         }
-        this.totalSum = prefixSum;
     }
-
+    
     public int pickIndex() {
-        double target = this.totalSum * Math.random();
-
-        // run a binary search to find the target zone
-        int low = 0, high = this.prefixSums.length;
-        while (low < high) {
-            // better to avoid the overflow
-            int mid = low + (high - low) / 2;
-            if (target > this.prefixSums[mid])
-                low = mid + 1;
-            else
-                high = mid;
+        double target = Math.random() * totalSum;
+        
+        for(int i = 0;i<prefixSums.length;i++) {
+            if(target < prefixSums[i]) {
+                return i;
+            }
         }
-        return low;
+        
+        return 0;
     }
 }
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(w);
+ * int param_1 = obj.pickIndex();
+ */
