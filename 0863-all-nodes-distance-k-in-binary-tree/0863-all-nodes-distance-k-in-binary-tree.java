@@ -8,36 +8,57 @@
  * }
  */
 class Solution {
-    Map<Integer, String> m = new HashMap<>();
+    Map<Integer, List<Integer>> adj;
+    Set<Integer> visited;
+    List<Integer> result;
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        inorder(root, ""); 
-        List<Integer> result = new ArrayList<>();
-        String targetString = m.get(target.val); 
+        adj = new HashMap<>();
+        visited = new HashSet<>();
+        result = new ArrayList<>();
         
-        for(Integer i : m.keySet()) {
-            String val = m.get(i);
-            
-            int diff = Math.abs(val.length() - targetString.length());
-            
-            for(int j=0;j<Math.min(val.length(), targetString.length());j++) {
-                if(val.charAt(j) != targetString.charAt(j)) {
-                    diff += ((Math.min(val.length(), targetString.length()) -j) * 2);
-                    break;
-                } 
-            }
-            
-            if(diff == k)
-                result.add(i);
-        }
+        visited.add(target.val);
+        buildGraph(root, null);
+        
+        dfs(target.val, adj, visited, 0, k);
         
         return result;
     }
     
-    void inorder(TreeNode root, String curr) {
-        if(root != null) {
-            inorder(root.left, curr + "L");
-            m.put(root.val, curr);
-            inorder(root.right, curr+ "R"); 
+    public void dfs(Integer curr, Map<Integer, List<Integer>> adj, Set<Integer> visited, int distance, int k) {
+        if(distance == k) {
+            result.add(curr);
+            return;
         }
+        
+        if(!adj.containsKey(curr))
+            return;
+        
+        for(Integer neighbour : adj.get(curr)) {
+            if(!visited.contains(neighbour)) {
+                            visited.add(neighbour);
+            dfs(neighbour, adj, visited, distance + 1, k);
+            }
+        }
+    }
+    
+    public void buildGraph(TreeNode root, TreeNode parent) {
+        if(root == null)
+            return;
+        
+        if(root != null && parent != null) {
+            if(!adj.containsKey(root.val)) {
+                adj.put(root.val, new ArrayList<>());
+            }
+            
+            if(!adj.containsKey(parent.val)) {
+                adj.put(parent.val, new ArrayList<>());
+            }
+            
+            adj.get(root.val).add(parent.val);
+            adj.get(parent.val).add(root.val);
+        }
+        
+        buildGraph(root.left, root);
+        buildGraph(root.right, root);
     }
 }
