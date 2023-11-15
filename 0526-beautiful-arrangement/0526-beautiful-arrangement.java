@@ -1,24 +1,23 @@
 class Solution {
     int count = 0;
     public int countArrangement(int n) {
-        backtrack(n, 0, new HashSet<>());
+        boolean[] visited = new boolean[n + 1];
+        backtrack(n, 1, visited);
         return count;
     }
     
     
-    public void backtrack(int n, int index, Set<Integer> s) {
-        if(index == n) {
+    public void backtrack(int n, int index, boolean[] visited) {
+        if(index > n) {
             count++;
         }
         
         for(int i=1;i<=n;i++) {
-            if(s.contains(i))
+            if(visited[i] || (i % index != 0 && index % i != 0))
                 continue;
-            if(i % (index+1) != 0 && (index+1) % i != 0)
-                continue;
-            s.add(i);
-            backtrack(n, index+1, s);
-            s.remove(i);
+            visited[i] = true;
+            backtrack(n, index+1, visited);
+            visited[i] = false;
         }
     }
 }
