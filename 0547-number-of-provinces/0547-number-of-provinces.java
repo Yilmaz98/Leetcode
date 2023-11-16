@@ -1,62 +1,39 @@
 class Solution {
-    class UnionFind {
-        int[] parent;
-        int[] size;
-        int components;
-        
-        UnionFind(int n) {
-            components = n;
-            parent = new int[n];
-            size = new int[n];
-            
-            for(int i=0;i<n;i++) {
-                parent[i] = i;
-                size[i] = 1;
-            }
-        }
-        
-        public int find(int a) {
-            if(parent[a] == a)
-                return a;
-            
-            return parent[a] = find(parent[a]);
-        }
-        
-        public void union(int a, int b) {
-            int x = find(a);
-            int y = find(b);
-            
-            if(x == y)
-                return;
-            
-            if(size[x] <= size[y]) {
-                     parent[y] = x;
-                size[x]+=1;
-            }
-           
-            else {
-                parent[x] = y;
-                size[y] +=1;
-            }
-                
-            
-            components--;
-        }
-    };
-    
-    
     public int findCircleNum(int[][] isConnected) {
-        int m = isConnected.length;
-        UnionFind uf = new UnionFind(m);
+        Map<Integer, List<Integer>> m = new HashMap<>();
         
-        for(int i=0;i<m;i++) {
-            for(int j=0;j<m;j++) {
-                if(isConnected[i][j] == 1) {
-                    uf.union(i,j);
+        for(int i=0;i<isConnected.length;i++) {
+            for(int j=0;j<isConnected[0].length;j++) {
+                if(i != j && isConnected[i][j] == 1) {
+                    if(!m.containsKey(i))
+                        m.put(i, new ArrayList<>());
+                    m.get(i).add(j);
                 }
             }
         }
         
-        return uf.components;
+        int n = isConnected.length;
+        boolean[] visited = new boolean[n + 1];
+        int provinces = 0;
+        
+        for(int i=0;i<n;i++) {
+            if(!visited[i]) {
+                provinces++;
+                dfs(m, visited, i);
+            }
+        }
+        
+        return provinces;
+    }
+    
+    public void dfs(Map<Integer, List<Integer>> m , boolean[] visited, int i) {
+        visited[i] = true;
+        if(!m.containsKey(i))
+            return;
+        for(Integer nei : m.get(i)) {
+            if(!visited[nei]) {
+                dfs(m, visited, nei);
+            }
+        }
     }
 }
