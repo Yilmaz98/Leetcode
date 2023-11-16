@@ -7,11 +7,28 @@ class Solution {
         for(int i=0;i<n;i++) {
             if(!visited[i]) {
                 provinces++;
-                dfs(visited, i, isConnected);
+                bfs(visited, i, isConnected);
             }
         }
         
         return provinces;
+    }
+    
+    public void bfs(boolean[] visited, int i, int[][] isConnected) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(i);
+        visited[i] = true;
+        
+        while(!q.isEmpty()) {
+            Integer curr = q.poll();
+            
+            for(int j=0;j<isConnected[curr].length;j++) {
+            if(curr != j && isConnected[curr][j] == 1 && !visited[j]) {
+                q.add(j);
+                visited[j] = true;
+             }
+            }
+        }
     }
     
     public void dfs(boolean[] visited, int i, int[][] isConnected) {
