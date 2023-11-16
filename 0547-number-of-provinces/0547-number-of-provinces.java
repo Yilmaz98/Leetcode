@@ -23,7 +23,7 @@ class Solution {
             Integer curr = q.poll();
             
             for(int j=0;j<isConnected[curr].length;j++) {
-            if(curr != j && isConnected[curr][j] == 1 && !visited[j]) {
+            if(isConnected[curr][j] == 1 && !visited[j]) {
                 q.add(j);
                 visited[j] = true;
              }
@@ -35,7 +35,7 @@ class Solution {
         visited[i] = true;
        
         for(int j=0;j<isConnected[i].length;j++) {
-            if(i != j && isConnected[i][j] == 1 && !visited[j]) {
+            if(isConnected[i][j] == 1 && !visited[j]) {
                 dfs(visited, j, isConnected);
             }
         }
