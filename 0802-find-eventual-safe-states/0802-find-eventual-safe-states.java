@@ -1,53 +1,44 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        Map<Integer, List<Integer>> adj = new HashMap<>();
+        List<Integer> result = new ArrayList<>();
+        int V = graph.length;
+        boolean[] visited = new boolean[V];
+        boolean[] pathVisited = new boolean[V];
+        int[] check = new int[V];
         
-        int[] outdegree = new int[graph.length];
-                Queue<Integer> q = new LinkedList<>();  
-        
-        for(int i=0;i<graph.length;i++) { 
-            outdegree[i] = graph[i].length;
-             if(outdegree[i] == 0)  {
-                q.add(i);
+        for(int i=0;i<V;i++) {
+            if(!visited[i]) {
+                dfs(graph, visited, pathVisited, i, check);
             }
-           for(int j=0;j<graph[i].length;j++) {
-                if(!adj.containsKey(graph[i][j])) {
-                    adj.put(graph[i][j], new ArrayList<>());
-                } 
-                    adj.get(graph[i][j]).add(i);
-           }
         } 
         
-
-        List<Integer> result = new ArrayList<>();
-
-        
-        while(!q.isEmpty()) {
-            int size = q.size();
-            for(int i=0;i<size;i++) {
-            Integer curr = q.poll();
-            
-            if(!adj.containsKey(curr))
-                continue;
-            
-            for(Integer k: adj.get(curr)) {
-                outdegree[k]--;
-                if(outdegree[k] == 0) {
-                    q.add(k);
-                }
-            }
-            }
-          
-        }
-        
-        for(int i=0;i<outdegree.length;i++) {
-            if(outdegree[i] == 0) {
+        for(int i=0;i<V;i++) {
+            if(check[i] == 1) {
                 result.add(i);
             }
         }
-        
-        
         return result;
+    }
+    
+    public boolean dfs(int[][] graph, boolean[] visited, boolean[] pathVisited, int src, int[] check) {
+        visited[src] = true;
+        pathVisited[src] = true;
+        check[src] = 0;
         
+        for(int nei : graph[src]) {
+            if(!visited[nei]) {
+                if(dfs(graph, visited, pathVisited, nei, check)) {
+                    check[src] = 0;
+                    return true;
+                }
+            } else if(pathVisited[nei]) {
+                    check[src] = 0;
+                    return true;
+                }
+        }
+        
+        check[src] = 1;
+        pathVisited[src] = false;
+        return false;
     }
 }
