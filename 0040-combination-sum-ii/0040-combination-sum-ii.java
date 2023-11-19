@@ -8,11 +8,7 @@ class Solution {
         return result;
     }
     
-    public void backtrack(int[] candidates, int target, int start, List<Integer> temp, List<List<Integer>> result) {
-
-        if(target < 0)
-            return;
-        
+    public void backtrack(int[] candidates, int target, int start, List<Integer> temp, List<List<Integer>> result) {        
         if(target == 0) {
             result.add(new ArrayList<>(temp));
             return;
@@ -22,6 +18,9 @@ class Solution {
             if(i>start && candidates[i] == candidates[i-1])
                 continue;
             
+            if(target - candidates[i] < 0)
+                break;
+ 
             temp.add(candidates[i]);
             backtrack(candidates, target - candidates[i], i+1, temp, result);
             temp.remove(temp.size() - 1);
