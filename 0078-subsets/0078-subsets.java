@@ -1,18 +1,19 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        subsets(nums,0, new ArrayList<>(), result);
+        
+        backtrack(nums, 0, new ArrayList<>(), result);
         
         return result;
     }
     
-    public void subsets(int[] nums, int start, List<Integer> tempList, List<List<Integer>> result) {
-        result.add(new ArrayList<>(tempList));
+    public void backtrack(int[] nums, int start, List<Integer> temp, List<List<Integer>> result) {
+        result.add(new ArrayList<>(temp));
         
         for(int i=start;i<nums.length;i++) {
-            tempList.add(nums[i]);
-            subsets(nums,i+1,tempList, result);
-            tempList.remove(tempList.size() -1);
+            temp.add(nums[i]);
+            backtrack(nums, i+1,temp, result);
+            temp.remove(temp.size() - 1);
         }
     }
 }
