@@ -19,7 +19,7 @@ class Solution {
                 continue;
             
             if(target - candidates[i] < 0)
-                break;
+                continue;
  
             temp.add(candidates[i]);
             backtrack(candidates, target - candidates[i], i+1, temp, result);
