@@ -1,26 +1,34 @@
 class Solution {
     public int uniquePaths(int m, int n) {
-        int[][] memo = new int[m][n];
-        helper(memo, m, n, 0, 0);
-        return memo[0][0];
+        int[][] dp = new int[m][n];
+        for(int i=0;i<m;i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        
+        return recurse(m, n, 0, 0, dp);
     }
     
-    public int helper(int[][] memo, int m, int n, int i, int j) {
+    public int recurse(int m, int n, int i, int j, int[][] dp) {
+        if(i == m - 1 && j == n - 1){
+            return 1;
+        }
         
-        if(i>=m || j >= n){
+        if(i >= m || j >= n) {
             return 0;
         }
         
-        if(i == m-1 && j == n-1){
-            return memo[i][j] = 1;
-        }
+        if(dp[i][j] != -1)
+            return dp[i][j];
         
-        if(memo[i][j] != 0)
-            return memo[i][j];
+        int right = 0;
+        int down = 0;
         
-        int down = helper(memo, m, n, i+1,j);
-        int right = helper(memo, m,n, i, j+1);
+        if(j + 1 < n)
+            right = recurse(m,n,i,j+1,dp);
         
-        return memo[i][j] = down + right;
+        if(i + 1 < m)
+            down = recurse(m,n,i+1,j,dp);
+        
+        return dp[i][j] = down + right;
     }
 }
