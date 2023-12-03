@@ -15,7 +15,6 @@ class Solution {
         
         int len = 0;
         int prev = nums[idx];
-        List<Integer> tempList = new ArrayList<>();
         int noConsecutive = 0;
         int noEqual = -1;
         for(int i=idx;i<Math.min(n, idx + 3);i++) {
@@ -26,7 +25,6 @@ class Solution {
             if(diff == 0) {
                 noEqual++;
             }
-            tempList.add(nums[i]);
             if(diff !=0 && diff != 1) 
                 return 0;
             len++;
