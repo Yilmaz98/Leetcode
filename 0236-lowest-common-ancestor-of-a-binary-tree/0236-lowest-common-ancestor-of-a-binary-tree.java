@@ -9,61 +9,18 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        Stack<TreeNode> firstNodePath = new Stack<>();
-        Set<TreeNode> secondNodePath = new HashSet<>();
+        if(root == p || root == q || root == null)
+            return root;
         
-        inorderFirst(root, p, firstNodePath);
-        inorderSecond(root, q, secondNodePath);
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
         
-        while(!firstNodePath.isEmpty()) {
-            TreeNode curr = firstNodePath.pop();
-            if(secondNodePath.contains(curr))
-                return curr;
+        if(left == null) {
+            return right;
+        } else if(right == null) {
+            return left;
+        } else {
+            return root;
         }
-        
-        
-        return root;
-    }
-    
-    public boolean inorderFirst(TreeNode root, TreeNode p, Stack<TreeNode> firstNodePath) {
-        if(root != null) {
-            firstNodePath.add(root);
-            
-            if(!firstNodePath.isEmpty() && firstNodePath.peek() == p) {
-                return true;
-            }
-            
-            if(inorderFirst(root.left, p, firstNodePath))
-                return true;
-          
-            
-            if(inorderFirst(root.right, p, firstNodePath)) {
-                    return true;
-            }
-            
-            firstNodePath.pop();
-        }
-        return false;
-    }
-    
-    public boolean inorderSecond(TreeNode root, TreeNode p, Set<TreeNode> secondNodePath) {
-        if(root != null) {
-            secondNodePath.add(root);
-            
-            if(secondNodePath.contains(p)) {
-                return true;
-            }
-            
-            if(inorderSecond(root.left, p, secondNodePath))
-                return true;
-          
-            
-            if(inorderSecond(root.right, p, secondNodePath)) {
-                    return true;
-            }
-            
-            secondNodePath.remove(root);
-        }
-        return false;
     }
 }
