@@ -19,13 +19,15 @@ class Solution {
     }
     
     public boolean checkRepeatingString(String s, int len) {
-        Set<String> seen = new HashSet<>();
+        Set<Integer> seen = new HashSet<>();
+        int hashCode = 0;
         for(int i=0;i<s.length() - len + 1;i++) {
             String substr = s.substring(i, i + len);
-            if(seen.contains(substr)) {
+            hashCode = substr.hashCode();
+            if(seen.contains(hashCode)) {
                 return true;
             }
-            seen.add(substr);
+            seen.add(hashCode);
         }
         
         return false;
