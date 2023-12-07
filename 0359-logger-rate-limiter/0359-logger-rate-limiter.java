@@ -1,17 +1,42 @@
+class Pair {
+    String message;
+    int timestamp;
+    
+    Pair(String message, int timestamp) {
+        this.message = message;
+        this.timestamp = timestamp;
+    }
+};
+
 class Logger {
-    Map<String, Integer> times;
+    Queue<Pair> q;
+    Set<String> present;
+    int firstTime; 
+    String firstMessage;
     
     public Logger() {
-        times = new HashMap<>();
+        q = new LinkedList<>();
+        present = new HashSet<>();
+        firstTime = 0;
+        firstMessage = new String();
     }
     
-    public boolean shouldPrintMessage(int timestamp, String message) {
-        if(times.containsKey(message)) {
-            if(timestamp < times.get(message))
-                return false;
+    public boolean shouldPrintMessage(int timestamp, String message) {        
+        while(!q.isEmpty()) {
+            firstTime = q.peek().timestamp;
+            firstMessage = q.peek().message;
+            if(timestamp >= firstTime + 10) {
+                q.poll();
+                present.remove(firstMessage);
+            } else 
+                break;
         }
         
-        times.put(message, timestamp + 10);
+        if(present.contains(message))
+            return false;
+        
+        q.add(new Pair(message, timestamp));
+        present.add(message);
         return true;
     }
 }
