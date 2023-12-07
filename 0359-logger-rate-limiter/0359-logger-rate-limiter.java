@@ -1,42 +1,34 @@
-class Pair {
-    String message;
-    int timestamp;
-    
-    Pair(String message, int timestamp) {
-        this.message = message;
-        this.timestamp = timestamp;
-    }
-};
-
 class Logger {
-    Queue<Pair> q;
-    Set<String> present;
-    int firstTime; 
-    String firstMessage;
+    Map<String, Integer> oldMap;
+    Map<String, Integer> newMap;
+    int timeNew;
     
     public Logger() {
-        q = new LinkedList<>();
-        present = new HashSet<>();
-        firstTime = 0;
-        firstMessage = new String();
+        oldMap = new HashMap<>();
+        newMap = new HashMap<>();
+        timeNew = 0;
     }
     
-    public boolean shouldPrintMessage(int timestamp, String message) {        
-        while(!q.isEmpty()) {
-            firstTime = q.peek().timestamp;
-            firstMessage = q.peek().message;
-            if(timestamp >= firstTime + 10) {
-                q.poll();
-                present.remove(firstMessage);
-            } else 
-                break;
+    public boolean shouldPrintMessage(int timestamp, String message) {
+        if(timestamp >= timeNew + 20) {
+            oldMap.clear();
+            newMap.clear();
+            timeNew = timestamp;
+        } else if(timestamp >= timeNew + 10) {
+            oldMap = Map.copyOf(newMap);
+            newMap.clear();
+            timeNew = timestamp;
         }
         
-        if(present.contains(message))
+        if(newMap.containsKey(message)) {
             return false;
+        }
         
-        q.add(new Pair(message, timestamp));
-        present.add(message);
+        if(oldMap.containsKey(message) && oldMap.get(message) > timestamp - 10) {
+            return false;
+        }
+        
+        newMap.put(message, timestamp);
         return true;
     }
 }
