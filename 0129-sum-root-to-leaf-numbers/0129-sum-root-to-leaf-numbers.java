@@ -13,43 +13,21 @@
  *     }
  * }
  */
-public class Node {
-    TreeNode node;
-    int val;
-    
-    Node(TreeNode node, int val) {
-        this.node = node;
-        this.val = val;
-    }
-};
-
 class Solution {
     public int sumNumbers(TreeNode root) {
-        if(root == null)
-            return 0;
-        
-        Queue<Node> q = new LinkedList<>();
-        q.add(new Node(root,root.val));
-        
-        int sum = 0;
-        
-        while(!q.isEmpty()) {
-            Node curr = q.poll();
-            
-            if(curr.node.left == null && curr.node.right == null) {
-                  sum += curr.val;
+        int[] sum = new int[1];
+        inorder(root, 0, sum);
+        return sum[0];
+    }
+    
+    public void inorder(TreeNode root, int sum, int[] ans) {
+        if(root != null) {
+            sum = sum * 10 + root.val;
+            if(root.left == null && root.right == null) {
+                ans[0] += sum;
             }
-              
-            
-            if(curr.node.left != null) {
-                q.add(new Node(curr.node.left, curr.val * 10 + curr.node.left.val));
-            }
-            
-            if(curr.node.right != null) {
-                  q.add(new Node(curr.node.right, curr.val * 10 + curr.node.right.val));
-            }
+            inorder(root.left, sum, ans);
+            inorder(root.right, sum, ans);
         }
-        
-        return sum;
     }
 }
