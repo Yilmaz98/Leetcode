@@ -1,41 +1,35 @@
 class Solution {
-    boolean found;
-    
-    public void dfs(int i, int j, char[][] board, String word, int k, boolean[][] visited) {
-        if(k >= word.length())
-        {
-            found = true;
-            return;
-        }
-        
-        if(i<0 || i>board.length-1 || j<0 || j> board[0].length-1 || visited[i][j] || board[i][j] != word.charAt(k)) {
-            return;
-        }
-          
-        visited[i][j] = true;
-        
-        dfs(i,j+1,board,word,k+1,visited);
-        dfs(i,j-1,board,word,k+1,visited);
-        dfs(i+1,j,board,word,k+1,visited);
-        dfs(i-1,j,board,word,k+1,visited);
-        
-        visited[i][j] = false;
-    }
-    
+    int[][] dir = {{0,1},{0,-1},{1,0},{-1,0}};
     public boolean exist(char[][] board, String word) {
         int m = board.length;
         int n = board[0].length;
         
-        boolean visited[][];
-        
         for(int i=0;i<m;i++) {
-            for(int j=0;j<n;j++) {
-                visited = new boolean[m][n];
-                found = false;
-                dfs(i,j,board,word,0,visited);
-                if(found)
+            for(int j = 0;j<n;j++) {
+                if(word.charAt(0) == board[i][j]) {
+                if(backtrack(board, i, j, m, n, word, 0))
                     return true;
+                }
             }
+        }
+        
+        return false;
+    }
+    
+    public boolean backtrack(char[][] board, int i, int j, int m, int n, String word, int idx) { 
+        if(idx >= word.length()) {
+            return true;
+        }
+        
+        if(i < 0 || i >= m || j < 0 || j >= n || word.charAt(idx) != board[i][j])
+            return false;
+        
+        for(int k=0;k<dir.length;k++) {
+                char temp = board[i][j];
+                board[i][j] = ' ';
+                if(backtrack(board, i + dir[k][0], j + dir[k][1], m, n, word, idx+1))
+                    return true;
+                board[i][j] = temp;
         }
         
         return false;
