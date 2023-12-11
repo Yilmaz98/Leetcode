@@ -1,18 +1,31 @@
 class Solution {
-    int count = 1;
     public int countSubstrings(String s) {
-        for(int i=0;i<s.length()-1;i++) {
-            extendPalindrome(s,i,i);
-            extendPalindrome(s,i,i+1);
+        int n=s.length();
+        boolean[][] dp= new boolean[n][n];
+        int count=0;
+        
+        for(int gap = 0; gap < n; gap++) {
+            int row = 0;
+            for(int col = gap; col < n; col++) {
+                if(gap == 0) {
+                    dp[row][col] = true;
+                }
+                else if(gap == 1) {
+                    if(s.charAt(row) == s.charAt(col)) {
+                        dp[row][col] = true;
+                    }
+                }
+                else {
+                    if(s.charAt(row) == s.charAt(col) && dp[row+1][col-1] == true) {
+                        dp[row][col] = true;
+                    }
+                }
+
+                if(dp[row][col] == true) count++;
+                row++;
+            }
         }
+        
         return count;
-    }
-    
-    public void extendPalindrome(String s, int j, int k) {
-        while(j>=0 && k<s.length() && s.charAt(j) == s.charAt(k)) {
-            j--;
-            k++;
-            count++;
-        }
     }
 }
