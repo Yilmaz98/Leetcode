@@ -9,24 +9,50 @@
  * }
  */
 class Solution {
-    ListNode front;
-    public boolean isPalindrome(ListNode head) {
-        front = head;
-        return helper(head);
+    public ListNode reverse(ListNode head) {
+        ListNode curr = head;
+        ListNode prev = null;
+        
+        while(curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
     }
     
-    public boolean helper(ListNode head) {
-        if(head == null)
-            return true;
+    public ListNode getFirstHalf(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
         
-        if(!helper(head.next))
-            return false;
-              
-        if(head.val != front.val) {
-            return false;
+        while(fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
-            
-        front = front.next;
+        
+        return slow;
+    }
+    
+    public boolean isPalindrome(ListNode head) {
+        ListNode curr = head;
+        
+        ListNode firstHalf = getFirstHalf(head);
+        ListNode secondHalf = reverse(firstHalf.next);
+        
+        
+        ListNode temp = secondHalf;
+        ListNode dummy = head;
+        while(dummy != null && secondHalf != null) {
+            if(dummy.val != secondHalf.val) {
+                return false;
+            }
+            dummy = dummy.next;
+            secondHalf = secondHalf.next;
+        }
+        
+        firstHalf.next = reverse(temp);
         
         return true;
     }
