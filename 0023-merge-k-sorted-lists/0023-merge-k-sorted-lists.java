@@ -9,43 +9,49 @@
  * }
  */
 class Solution {
-    public ListNode mergeKLists(ListNode[] lists) {
-        if (lists.length == 0) return null;
+      public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode temp1 = list1;
+        ListNode temp2 = list2;
+        ListNode result = new ListNode(0);
+        ListNode head = result;
         
-        return traverse(lists, 0, lists.length-1);
-    }
-    
-    private ListNode traverse(ListNode[] lists, int lo, int hi){
-        if (lo == hi) return lists[lo];
-        
-        int mid = (lo + hi)/2;
-        ListNode l1 = traverse(lists, lo, mid);
-        ListNode l2 = traverse(lists, mid+1, hi);
-        
-        return merge(l1, l2);
-    }
-    
-    private ListNode merge(ListNode l1, ListNode l2) {
-        ListNode head = new ListNode(0);
-        ListNode mainHead = head;
-        while(l1 != null && l2 != null) {
-            if (l1.val < l2.val) {
-                head.next = l1;
-                l1 = l1.next;
+        while(temp1 != null && temp2 != null) {
+            if(temp1.val <= temp2.val) {
+                head.next = temp1;
+                temp1 = temp1.next;
             } else {
-                head.next = l2;
-                l2 = l2.next;
+                head.next = temp2;
+                temp2 = temp2.next;
             }
             head = head.next;
         }
         
-        if (l1 != null) {
-            head.next = l1;
+        if(temp1 != null)
+            head.next = temp1;
+        
+        if(temp2 != null)
+            head.next = temp2;
+        
+        return result.next;
+    }
+    
+    public ListNode merge(ListNode[] lists, int low, int high) {
+        if(low > high)
+            return null;
+        
+        if(low == high) {
+            return lists[low];
         }
         
-        if (l2 != null) {
-            head.next = l2;
-        }
-        return mainHead.next;
+        int mid = low + (high - low) / 2;
+        ListNode left = merge(lists, low, mid);
+        ListNode right = merge(lists, mid + 1, high);
+        
+        return mergeTwoLists(left, right);
+    }
+    
+    public ListNode mergeKLists(ListNode[] lists) {
+        int n = lists.length;
+        return merge(lists, 0, n - 1);
     }
 }
