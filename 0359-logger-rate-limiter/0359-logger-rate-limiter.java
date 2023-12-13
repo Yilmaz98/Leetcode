@@ -1,35 +1,18 @@
 class Logger {
-    Map<String, Integer> oldMap;
-    Map<String, Integer> newMap;
-    int timeNew;
-    
+    Map<String, Integer> m;
     public Logger() {
-        oldMap = new HashMap<>();
-        newMap = new HashMap<>();
-        timeNew = 0;
+        m = new HashMap<>();
     }
     
     public boolean shouldPrintMessage(int timestamp, String message) {
-        if(timestamp >= timeNew + 20) {
-            oldMap.clear();
-            newMap.clear();
-            timeNew = timestamp;
-        } else if(timestamp >= timeNew + 10) {
-            oldMap = Map.copyOf(newMap);
-            newMap.clear();
-            timeNew = timestamp;
+        if(m.containsKey(message)) {
+           if(timestamp < m.get(message)) {
+               return false;
+           }
         }
         
-        if(newMap.containsKey(message)) {
-            return false;
-        }
-        
-        if(oldMap.containsKey(message) && oldMap.get(message) > timestamp - 10) {
-            return false;
-        }
-        
-        newMap.put(message, timestamp);
-        return true;
+         m.put(message, timestamp + 10);
+         return true;
     }
 }
 
