@@ -1,68 +1,42 @@
 class Solution {
     public int maximumDetonation(int[][] bombs) {
-        Map<Integer, List<Integer>> adj = new HashMap<>();
-        
-        for(int i=0;i<bombs.length;i++) {
-            long x1 = bombs[i][0];
-            long y1 = bombs[i][1];
-            long r1 = bombs[i][2];
-            
-            for(int j = 0 ;j< bombs.length;j++) {
-                long x2 = bombs[j][0];
-                long y2 = bombs[j][1];
-                long r2 = bombs[j][2];
-                
-                if(i!=j) {
-                    long a = (x1-x2) *(x1-x2);
-                    long b = (y1-y2)*(y1-y2);
-                    long c = r1*r1;
-                    if( a + b  <= c) {
-                        if(!adj.containsKey(i)) {
-                            adj.put(i, new ArrayList<>());
-                        }
-                        
-                        adj.get(i).add(j);
-                    }
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        int n = bombs.length;
+
+        // Build the graph
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    continue;
+                }
+                int xi = bombs[i][0], yi = bombs[i][1], ri = bombs[i][2];
+                int xj = bombs[j][0], yj = bombs[j][1];
+
+                // Create a path from node i to node j, if bomb i detonates bomb j.
+                if ((long)ri * ri >= (long)(xi - xj) * (xi - xj) + (long)(yi - yj) * (yi - yj)) {
+                    graph.computeIfAbsent(i, k -> new ArrayList<>()).add(j);
                 }
             }
         }
-        
-        //System.out.println(adj);
-        
-        int count = 0;
-        int maxCount = 1;
-        
-        for(int i=0;i<bombs.length;i++) {
-            count = bfs(adj,i);
-            maxCount = Math.max(maxCount, count);
+
+        int answer = 0;
+        for (int i = 0; i < n; i++) {
+            int count = dfs(i, new HashSet<>(), graph);
+            answer = Math.max(answer, count);
         }
-        
-        return maxCount;
+
+        return answer;
     }
-    
-    public int bfs(Map<Integer, List<Integer>> adj, int startIndex) {
-        Queue<Integer> q = new LinkedList<>();
-        q.add(startIndex);
-        
-        Set<Integer> visited = new HashSet<>();
-        visited.add(startIndex);
-        
-        while(!q.isEmpty()) {
-            int size = q.size();
-            for(int i=0;i<size;i++) {
-                Integer curr = q.poll();
-                
-                if(adj.containsKey(curr)) {
-                    for(Integer n : adj.get(curr)) {
-                        if(!visited.contains(n)) {
-                             visited.add(n);
-                                q.add(n);
-                        }  
-                    }
-                }
+
+    // DFS to get the number of nodes reachable from a given node cur
+    private int dfs(int cur, Set<Integer> visited, Map<Integer, List<Integer>> graph) {
+        visited.add(cur);
+        int count = 1;
+        for (int neib : graph.getOrDefault(cur, new ArrayList<>())) {
+            if (!visited.contains(neib)) {
+                count += dfs(neib, visited, graph);
             }
         }
-        
-        return visited.size();
+        return count;
     }
 }
