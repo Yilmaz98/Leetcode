@@ -23,15 +23,14 @@ class Solution {
             else 
                 return 0;
         }
-        
-        if(freshOranges == 0)
-            return 0;
-        
+                
         int time = 0;
         int minutes = 0;
         
         while(!q.isEmpty()) {
-            int size = q.size();    
+            int size = q.size(); 
+            if(freshOranges == 0) 
+                return minutes;
             minutes++;
             for(int i=0;i<size;i++) {
                 int[] curr = q.poll();
@@ -47,8 +46,6 @@ class Solution {
                     }
                 }
             }
-            if(freshOranges == 0) 
-                return minutes;
         }
         
         if(freshOranges != 0)
