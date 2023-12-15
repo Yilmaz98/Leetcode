@@ -16,13 +16,6 @@ class Solution {
                 }
             }
         }
-        
-        if(q.isEmpty()) {
-            if(freshOranges > 0)
-                return -1;
-            else 
-                return 0;
-        }
                 
         int time = 0;
         int minutes = 0;
