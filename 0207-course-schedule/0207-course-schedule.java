@@ -11,10 +11,7 @@ class Solution {
             adj.get(curr[1]).add(curr[0]);
             indegree[curr[0]]++;
         }
-        
-        System.out.println(adj);
-        
-        
+                
         Queue<Integer> q = new LinkedList<>();
         
         for(int i=0;i<numCourses;i++) {
