@@ -1,51 +1,58 @@
 class Solution {
     public String alienOrder(String[] words) {
-    Map<Character, Set<Character>> map=new HashMap<Character, Set<Character>>();
-    Map<Character, Integer> degree=new HashMap<Character, Integer>();
-    String result="";
-    if(words==null || words.length==0) return result;
-    for(String s: words){
-        for(char c: s.toCharArray()){
-            degree.put(c,0);
-        }
-    }
-    for(int i=0; i<words.length-1; i++){
-        String cur=words[i];
-        String next=words[i+1];
+        Map<Character, List<Character>> adj = new HashMap<>();
+        Map<Character, Integer> indegree = new HashMap<>();
         
-        if(next.length()<cur.length() && cur.startsWith(next))
-            return "";
-        int length=Math.min(cur.length(), next.length());
-        for(int j=0; j<length; j++){
-            char c1=cur.charAt(j);
-            char c2=next.charAt(j);
-            if(c1!=c2){
-                Set<Character> set=new HashSet<Character>();
-                if(map.containsKey(c1)) set=map.get(c1);
-                if(!set.contains(c2)){
-                    set.add(c2);
-                    map.put(c1, set);
-                    degree.put(c2, degree.get(c2)+1);
+    for (String word : words) {
+        for (char c : word.toCharArray()) {
+            indegree.put(c, 0);
+            adj.put(c, new ArrayList<>());
+        }
+    }
+        
+        for(int i=0;i<words.length - 1;i++) {
+            String word1 = words[i];
+            String word2 = words[i + 1];
+            int m = word1.length();
+            int n = word2.length();
+            
+            if(m > n &&  word1.startsWith(word2)) {
+                return "";
+            }
+            
+            for(int k=0;k<Math.min(m, n);k++) {                    
+                if(word1.charAt(k) != word2.charAt(k)) {                        
+                    adj.get(word1.charAt(k)).add(word2.charAt(k));
+                    indegree.put(word2.charAt(k), indegree.get(word2.charAt(k)) + 1);
+                    break;
                 }
-                break;
             }
         }
-    }
-    Queue<Character> q=new LinkedList<Character>();
-    for(char c: degree.keySet()){
-        if(degree.get(c)==0) q.add(c);
-    }
-    while(!q.isEmpty()){
-        char c=q.remove();
-        result+=c;
-        if(map.containsKey(c)){
-            for(char c2: map.get(c)){
-                degree.put(c2,degree.get(c2)-1);
-                if(degree.get(c2)==0) q.add(c2);
+        
+        Queue<Character> q = new LinkedList<>();
+        
+        for(Character c : indegree.keySet()) {
+            if(indegree.get(c) == 0) {
+                q.add(c);
             }
         }
+                
+        StringBuilder sb = new StringBuilder();
+        
+        while(!q.isEmpty()) {
+            Character curr = q.poll();
+            sb.append(curr);
+            
+            for(Character nei : adj.getOrDefault(curr, new ArrayList<>())) {
+                indegree.put(nei, indegree.get(nei) - 1);
+                if(indegree.get(nei) == 0)
+                    q.add(nei);
+            }
+        }
+        
+        if(sb.length() < indegree.size())
+            return "";
+    
+        return sb.toString();
     }
-    if(result.length()!=degree.size()) return "";
-    return result;
-}
 }
