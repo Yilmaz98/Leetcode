@@ -25,23 +25,20 @@ class Solution {
         return true;
     }
     
-    public boolean dfs(Map<Integer, List<Integer>> adj,  int[] colors, int start) {
-                Stack<Integer> stack = new Stack();
-                stack.push(start);
-                colors[start] = 0;
-
-                while (!stack.empty()) {
-                    Integer node = stack.pop();
-                    for (int nei: adj.getOrDefault(node, new ArrayList<>())) {
-                        if (colors[nei] == -1) {
-                            stack.push(nei);
-                            colors[nei] = colors[node] ^ 1;
-                        } else if (colors[nei] == colors[node]) {
-                            return false;
-                        }
-                    }
+    public boolean dfs(Map<Integer, List<Integer>> adj,  int[] colors, int src) {
+        for(Integer nei : adj.getOrDefault(src, new ArrayList<>())) {
+            if(colors[nei] == -1) {
+                colors[nei] = colors[src] ^ 1;
+                if(!dfs(adj, colors, nei))
+                    return false;
+            } else {
+                if(colors[nei] == colors[src]) {
+                    System.out.println(nei + ":" + src);
+                    return false;
                 }
-    
+            }
+        }
+        
         return true;
     }   
 }
