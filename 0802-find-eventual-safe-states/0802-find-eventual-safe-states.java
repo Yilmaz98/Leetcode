@@ -1,18 +1,19 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
+        Set<Integer> visited = new HashSet<>();
+        Set<Integer> pathVisited = new HashSet<>();
+        
+        int m = graph.length;
+        
+        int[] check = new int[m];
+        
+        for(int i=0;i<m;i++) {
+            if(!visited.contains(i))
+                dfs(graph, visited, pathVisited,check, i);
+        }
+        
         List<Integer> result = new ArrayList<>();
-        int V = graph.length;
-        boolean[] visited = new boolean[V];
-        boolean[] pathVisited = new boolean[V];
-        int[] check = new int[V];
-        
-        for(int i=0;i<V;i++) {
-            if(!visited[i]) {
-                dfs(graph, visited, pathVisited, i, check);
-            }
-        } 
-        
-        for(int i=0;i<V;i++) {
+        for(int i=0;i<m;i++) {
             if(check[i] == 1) {
                 result.add(i);
             }
@@ -20,25 +21,22 @@ class Solution {
         return result;
     }
     
-    public boolean dfs(int[][] graph, boolean[] visited, boolean[] pathVisited, int src, int[] check) {
-        visited[src] = true;
-        pathVisited[src] = true;
-        check[src] = 0;
+    public boolean dfs(int[][] graph, Set<Integer> visited, Set<Integer> pathVisited, int[] check, int src) {
+        visited.add(src);
+        pathVisited.add(src);
         
-        for(int nei : graph[src]) {
-            if(!visited[nei]) {
-                if(dfs(graph, visited, pathVisited, nei, check)) {
-                    check[src] = 0;
+        for(Integer nei : graph[src]) {
+            if(!visited.contains(nei)) {
+                if(dfs(graph, visited, pathVisited, check, nei))
                     return true;
-                }
-            } else if(pathVisited[nei]) {
-                    check[src] = 0;
+            } else {
+                if(pathVisited.contains(nei))
                     return true;
-                }
+            }
         }
         
         check[src] = 1;
-        pathVisited[src] = false;
+        pathVisited.remove(src);
         return false;
     }
 }
