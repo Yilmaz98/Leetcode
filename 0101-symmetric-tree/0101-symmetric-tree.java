@@ -14,39 +14,25 @@
  * }
  */
 class Solution {
-    public boolean firstAndLastEqual(List<Integer> valsArray) {
-        for(int i=0;i<valsArray.size()/2;i++) {
-            if(valsArray.get(i) != valsArray.get(valsArray.size()-i-1)) {
-                return false;
-            }
-        }
-        return true;
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null)
+            return true;
+        
+        return inorder(root, root);
     }
     
-    public boolean isSymmetric(TreeNode root) {
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
+    public boolean inorder(TreeNode root1, TreeNode root2) {
+        if(root1 == null && root2 == null)
+            return true;
         
-        while(!q.isEmpty()) {
-            int size = q.size();
-            List<Integer> valsArray = new ArrayList<>();
-            for(int i=0;i<size;i++) {
-                TreeNode curr = q.poll();
-                if(curr == null) {
-                     valsArray.add(-101);
-                     continue;
-                }
-                                
-                valsArray.add(curr.val);
-                
-                q.add(curr.left);
-                q.add(curr.right);
-            }  
-            System.out.println(valsArray);
-            if(!firstAndLastEqual(valsArray)) {
-                return false;
-            }
-        }
+        if(root1 == null || root2 == null || root1.val != root2.val)
+            return false;
+        
+        if(!inorder(root1.left, root2.right))
+            return false;
+        
+        if(!inorder(root1.right, root2.left))
+            return false;
         
         return true;
     }
