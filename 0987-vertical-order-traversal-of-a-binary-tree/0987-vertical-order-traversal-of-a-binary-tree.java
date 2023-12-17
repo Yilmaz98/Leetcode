@@ -14,53 +14,59 @@
  * }
  */
 class Solution {
-    class Node {
-        int col;
-        int row;
+    class SpecialNode {
         TreeNode node;
+        int level;
+        int row;
         
-        Node(int col, int row, TreeNode node) {
-            this.col = col;
-            this.row = row;
+        SpecialNode(TreeNode node, int level, int row) {
             this.node = node;
-        }
-    }
-    
-    public class MyComparator implements Comparator<Node> {
-        public int compare(Node n1, Node n2) {
-            if(n1.row == n2.row)
-                return n1.node.val - n2.node.val;
-            
-            return n1.row - n2.row;
+            this.level = level;
+            this.row = row;
         }
     }
     
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-        PriorityQueue<Node> q = new PriorityQueue<>(new MyComparator());
-        q.add(new Node(0,0, root));
+        List<List<Integer>> result = new ArrayList<>();
         
-        TreeMap<Integer, List<Integer>> tm = new TreeMap<>();
+        if(root == null)
+            return result;
+        
+        Queue<SpecialNode> q = new LinkedList<>();
+        q.add(new SpecialNode(root, 0, 0));
+        
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> tm = new TreeMap<>();
         
         while(!q.isEmpty()) {
-            int size = q.size();
-            for(int i=0;i<size;i++) {
+            SpecialNode curr = q.poll();
             
-            Node curr = q.poll();
-            if(!tm.containsKey(curr.col))
-                tm.put(curr.col, new ArrayList<>());
+            if(!tm.containsKey(curr.level)) {
+                tm.put(curr.level, new TreeMap<>());
+            } 
             
-            tm.get(curr.col).add(curr.node.val);
+            if(!tm.get(curr.level).containsKey(curr.row))
+                tm.get(curr.level).put(curr.row, new PriorityQueue<>());
+            
+            tm.get(curr.level).get(curr.row).add(curr.node.val);
             
             if(curr.node.left != null) {
-                q.add(new Node(curr.col -1, curr.row + 1, curr.node.left));
+                q.add(new SpecialNode(curr.node.left, curr.level - 1, curr.row + 1));
             }
             
             if(curr.node.right != null) {
-                q.add(new Node(curr.col + 1, curr.row + 1,curr.node.right));
+               q.add(new SpecialNode(curr.node.right, curr.level + 1, curr.row + 1));
             }
+        }
+
+        for(TreeMap<Integer, PriorityQueue<Integer>> rows : tm.values()) {
+            result.add(new ArrayList<>());
+            for(PriorityQueue<Integer> pq : rows.values()) {
+                while(!pq.isEmpty()) {
+                    result.get(result.size() - 1).add(pq.poll());
+                }
             }
         }
         
-        return new ArrayList<>(tm.values());
+        return result;
     }
 }
