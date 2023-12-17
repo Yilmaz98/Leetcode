@@ -1,28 +1,37 @@
 class Solution {
-    public int computeHours(int mid, int piles[]) {
-        int hours = 0;
+    public long canFinishEating(int[] piles, int h) {
+        long count = 0;
+        
         for(int i=0;i<piles.length;i++) {
-                hours += (Math.ceil((double)piles[i]/mid));
+            count += Math.ceil((double) piles[i] /h);
         }
         
-        return hours;
+        return count;
     }
-    
     public int minEatingSpeed(int[] piles, int h) {
-        int low = 1;
-        Arrays.sort(piles);
-        int high = piles[piles.length - 1];
+        int n = piles.length;
         
-        while(low < high) {
+        int maxi = Integer.MIN_VALUE;
+        
+        for(int i=0;i<n;i++) {
+            maxi = Math.max(maxi, piles[i]);
+        }
+        
+        int low = 0;
+        int high = maxi;
+        int ans = - 1;
+        
+        while(low <= high) {
             int mid = low + (high - low) / 2;
-            int hours = computeHours(mid,piles);
-            if(hours <= h) {
-                high = mid;
-            } else if(hours > h) {
-                low = mid+1;
+            
+            if(canFinishEating(piles, mid) > h) {
+                low = mid + 1;
+            } else {
+                ans = mid;
+                high = mid - 1;
             }
         }
         
-        return high;
+        return ans;
     }
 }
