@@ -26,11 +26,15 @@ class Solution {
         
         while(!q.isEmpty()) {
             int size = q.size();
-            List<Integer> tempList = new ArrayList<>();
+            LinkedList<Integer> tempList = new LinkedList<>();
             for(int i=0;i<size;i++) {
                 TreeNode curr = q.poll();
                 
-                tempList.add(curr.val);
+                if(zig) {
+                    tempList.addLast(curr.val);
+                } else {
+                    tempList.addFirst(curr.val);
+                }
                 
                 if(curr.left != null) {
                     q.add(curr.left);
@@ -40,14 +44,8 @@ class Solution {
                     q.add(curr.right);
                 }
             }
-            if(zig) {
-                result.add(new ArrayList<>(tempList));
-                zig = false;
-            } else {
-                Collections.reverse(tempList);
-                result.add(new ArrayList<>(tempList));
-                zig = true;
-            }
+            result.add(new ArrayList<>(tempList));
+            zig = !zig;
         }
         
         return result;
