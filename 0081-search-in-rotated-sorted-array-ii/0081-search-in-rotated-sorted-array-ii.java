@@ -1,18 +1,13 @@
 class Solution {
     public boolean search(int[] nums, int target) {
         int n = nums.length;
+    
         
-        if(nums[0] == target || nums[n-1] == target) return true;
-        
-        if(n == 1)
-            return false;
-            
-        int low = 1;
-        int high = n - 2;
-        
+        int low = 0;
+        int high = n - 1;
         
         while(low <= high) {
-            int mid = low + (high - low)/2;
+            int mid = low + (high - low) / 2;
             
             if(nums[mid] == target)
                 return true;
@@ -24,15 +19,19 @@ class Solution {
             }
             
             if(nums[low] <= nums[mid]) {
-                if(nums[low] <= target && target <= nums[mid])
-                {
+                if(nums[low] <= target && target <= nums[mid]) {
+                    if(nums[mid] == target) {
+                        return true;
+                    }
                     high = mid - 1;
                 } else {
                     low = mid + 1;
                 }
             } else {
-                if(nums[mid] <= target && target <= nums[high])
-                {
+                if(nums[mid] <= target && target <= nums[high]) {
+                    if(nums[mid] == target) {
+                             return true;
+                    }
                     low = mid + 1;
                 } else {
                     high = mid - 1;
