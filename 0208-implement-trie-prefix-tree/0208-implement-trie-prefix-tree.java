@@ -1,53 +1,55 @@
-class Trie {
-    class TrieNode {
-        Map<Character, TrieNode> edges;
-        boolean isWord;
-        
-        TrieNode() {
-            this.edges = new HashMap<>();
-            this.isWord = false;
-        }
+class TrieNode {
+    Map<Character, TrieNode> children;
+    boolean isWord;
+    
+    TrieNode() {
+        children = new HashMap<>();
+        isWord = false;
     }
-    
-    TrieNode root = new TrieNode();
-    
+}
+
+class Trie {
+    TrieNode root;
     public Trie() {
-        
+        root = new TrieNode();
     }
     
     public void insert(String word) {
         TrieNode ws = root;
-        for(Character ch : word.toCharArray()) {
-            if(!ws.edges.containsKey(ch)) {
-                ws.edges.put(ch, new TrieNode());
+
+        for(Character c : word.toCharArray()) {
+            if(!ws.children.containsKey(c)) {
+                ws.children.put(c, new TrieNode());
             }
-            
-            ws = ws.edges.get(ch);
-        }    
+            ws = ws.children.get(c);
+        }
+        
         ws.isWord = true;
     }
     
     public boolean search(String word) {
-        TrieNode ws = root;
-        for(Character ch : word.toCharArray()) {
-            if(!ws.edges.containsKey(ch)) {
+         TrieNode ws = root;
+        
+        for(Character c : word.toCharArray()) {
+            if(!ws.children.containsKey(c)) {
                 return false;
             }
-            
-            ws = ws.edges.get(ch);
-        }    
+            ws = ws.children.get(c);
+        }
+        
         return ws.isWord;
     }
     
     public boolean startsWith(String prefix) {
-        TrieNode ws = root;
-        for(Character ch : prefix.toCharArray()) {
-            if(!ws.edges.containsKey(ch)) {
+          TrieNode ws = root;
+        
+        for(Character c : prefix.toCharArray()) {
+            if(!ws.children.containsKey(c)) {
                 return false;
             }
-            
-            ws = ws.edges.get(ch);
-        }    
+            ws = ws.children.get(c);
+        }
+        
         return true;
     }
 }
