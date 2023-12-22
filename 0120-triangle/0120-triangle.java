@@ -1,30 +1,30 @@
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         int m = triangle.size();
-        int[][] dp = new int[m+1][m+1];
-        
-        for(int i=0;i<dp.length;i++) {
-            Arrays.fill(dp[i], 100000);
+        int[][] dp = new int[m][m];
+        for(int i=0;i<m;i++) {
+            Arrays.fill(dp[i], -1);
         }
         
-        dp[0][0] = triangle.get(0).get(0);
-        
-        for(int i = 1;i<triangle.size();i++) {
-            for(int j = 0;j<triangle.get(i).size();j++) {
-                
-                int up = i > 0 && j < triangle.get(i).size() ? triangle.get(i).get(j) + dp[i - 1][j] : 100000;
-                int diagonal = i > 0 && j > 0 ? triangle.get(i).get(j) + dp[i - 1][j - 1] : 100000;
-                
-                int curr = Math.min(up, diagonal);
-                dp[i][j] = Math.min(dp[i][j], curr);
-            }
+        return recurse(triangle, 0, 0, m, dp);
+    }
+    
+    public int recurse(List<List<Integer>> triangle, int i, int j, int m, int[][] dp) {
+        if(i == m -1) {
+            return triangle.get(i).get(j);
         }
         
-        int result = Integer.MAX_VALUE;
-        for(int i =0;i<triangle.get(m-1).size();i++) {
-            result = Math.min(result,dp[m-1][i]);
-        }
+        if(dp[i][j] != -1)
+            return dp[i][j];
         
-        return result;
+        int down = Integer.MAX_VALUE;
+        int diagonal = Integer.MAX_VALUE;
+        
+        if(i + 1 < m)
+            down = triangle.get(i).get(j) +  recurse(triangle, i + 1, j, m, dp);
+        if(i + 1 < m && j + 1 < triangle.get(i + 1).size())
+            diagonal = triangle.get(i).get(j) +  recurse(triangle, i + 1, j + 1, m, dp);
+        
+        return dp[i][j] = Math.min(down, diagonal);
     }
 }
