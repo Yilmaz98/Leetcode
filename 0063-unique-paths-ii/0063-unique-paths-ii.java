@@ -3,26 +3,37 @@ class Solution {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         
-          int[][] memo = new int[m][n];
-        return helper(memo, m, n, 0, 0, obstacleGrid);
+        int[][] dp = new int[m][n];
+        
+        for(int i=0;i<m;i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        
+        if(obstacleGrid[m-1][n-1] == 1)
+            return 0;
+        
+        return recurse(obstacleGrid, m , n, 0 , 0, dp);
     }
     
-      public int helper(int[][] memo, int m, int n, int i, int j, int[][] grid) {
+    public int recurse(int[][] obstacleGrid, int m, int n, int i, int j, int[][] dp) {
+        if(i == m - 1 && j == n - 1) {
+            return 1;
+        }
         
-        if(i>=m || j >= n || i<0 || j<0 || grid[i][j] == 1){
+        if(obstacleGrid[i][j] == 1)
             return 0;
-        }
         
-        if(i == m-1 && j == n-1){
-            return memo[i][j] = 1;
-        }
+        if(dp[i][j] != -1)
+            return dp[i][j];
         
-        if(memo[i][j] != 0)
-            return memo[i][j];
+        int right = 0;
+        int down = 0;
         
-        int down = helper(memo, m, n, i+1,j, grid);
-        int right = helper(memo, m,n, i, j+1, grid);
+        if(j + 1 < n)
+            right = recurse(obstacleGrid, m, n, i, j + 1, dp);
+        if(i + 1  < m)
+            down = recurse(obstacleGrid, m, n, i + 1, j, dp);
         
-        return memo[i][j] = down + right;
+        return dp[i][j] = down + right;
     }
 }
