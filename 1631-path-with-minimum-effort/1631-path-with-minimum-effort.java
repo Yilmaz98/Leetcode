@@ -14,11 +14,12 @@ class Solution {
         boolean[][] visited = new boolean[m][n];
         
         int[][] dist = new int[m][n];
-        dist[0][0] = heights[0][0];
         
         for(int i=0;i<m;i++) {
             Arrays.fill(dist[i], Integer.MAX_VALUE);
         }
+        
+        dist[0][0] = 0;
         
         while(!pq.isEmpty()) {
             int size = pq.size();
