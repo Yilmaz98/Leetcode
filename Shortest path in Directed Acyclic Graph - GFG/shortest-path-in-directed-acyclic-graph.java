@@ -33,46 +33,43 @@ class Solution {
 
 	public int[] shortestPath(int N,int M, int[][] edges) {
 		//Code here
+		Map<Integer, Map<Integer, Integer>> m = new HashMap<>();
 		int[] dist = new int[N];
 		Arrays.fill(dist, Integer.MAX_VALUE);
 		
-		dist[0] = 0;
-		
-		Map<Integer, Map<Integer, Integer>> adj = new HashMap<>();
-		
-		for(int[] edge : edges) {
-		    if(!adj.containsKey(edge[0])) {
-		        adj.put(edge[0], new HashMap<>());
+		for(int[] edge: edges) {
+		    if(!m.containsKey(edge[0])) {
+		        m.put(edge[0], new HashMap<>());
 		    }
-		    
-		    adj.get(edge[0]).put(edge[1], edge[2]);
+		    m.get(edge[0]).put(edge[1], edge[2]);
 		}
 		
 		PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
-		pq.add(new int[]{0,0});
+		pq.add(new int[]{0, 0});
 		
-		Set<Integer> visited = new HashSet<>();
-	
+		dist[0] = 0;
+		
 		while(!pq.isEmpty()) {
 		    int[] curr = pq.poll();
-		    visited.add(curr[0]);
 		    
-		    for(Integer nei : adj.getOrDefault(curr[0], new HashMap<>()).keySet()) {
-		        Integer distance = adj.get(curr[0]).get(nei);
+		    if(!m.containsKey(curr[0]))
+		        continue;
+		    
+		    for(Integer nei : m.get(curr[0]).keySet()) {
+		        int d = m.get(curr[0]).get(nei);
 		        
-		        if(!visited.contains(nei) && (distance + dist[curr[0]]) < dist[nei]) {
-		            dist[nei] = distance + dist[curr[0]];
+		        if(dist[curr[0]] + d < dist[nei]) {
+		            dist[nei] = dist[curr[0]] + d;
 		            pq.add(new int[]{nei, dist[nei]});
 		        }
 		    }
 		}
 		
 		for(int i=0;i<dist.length;i++) {
-		    if(dist[i] == Integer.MAX_VALUE) {
-		        dist[i] = -1;
-		    }
+	        if(dist[i] == Integer.MAX_VALUE)
+	            dist[i] = -1;
 		}
-		
+	
 		return dist;
 	}
 }
