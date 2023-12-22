@@ -1,19 +1,15 @@
 class Solution {
-    int[] dirX = {-1,0,0,1};
-    int[] dirY = {0,1,-1,0};
-    
+    int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
     public int minimumEffortPath(int[][] heights) {
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[2] - b[2]);
-        
-        pq.add(new int[]{0,0,0});
-        
-        
         int m = heights.length;
         int n = heights[0].length;
         
+        int[][] dist = new int[m][n];
+        
         boolean[][] visited = new boolean[m][n];
         
-        int[][] dist = new int[m][n];
+        PriorityQueue<int[]> q = new PriorityQueue<>((a,b) -> a[2] - b[2]);
+        q.add(new int[]{0,0,0});
         
         for(int i=0;i<m;i++) {
             Arrays.fill(dist[i], Integer.MAX_VALUE);
@@ -21,33 +17,32 @@ class Solution {
         
         dist[0][0] = 0;
         
-        while(!pq.isEmpty()) {
-            int size = pq.size();
+        while(!q.isEmpty()) {
+            int size = q.size();
             
-            for(int i=0;i<size;i++) {
-                int[] curr = pq.poll();
+            for(int k = 0;k<size;k++) {
+                int[] curr = q.poll();
                 
                 visited[curr[0]][curr[1]] = true;
                 
-               
+                if(curr[0] == m - 1 && curr[1] == n - 1)
+                    return dist[curr[0]][curr[1]];
                 
-                for(int j=0; j<4;j++) {
-                    int newX = curr[0] + dirX[j];
-                    int newY = curr[1] + dirY[j];
+                
+                for(int i=0;i<4;i++) {
+                    int newX = curr[0] + dirs[i][0];
+                    int newY = curr[1] + dirs[i][1];
                     
-                    if(newX < m && newX >=0 && newY<n && newY>=0 && !visited[newX][newY]) {
-                        
-                        int dis = Math.max(curr[2], Math.abs(heights[newX][newY] - heights[curr[0]][curr[1]]));
-                        
-                        if(dis < dist[newX][newY]) {
+                    if(newX >=0 && newX < m && newY >=0 && newY < n && !visited[newX][newY]) {
+                        int dis = Math.max(curr[2], Math.abs(heights[curr[0]][curr[1]] - heights[newX][newY]));
+                        if(dis < dist[newX][newY])
                             dist[newX][newY] = dis;
-                        }
-                        pq.add(new int[]{newX,newY,dis});
+                        q.add(new int[]{newX, newY, dis});
                     }
                 }
             }
         }
         
-        return dist[m-1][n-1] == Integer.MAX_VALUE ? 0 : dist[m-1][n-1];
+        return -1;
     }
 }
