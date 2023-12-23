@@ -15,51 +15,38 @@
  */
 class Solution {
     public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+        Set<Integer> deleteNodes = new HashSet<>();
         
-        Set<Integer> s = new HashSet<>();
-        
-        for(int i : to_delete) {
-            s.add(i);
+        for(int i=0;i<to_delete.length;i++) {
+            deleteNodes.add(to_delete[i]);
         }
-        
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-        
+                 
         List<TreeNode> result = new ArrayList<>();
-                
-        result.add(root);
+                    
+        inorder(root, deleteNodes, result);
         
-        while(!q.isEmpty()) {
-            TreeNode curr = q.poll();
-            
-            if(s.contains(curr.val)) {
-                result.remove(curr);
-                if(curr.left != null) {
-                     result.add(curr.left);
-                }
-            
-                if(curr.right != null) {
-                    result.add(curr.right);
-                }
- 
-            }
-            
-            if(curr.left != null) {
-                 q.add(curr.left);
-                if(s.contains(curr.left.val)) {
-                    curr.left = null;
-                }
-            }
-            
-            if(curr.right != null) {
-                q.add(curr.right);
-                 if(s.contains(curr.right.val)) {
-                    curr.right = null;
-                }
-            }
+        if(!deleteNodes.contains(root.val)) {
+            result.add(root);
         }
-
         
         return result;
+    }
+    
+    public TreeNode inorder(TreeNode root, Set<Integer> deleteNodes, List<TreeNode> result) {
+        if(root == null)
+            return null;
+                
+        root.left = inorder(root.left, deleteNodes, result);
+        root.right = inorder(root.right, deleteNodes, result);
+        
+        if(deleteNodes.contains(root.val)) {
+            if(root.left != null)
+                result.add(root.left);
+            if(root.right != null)
+                result.add(root.right);
+            root = null;
+        }
+        
+        return root;
     }
 }
