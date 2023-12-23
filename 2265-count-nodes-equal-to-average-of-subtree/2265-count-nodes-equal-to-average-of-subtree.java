@@ -14,44 +14,34 @@
  * }
  */
 class Solution {
-    int count = 0;
+    int nodes = 0;
     public int averageOfSubtree(TreeNode root) {
-        dfs(root);
-        return count;
+        inorder(root);
+        return nodes;
     }
     
-    public int[] dfs(TreeNode root) {
+    public int[] inorder(TreeNode root) {
         if(root == null)
-            return new int[]{0,-1};
+            return new int[]{0, 0};
         
-        int[] left = dfs(root.left);
-        int[] right = dfs(root.right);
+        int[] left = inorder(root.left);
+        int[] right = inorder(root.right);
         
-        if(left[1] == -1 && right[1] == -1) {
-            count++;
-            return new int[]{root.val,1};
+        if(root.left == null && root.right == null) {
+            nodes++;
+            return new int[]{root.val, 1};
+        }
+            
+        
+        int sum = left[0] + right[0] + root.val;
+        int count = left[1] + right[1] + 1;
+        
+        int average = sum / count;
+        
+        if(average == root.val) {
+            nodes++;
         }
         
-        int sum = 0;
-        int nodes = 0;
-        
-        if(left[1] == -1) {
-            sum = (root.val + right[0]);
-            nodes = (1 + right[1]);
-        }
-        else if(right[1] == -1) {
-            sum = (root.val + left[0]);
-            nodes = (1 + left[1]);
-        }
-        else {
-            sum = (root.val + left[0] + right[0]);
-            nodes = (1 + left[1] + right[1]);
-        }
-        
-        if(sum/nodes == root.val) {
-            count++;
-        }
-        
-        return new int[]{sum, nodes};
+        return new int[]{sum, count};
     }
 }
