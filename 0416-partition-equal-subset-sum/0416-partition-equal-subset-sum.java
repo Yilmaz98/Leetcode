@@ -1,42 +1,43 @@
 class Solution {
     public boolean canPartition(int[] nums) {
-        int n = nums.length;
         int sum = 0;
         
-        for(int num : nums)
-            sum += num;
+        for(int i=0;i<nums.length;i++) {
+            sum += nums[i];
+        } 
         
-        if(sum %2 != 0)
+        if(sum % 2 != 0)
             return false;
         
-        int[][] memo = new int[n+1][sum+1];
+        int n = nums.length;
         
-        return helper(memo,0,sum/2, nums) == 1? true: false;
-    }
-    
-    
-    public int helper(int[][] memo, int i, int target, int[] nums) {
-        if(i == nums.length) {
-            if(target == 0)
-                return 1;
-            else
-                return 2;
+        int[][] dp = new int[n][sum * 2 + 1];
+        
+        for(int i=0;i<n;i++) {
+            Arrays.fill(dp[i], -1);
         }
         
-        if(target == 0)
-            return 1;
+        return recurse(nums, 0, sum/2, dp, sum) != 0? true : false;
+    }
+    
+    public int recurse(int[] nums, int start, int target, int[][] dp, int sum) {
+        if(start == nums.length - 1) {
+            
+            if(nums[start] == target) {
+                return 1;
+            }
+            return 0;
+        }
         
-        if(target < 0)
-            return 2;
+        if(dp[start][sum + target] != -1)
+            return dp[start][sum + target];
         
-        if(memo[i][target] != 0)
-            return memo[i][target];
+        int pick = 0;
+        int notPick = 0;
         
-        int include = helper(memo, i+1, target - nums[i],nums);
-        int exclude = helper(memo,i+1,target,nums);
+        pick = recurse(nums, start + 1, target - nums[start],dp, sum);
+        notPick = recurse(nums, start + 1, target, dp, sum);
         
-        int result = include==1? 1:exclude==1?1: 2;
-        
-        return memo[i][target] = result;
+        return dp[start][sum + target] = pick + notPick;
     }
 }
