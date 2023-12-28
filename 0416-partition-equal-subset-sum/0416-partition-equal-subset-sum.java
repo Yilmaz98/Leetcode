@@ -21,8 +21,7 @@ class Solution {
     }
     
     public int recurse(int[] nums, int start, int target, int[][] dp, int sum) {
-        if(start == nums.length - 1) {
-            
+        if(start == nums.length - 1) {   
             if(nums[start] == target) {
                 return 1;
             }
