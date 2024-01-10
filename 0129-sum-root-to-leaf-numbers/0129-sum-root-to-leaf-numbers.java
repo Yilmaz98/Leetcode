@@ -23,11 +23,11 @@ class Solution {
     public void inorder(TreeNode root, int sum, int[] ans) {
         if(root != null) {
             sum = sum * 10 + root.val;
-            if(root.left == null && root.right == null) {
-                ans[0] += sum;
-            }
             inorder(root.left, sum, ans);
             inorder(root.right, sum, ans);
+                        if(root.left == null && root.right == null) {
+                ans[0] += sum;
+            }
         }
     }
 }
