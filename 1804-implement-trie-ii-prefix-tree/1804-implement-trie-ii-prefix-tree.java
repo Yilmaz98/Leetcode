@@ -1,16 +1,17 @@
 class TrieNode {
-    Map<Character, TrieNode> children;
+    Map<Character, TrieNode> childrenMap;
     boolean isWord;
-    int prefixCount;
-    int wordCount;
+    int wc;
+    int pc;
     
     TrieNode() {
-        children = new HashMap<>();
+        childrenMap = new HashMap<>();
         isWord = false;
-        prefixCount = 0;
-        wordCount = 0;
+        wc = 0;
+        pc = 0;
     }
 }
+
 class Trie {
     TrieNode root;
     
@@ -22,54 +23,52 @@ class Trie {
         TrieNode ws = root;
         
         for(Character c : word.toCharArray()) {
-            if(!ws.children.containsKey(c)) {
-               ws.children.put(c, new TrieNode());
+            if(!ws.childrenMap.containsKey(c)) {
+                ws.childrenMap.put(c, new TrieNode());
             }
-            ws = ws.children.get(c);
-            ws.prefixCount += 1;
+            ws = ws.childrenMap.get(c);
+            ws.pc += 1;
         }
-        
-        ws.isWord = true;
-        ws.wordCount += 1;
+        ws.wc += 1;
     }
     
     public int countWordsEqualTo(String word) {
         TrieNode ws = root;
         
         for(Character c : word.toCharArray()) {
-            if(ws.children.containsKey(c))
-                ws = ws.children.get(c);
-            else 
-                return 0; 
+            if(!ws.childrenMap.containsKey(c)) {
+                return 0;
+            }
+            ws = ws.childrenMap.get(c);
         }
         
-        return ws.wordCount;
+        return ws.wc;
     }
     
     public int countWordsStartingWith(String prefix) {
-         TrieNode ws = root;
+        TrieNode ws = root;
         
         for(Character c : prefix.toCharArray()) {
-            if(!ws.children.containsKey(c))
+            if(!ws.childrenMap.containsKey(c)) {
                 return 0;
-            ws = ws.children.get(c);
+            }
+            ws = ws.childrenMap.get(c);
         }
         
-        return ws.prefixCount;
+        return ws.pc;
     }
     
     public void erase(String word) {
         TrieNode ws = root;
         
         for(Character c : word.toCharArray()) {
-            if(ws.children.containsKey(c)) {
-                ws = ws.children.get(c);
-                ws.prefixCount -= 1;
-            } else 
-                return;     
+            if(!ws.childrenMap.containsKey(c)) {
+                ws.childrenMap.put(c, new TrieNode());
+            }
+            ws = ws.childrenMap.get(c);
+            ws.pc -= 1;
         }
-        
-        ws.wordCount -= 1;
+        ws.wc -= 1;
     }
 }
 
