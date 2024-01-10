@@ -1,12 +1,10 @@
 class Solution {
     class TrieNode {
         Map<Character, TrieNode> children;
-        boolean isWord;
         boolean isPrefixPresent;
         
         TrieNode() {
             children = new HashMap<>();
-            isWord = false;
             isPrefixPresent = false;
         }
         
@@ -28,8 +26,6 @@ class Solution {
                 }
                 ws = ws.children.get(c);
             }
-            
-            ws.isWord = true;
             ws.isPrefixPresent = true;
         }
         
