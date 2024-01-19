@@ -1,27 +1,23 @@
 class Solution {
     public List<Integer> lexicalOrder(int n) {
         List<Integer> result = new ArrayList<>();
-        
-        backtrack(n, result, new StringBuilder(), true);
-        
+        backtrack(n, result, 0);
         return result;
     }
     
-    public void backtrack(int n, List<Integer> result, StringBuilder sb, boolean firstTime) { 
-        int start = firstTime ? 1 : 0;
+    public void backtrack(int n, List<Integer> result, int curr) { 
+        int start = curr == 0 ? 1 : 0;
         for(int i = start;i<=9;i++) {
-            sb.append(i);
-            int val = Integer.parseInt(sb.toString());
-        
-            if(val > n) {
-                sb.deleteCharAt(sb.length() -1);
+            curr = curr * 10 + i;
+            if(curr > n) {
+                curr = curr / 10;
                 return;
             }   
             else {    
-                result.add(val);
-                backtrack(n, result, sb, false);
+                result.add(curr);
+                backtrack(n, result, curr);
             }
-            sb.deleteCharAt(sb.length() -1);
+            curr = curr / 10;
         }
     }
 }
