@@ -2,9 +2,7 @@ class Solution {
     public int minInsertions(String s) {
         int n = s.length();
         int lps = longestPalindromicSubsequence(s);
-        
-        System.out.println(n + ":" + lps);
-        
+
         return n - lps;
     }
     
