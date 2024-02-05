@@ -2,13 +2,10 @@ class FileSystem {
 
     // The TrieNode data structure.
     class TrieNode {
-        
-        String name;
         int val = -1;
         Map<String, TrieNode> map = new HashMap<>();
         
-        TrieNode (String name) {
-            this.name = name;
+        TrieNode () {
         }
     }
     
@@ -16,7 +13,7 @@ class FileSystem {
     
     // Root node contains the empty string.
     public FileSystem() {
-        this.root = new TrieNode("");
+        this.root = new TrieNode();
     }
     
     public boolean createPath(String path, int value) {
@@ -33,11 +30,11 @@ class FileSystem {
             String currentComponent = components[i];
             
             // For each component, we check if it exists in the current node's dictionary.
-            if (cur.map.containsKey(currentComponent) == false) {
+            if (!cur.map.containsKey(currentComponent)) {
                 
                 // If it doesn't and it is the last node, add it to the Trie.
                 if (i == components.length - 1) {
-                    cur.map.put(currentComponent, new TrieNode(currentComponent));
+                    cur.map.put(currentComponent, new TrieNode());
                 } else {
                     return false;
                 }    
