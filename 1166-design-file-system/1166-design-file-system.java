@@ -66,7 +66,7 @@ class FileSystem {
             String currentComponent = components[i];
             
             // For each component, we check if it exists in the current node's dictionary.
-            if (cur.map.containsKey(currentComponent) == false) {
+            if (!cur.map.containsKey(currentComponent)) {
                 return -1;   
             }
             
