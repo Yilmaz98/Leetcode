@@ -23,12 +23,14 @@ class Solution {
         
         height(root, maxSum);
         
-        return maxSum[0];
+        return maxSum[0] == Integer.MIN_VALUE ? root.val : maxSum[0];
     }
     
     public int height(TreeNode root, int[] maxSum) {
         if(root == null)
             return 0;
+        
+
         
         int left = Math.max(0, height(root.left, maxSum));
         int right = Math.max(0, height(root.right, maxSum));
