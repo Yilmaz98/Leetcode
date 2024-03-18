@@ -1,38 +1,35 @@
 class Solution {
-    int[][] dist = {{-1,0},{0,1},{0,-1},{1,0}};
+    int[][] dir = {{-1,0},{1,0},{0,1},{0,-1}};
     
     public void wallsAndGates(int[][] rooms) {
-        for(int i = 0;i<rooms.length;i++) {
-            for(int j = 0;j<rooms[0].length;j++) {
+        int m = rooms.length;
+        int n = rooms[0].length;
+        
+        for(int i=0;i<m;i++) {
+            for(int j = 0;j<n;j++) {
                 if(rooms[i][j] == 0) {
-                    bfs(rooms, i, j);
+                    bfs(i, j, rooms,m,n);
                 }
             }
         }
     }
     
-    public void bfs(int[][] rooms, int i, int j) {
-        int m = rooms.length;
-        int n = rooms[0].length;
-        
+    public void bfs(int i, int j, int[][] rooms,int m, int n) {
         Queue<int[]> q = new LinkedList<>();
-        
         q.add(new int[]{i,j});
         
         while(!q.isEmpty()) {
             int[] curr = q.poll();
+            int x = curr[0];
+            int y = curr[1];
             
             for(int k=0;k<4;k++) {
-                int newX = curr[0] + dist[k][0];
-                int newY = curr[1] + dist[k][1];
-
+                int newX = x + dir[k][0];
+                int newY = y + dir[k][1];
                 
-                if(newX >=0 && newX < m && newY >=0 && newY < n) {
-                    if(rooms[newX][newY] > rooms[curr[0]][curr[1]] + 1) {
-                         rooms[newX][newY] = rooms[curr[0]][curr[1]]  + 1;
+                if(newX >= 0 && newX < m && newY >= 0 && newY < n && rooms[newX][newY] > rooms[x][y] + 1) {
+                    rooms[newX][newY] = rooms[x][y] + 1;
                     q.add(new int[]{newX, newY});
-                    }
-                   
                 }
             }
         }
