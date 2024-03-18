@@ -1,38 +1,53 @@
 class Solution {
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
-        int[][] arr = new int[startTime.length][3];
+        List<int[]> jobs = new ArrayList<>();
         
-        for(int i=0;i<startTime.length;i++) {
-            arr[i] = new int[]{startTime[i],endTime[i], profit[i]};
+        for(int i =0;i<startTime.length;i++) {
+            jobs.add(new int[]{startTime[i], endTime[i], profit[i]});
         }
         
-        Arrays.sort(arr, (a,b) -> a[1] - b[1]);
-                
-        int n = startTime.length;
-        int[] dp = new int[n];
-        dp[0] = arr[0][2];
+        Collections.sort(jobs, (a,b) -> a[0] - b[0]);
         
-        for(int i=1;i<arr.length;i++) {
-            dp[i] += arr[i][2];
-            
-            int low = -1;
-            int high = i-1;
-            
-            
-            while(low < high) {
-                int mid = (int) Math.ceil((double) (low+high)/2);
-                if(arr[mid][1] <=arr[i][0]) {
-                    low = mid;
-                } else {
-                    high = mid -1;
-                }
-            }
-            
-            if(low !=-1)
-                dp[i] += dp[low];
-            dp[i] = Math.max(dp[i], dp[i-1]);
+        int[] dp = new int[startTime.length];
+        Arrays.fill(dp, -1);
+        
+        return recurse(dp, jobs, 0);
+    }
+    
+    public int recurse(int[] dp, List<int[]> jobs, int start) {
+        if(start == jobs.size()) {
+            return 0;
         }
+        
+        if(dp[start] != -1)
+            return dp[start];
+        
+        int take = 0;
+        int notTake = 0;
+        
+        int next = findNext(start, jobs);
+        
+        take = jobs.get(start)[2] + (next == -1? 0 : recurse(dp, jobs, next));
            
-        return dp[n-1];
+        notTake = recurse(dp, jobs, start + 1);
+        
+        return dp[start] = Math.max(take, notTake);
+    }
+    
+     int findNext(int idx, List<int[]> jobs) {
+        int lo = idx + 1;
+        int hi = jobs.size() -1;
+        while(lo <= hi) {
+            int mid = lo + (hi - lo)/2;
+            if(jobs.get(mid)[0] >= jobs.get(idx)[1]) {
+                if(jobs.get(mid-1)[0] >= jobs.get(idx)[1])
+                    hi = mid - 1;
+                else 
+                    return mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return -1;
     }
 }
