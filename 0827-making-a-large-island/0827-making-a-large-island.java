@@ -46,12 +46,12 @@ class Solution {
         
         grid[r][c] = region;
         
-        int sum = 1;
-        sum+=floodFill(grid, r, c+1, region);
-        sum+=floodFill(grid, r+1, c, region);
-        sum+=floodFill(grid, r, c-1, region);
-        sum+=floodFill(grid, r-1, c, region);
+        int left = 0, right = 0, up = 0, down = 0;
+        left = floodFill(grid, r, c+1, region);
+        right = floodFill(grid, r+1, c, region);
+        up = floodFill(grid, r, c-1, region);
+        down = floodFill(grid, r-1, c, region);
         
-        return sum;
+        return left + right + up + down + 1;
     }
 }
