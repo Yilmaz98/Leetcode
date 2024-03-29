@@ -1,69 +1,77 @@
-public class ListNode {
-        int key;
-        int val;
-        ListNode prev;
-        ListNode next;
-        
-        ListNode(int key, int val) {
-            this.key = key;
-            this.val = val;
-        }
-};
-
 class LRUCache {
-    Map<Integer, ListNode> dic;
+    Map<Integer, ListNode> dict;
     ListNode head;
     ListNode tail;
     int capacity;
     
     public LRUCache(int capacity) {
-        dic = new HashMap<>();
-        this.capacity = capacity;
+        dict = new HashMap<>();
         head = new ListNode(-1, -1);
         tail = new ListNode(-1, -1);
         head.next = tail;
         tail.prev = head;
+        this.capacity = capacity;
     }
     
-    public void addToList(ListNode node) {
-        ListNode previousEnd = tail.prev;
-        previousEnd.next = node;
-        node.prev = previousEnd;
-        node.next = tail;
-        tail.prev = node;
-    }
-    
-    public void removeFromList(ListNode node) {
+    public void remove(ListNode node) {
         node.prev.next = node.next;
         node.next.prev = node.prev;
     }
     
+    public void add(ListNode node) {
+        ListNode prevEnd = tail.prev;
+        prevEnd.next = node;
+        node.next = tail;
+        node.prev = prevEnd;
+        tail.prev = node;
+    }
+    
     public int get(int key) {
-        if(!dic.containsKey(key))
+        if(!dict.containsKey(key))
             return -1;
         
-        ListNode curr = dic.get(key);
-        removeFromList(curr);
-        addToList(curr);
-        
-        return curr.val;
+        ListNode node = dict.get(key);
+         remove(node);
+        add(node);
+        return node.val;
     }
     
     public void put(int key, int value) {
-        if(dic.containsKey(key)) {
-            ListNode nodeToRemove = dic.get(key);
-            removeFromList(nodeToRemove);
+        if(dict.containsKey(key)) {
+            ListNode oldNode = dict.get(key);
+            remove(oldNode);
         }
         
-        ListNode curr = new ListNode(key, value);
-        dic.put(key, curr);
-        addToList(curr);
+        ListNode newNode = new ListNode(key,value);
+        dict.put(key, newNode);
+        add(newNode);
         
-        if(dic.size() > capacity) {
-            dic.remove(head.next.key);
-            removeFromList(head.next);
+        if(dict.size() > capacity) {
+            ListNode firstNode = head.next;
+            remove(firstNode);
+            dict.remove(firstNode.key);
         }
     }
+    
+    class ListNode {
+        int key;
+        int val;
+        ListNode next;
+        ListNode prev;
+        
+        ListNode(int key, int val) {
+            this.key = key;
+            this.val = val;
+            this.next = null;
+            this.prev = null;
+        }
+        
+        int getValue() {
+            return this.val;
+        }
+    }
+    
+    
 }
 
 /**
